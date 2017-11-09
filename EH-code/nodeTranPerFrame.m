@@ -20,7 +20,7 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
 %   arrivalQueue 数据包到达队列
 %   bufferQueue 缓存状态队列  
 %   last_end_slot_ind 上一超帧分配时隙的末尾位置
-    Node
+
    %% 判断是否有时隙资源
     if sum(Allocate.slot)<=0
         first_slot_ind = MAC.N_Slot; %分配时隙的开始位置，用于计算各个时隙的丢包率
@@ -36,7 +36,7 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
     
     %% 分析数据包到达队列,这里只统计正常包            
     % 正常数据包
-    cur_arrival_num_packets = ceil(Node.Nor_SrcRate*(end_slot_ind + MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot/Node.packet_length)
+    cur_arrival_num_packets = ceil(Node.Nor_SrcRate*(end_slot_ind + MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot/Node.packet_length);
     tmp_arrival_Queue = zeros(cur_arrival_num_packets,4);
     tmp_arrival_Queue(:,1) = ((1:cur_arrival_num_packets) + size(arrivalQueue,1))'; % 数据包ID-packetID
     last_time_frame = (MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot; %上一超帧所剩余的时间
@@ -48,14 +48,15 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         %tmp_arrival_Queue(tmp_ind,4) = 0; % 数据包类型-packetType, 值为0表示为普通包，值为1表示为紧急包
     end
     arrivalQueue = [arrivalQueue;tmp_arrival_Queue];
+
     %% 分析缓存状态队列
     % 需要根据缓存情况来决定是否对节点进行丢弃，并分析未存储的数据包是否超过缓存容量
     % 首先分析数据包是否超时延门限，如果超过时延门限将丢包
     ind_end_buffer = size(arrivalQueue,1); %结束位置
     ind_begin_buffer = bufferQueue(end,2); %读取上一超帧所剩的
     residue_energy = bufferQueue(end,4); %读取上一超帧所剩的能量
+    tmp_ind_begin_buffer = ind_begin_buffer;
     if (ind_end_buffer-ind_begin_buffer) > Node.num_packet_buffer %判断当前队列中的数据包是否大于缓存的最大数，如果大于将。
-        tmp_ind_begin_buffer = ind_begin_buffer;
         ind_begin_buffer = ind_end_buffer - Node.num_packet_buffer + 1;
         tmp_range = tmp_ind_begin_buffer:(ind_begin_buffer-1);
         tmp_len = size(tmp_range,2);
@@ -63,6 +64,24 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         deletePackets = [arrivalQueue(tmp_range,1:3), repmat(cur_ind_frame,tmp_len,1), zeros(tmp_len,4), repmat(tran_packet_state,tmp_len,1)]; %队列溢出
         tranQueue=[tranQueue; deletePackets];
     end 
+    % 检测是否有队列中的数据包的时延超过门限
+    tmp_ind_begin_buffer = ind_begin_buffer;
+    count_overdelay = 0;
+    for ind_overdelay = ind_begin_buffer:ind_end_buffer
+        cur_delay = (cur_ind_frame - arrivalQueue(ind_overdelay,2))*MAC.T_Frame + first_slot_ind*MAC.T_Slot - arrivalQueue(ind_overdelay,3);
+        if cur_delay > Constraints.Nor_Delay_th
+            count_overdelay = count_overdelay +1;
+        else
+            break;
+        end
+    end
+    ind_begin_buffer = ind_begin_buffer + count_overdelay;
+    overdelay_range = tmp_ind_begin_buffer:(ind_begin_buffer-1);
+    tmp_len = size(overdelay_range,2);
+    tran_packet_state = 3; %传输状态为3，表示时延超过门限而丢弃
+    deletePackets = [arrivalQueue(overdelay_range,1:3),repmat(cur_ind_frame,tmp_len,1), zeros(tmp_len,4), repmat(tran_packet_state,tmp_len,1)]; %时延超限丢弃
+    tranQueue=[tranQueue; deletePackets];
+    
     % 如果没有分配时隙，将跳出循环
     if sum(Allocate.slot)<=0
         bufferQueue = [bufferQueue;cur_ind_frame,ind_begin_buffer,ind_end_buffer,residue_energy]; %更新缓存队列

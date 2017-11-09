@@ -47,22 +47,32 @@ function parameters = initialParameters()
     Nodes.Emer_SrcRates = [10,10,10,10,10]; % 各个节点的紧急包的的数据速率,单位kbps
     Nodes.tranRates = repmat(parameters.PHY.RateSet(3), 1, Nodes.Num); % 配置的节点传输速率
     Nodes.packet_length = repmat(500,1,Nodes.Num);
-    Nodes.buffer_size = repmat(5*1000,1,Nodes.Num); %缓存的大小，单位bit
+    Nodes.buffer_size = repmat(100*1000,1,Nodes.Num); %缓存的大小，单位bit
     Nodes.num_packet_buffer = floor(Nodes.buffer_size./Nodes.packet_length); %节点缓存所能保存包的数量
-    Nodes.lambda_Emer =floor(Nodes.Emer_SrcRates.*parameters.MAC.T_Frame./Nodes.packet_length)
+    Nodes.lambda_Emer =floor(Nodes.Emer_SrcRates.*parameters.MAC.T_Frame./Nodes.packet_length);
     parameters.Nodes = Nodes; % 节点的参数
     % 身体姿势相关
     Postures.Num = 3; 
     Postures.Name = {'still','walk','run'};
-    Postures.Probability = [0.5, 0.3, 0.2]; % 各个身体姿势的稳态概率
+    Postures.P_state = [0.5, 0.3, 0.2]; % 各个身体姿势的稳态概率
+    Postures.P_ini = [0.7,0.5,0.5; 0.15,0.3,0.2; 0.15,0.2,0.3;]; %初始化状态转移矩阵,一列的和为1
     parameters.Postures = Postures;
     
     %% Constraints
-    Constraints.Nor_Delay_th = 1000; % 普通包时延门限，单位ms
-    Constraints.Emer_Delay_th = 500; % 紧急包时延门限，单位ms
+    Constraints.Nor_Delay_th = 500; % 普通包时延门限，单位ms
+    Constraints.Emer_Delay_th = 400; % 紧急包时延门限，单位ms
     Constraints.Nor_PLR_th = 0.1; %普通包丢包率门限
     Constraints.Emer_PLR_th = 0.05; %紧急包丢包率门限
     parameters.Constraints = Constraints;
+    
+    %% Energy Harvesting
+    EnergyHarvest.EH_pos_min = [0.001, 0.1286, 0.7242]; % 不同姿势下的能量采集功率的最小值，单位mw，刚好mw*ms=uJ
+    EnergyHarvest.EH_pos_max = [0.0048, 0.186,0.910]; % 不同姿势下的能量采集功率的最大值，单位mw，刚好mw*ms=uJ
+    EnergyHarvest.EH_P_state = {[0.9,0.1],[0.3,0.7],[0.4,0.6]}; % 不同姿势下能量采集状态为ON的概率
+    EnergyHarvest.EH_P_ini = {[0.8,0.7;0.2,0.3],[0.4,0.35;0.6,0.65],[0.45,0.35;0.55,0.65]}; %初始化状态转移矩阵
+    EnergyHarvest.t_cor_EH = 10; % 单个能量采集状态所维持的时间，一般设置为T_Slot的整数倍,单位ms
+    parameters.EnergyHarvest = EnergyHarvest;
+
     
    
     

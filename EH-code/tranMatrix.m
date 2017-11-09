@@ -1,10 +1,6 @@
-function P_tran = tranMatrix(P_state)
+function P_tran = tranMatrix(P_ini,P_state)
 %tranMatrix :给定各个阶段的稳定概率，计算状态转移矩阵
 
-% 初始化状态转移矩阵，Pij表示状态有j转移到i的概率
-    P_ini=[0.7,0.5,0.5;
-           0.15,0.3,0.2;
-           0.15,0.2,0.3;];
 % 用户是否是想获得：Pij表示由状态i转移到j的概率
     changeState = 0;
     if size(P_state,1)==1

@@ -24,7 +24,7 @@ function  [shadow_seq, pos_seq]= shadowStatistic( N_Frame, ini_pos, hold_time, N
     % 初始化参数
     MAC.N_Slot = MAC.T_Frame/MAC.T_Slot; %单个超帧内的时隙数
     total_num_slots = N_Frame_tmp*MAC.N_Slot; %总共的时隙数
-    P_tran = tranMatrix(Postures.Probability); % P_tran  身体姿势的状态转移矩阵：Pij表示由状态i转移到状态j的概率
+    P_tran = tranMatrix(Postures.P_ini,Postures.P_state); % P_tran  身体姿势的状态转移矩阵：Pij表示由状态i转移到状态j的概率
     P_tran_cumsum = cumsum(P_tran,2); %按行进行累加
     pos_seq = zeros(1, N_Frame_tmp); %初始化身体姿势序列
     shadow_seq = zeros(Nodes.Num, total_num_slots);
