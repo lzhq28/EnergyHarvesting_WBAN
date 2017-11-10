@@ -70,7 +70,7 @@ function parameters = initialParameters()
     EnergyHarvest.EH_pos_max = [0.0048, 0.186,0.910]; % 不同姿势下的能量采集功率的最大值，单位mw，刚好mw*ms=uJ
     EnergyHarvest.EH_P_state = {[0.9,0.1],[0.3,0.7],[0.4,0.6]}; % 不同姿势下能量采集状态为ON的概率
     EnergyHarvest.EH_P_ini = {[0.8,0.7;0.2,0.3],[0.4,0.35;0.6,0.65],[0.45,0.35;0.55,0.65]}; %初始化状态转移矩阵
-    EnergyHarvest.t_cor_EH = 10; % 单个能量采集状态所维持的时间，一般设置为T_Slot的整数倍,单位ms
+    EnergyHarvest.t_cor_EH = 12; % 单个能量采集状态所维持的时间，一般设置为T_Slot的整数倍,单位ms
     parameters.EnergyHarvest = EnergyHarvest;
 
     

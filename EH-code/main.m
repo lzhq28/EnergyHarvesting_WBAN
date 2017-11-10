@@ -23,10 +23,9 @@
     % 计算所有超帧的姿势序列和每个时隙的阴影衰落
     [shadow_seq, pos_seq] = shadowStatistic( N_Frame, ini_pos, pos_hold_time, par.Nodes, par.Postures, par.MAC, rand_state, slot_or_frame_state);
     % 初始化所有时隙的能量采集状态
-    [EH_seq] = energyHarvestStatistic( pos_seq, par.EnergyHarvest, par.MAC, rand_state);
-    
+    [ EH_status_seq, EH_collect_seq ] = energyHarvestStatistic( pos_seq, par.EnergyHarvest, par.MAC, rand_state);
  
-    
+
     %% 性能分析
     % 初始化三种不同的队列
     for ind_node = 1:par.Nodes.Num
