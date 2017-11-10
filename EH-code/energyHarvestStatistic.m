@@ -11,18 +11,22 @@ function [ EH_status_seq, EH_collect_seq ] = energyHarvestStatistic( pos_seq, En
     % EnergyHarvest = par.EnergyHarvest
     % MAC = par.MAC
     %% 各个状态下的能量采集状态
+    num_pos = size(EnergyHarvest.EH_P_ini,1);
+    num_node = size(EnergyHarvest.EH_P_ini,2);
     % 获取各个身体姿势下的能量采集状态转移矩阵Ptran, Ptran,ij表示状态i转移到状态j的概率
     EH_P_tran = {}; %各个身子姿势下的能量ON和OFF的状态转移矩阵，Pij表示状态i转移到状态j的概率
-    EH_ini_state = 1; %初始状态为1
+    EH_ini_state = ones(1,num_node); %初始状态为1
     k_cor = EnergyHarvest.t_cor_EH/MAC.T_Slot; %相关时隙数，及同一个能量采集状态所维持的时隙数
-    for ind_pos = 1:size(EnergyHarvest.EH_P_ini,2)
-        EH_P_tran{1,ind_pos} = tranMatrix(EnergyHarvest.EH_P_ini{1,ind_pos},EnergyHarvest.EH_P_state{1,ind_pos});
-        EH_P_tran_cumsum{1,ind_pos} = cumsum(EH_P_tran{1,ind_pos},2); %按行进行累加
+    for ind_pos = 1:num_pos
+        for ind_node = 1:num_node
+            EH_P_tran{ind_pos,ind_node} = tranMatrix(EnergyHarvest.EH_P_ini{ind_pos,ind_node},EnergyHarvest.EH_P_state{ind_pos,ind_node});
+            EH_P_tran_cumsum{ind_pos,ind_node} = cumsum(EH_P_tran{ind_pos,ind_node},2); %按行进行累加
+        end
     end
     %% 计算各个时隙下的能量采集状态： 1表示为ON, 2为OFF状态
     num_frame =  size(pos_seq,2);    
-    EH_status_seq = zeros(1,num_frame*MAC.N_Slot);
-    EH_collect_seq = zeros(1,num_frame*MAC.N_Slot); %能量采集的状态
+    EH_status_seq = zeros(num_node,num_frame*MAC.N_Slot);
+    EH_collect_seq = zeros(num_node,num_frame*MAC.N_Slot); %能量采集的状态
     begin_static_pos = 1;
     end_static_pos = 1;
     last_pos = pos_seq(1);
@@ -48,41 +52,43 @@ function [ EH_status_seq, EH_collect_seq ] = energyHarvestStatistic( pos_seq, En
         end
     end
     % 更新各个节点所处的能量采集状态
-    cur_EH_state = EH_ini_state;
-    max_slot_all = num_frame*MAC.N_Slot; %所有时隙中的最大时隙数
-    for ind_pos_change = 1:size(pos_periods,1)
-        cur_pos = pos_periods(ind_pos_change,1);
-        ind_begin_pos = pos_periods(ind_pos_change,2);
-        ind_end_pos = pos_periods(ind_pos_change,3);
-        num_EH_change = ceil((ind_end_pos - ind_begin_pos+1) * MAC.N_Slot/k_cor);        
-        rand_seed = rand_state*num_frame+ind_begin_pos;
-        rand('state', rand_seed)
-        rand_EH_prob = rand(1,num_EH_change);
-        rand('state', rand_seed)
-        rand_EH_collect_prob = rand(1,num_EH_change);
-
-        % 循环进行能量采集状态确定
-        for ind_EH_change = 1: num_EH_change-1
+    for ind_node = 1:num_node
+        cur_EH_state = EH_ini_state(1,ind_node);
+        max_slot_all = num_frame*MAC.N_Slot; %所有时隙中的最大时隙数
+        for ind_pos_change = 1:size(pos_periods,1)
+            cur_pos = pos_periods(ind_pos_change,1);
+            ind_begin_pos = pos_periods(ind_pos_change,2);
+            ind_end_pos = pos_periods(ind_pos_change,3);
+            num_EH_change = ceil((ind_end_pos - ind_begin_pos+1) * MAC.N_Slot/k_cor);        
+            rand_seed = rand_state*num_node*num_frame+ind_node*num_frame+ind_begin_pos;
+            rand('state', rand_seed)
+            rand_EH_prob = rand(1,num_EH_change);
+            rand('state', rand_seed)
+            rand_EH_collect_prob = rand(1,num_EH_change);
+            % 循环进行能量采集状态确定
+            for ind_EH_change = 1: num_EH_change-1
+                ind_begin_slot = (ind_begin_pos -1)*MAC.N_Slot + (ind_EH_change - 1)*k_cor+1;
+                ind_end_slot = (ind_begin_pos -1)*MAC.N_Slot + ind_EH_change*k_cor;
+                cur_EH_state = decideNextEH_State( EH_P_tran_cumsum{cur_pos,ind_node}, cur_EH_state, rand_EH_prob(1,ind_EH_change) ); %确定下一能量采集状态，1为ON，2为OFF状态
+                EH_status_seq(ind_node,ind_begin_slot:ind_end_slot) = cur_EH_state;
+                if cur_EH_state ==1
+                    EH_collect_seq(ind_node,ind_begin_slot:ind_end_slot) = (EnergyHarvest.EH_pos_max(cur_pos,ind_node) -EnergyHarvest.EH_pos_min(cur_pos,ind_node)).*rand_EH_collect_prob(1,ind_EH_change)+EnergyHarvest.EH_pos_min(cur_pos,ind_node); %在各个时隙所能采集到的能量
+                end
+            end
+            % 处理边界情况
+            ind_EH_change = num_EH_change;
             ind_begin_slot = (ind_begin_pos -1)*MAC.N_Slot + (ind_EH_change - 1)*k_cor+1;
-            ind_end_slot = (ind_begin_pos -1)*MAC.N_Slot + ind_EH_change*k_cor;
-            cur_EH_state = decideNextEH_State( EH_P_tran_cumsum{cur_pos}, cur_EH_state, rand_EH_prob(1,ind_EH_change) ); %确定下一能量采集状态，1为ON，2为OFF状态
-            EH_status_seq(1,ind_begin_slot:ind_end_slot) = cur_EH_state;
-            if cur_EH_state ==1
-                EH_collect_seq(1,ind_begin_slot:ind_end_slot) = (EnergyHarvest.EH_pos_max(cur_pos) -EnergyHarvest.EH_pos_min(cur_pos)).*rand_EH_collect_prob(1,ind_EH_change)+EnergyHarvest.EH_pos_min(cur_pos); %在各个时隙所能采集到的能量
+            ind_end_slot = (ind_begin_pos -1)*MAC.N_Slot + ind_EH_change*k_cor;        
+            max_slot_ind = ind_end_pos * MAC.N_Slot;    
+            ind_end_slot = min([ind_end_slot,max_slot_ind]);
+            cur_EH_state = decideNextEH_State( EH_P_tran_cumsum{cur_pos,ind_node}, cur_EH_state, rand_EH_prob(1,ind_EH_change) ); %确定下一能量采集状态，1为ON，2为OFF状态
+            EH_status_seq(ind_node,ind_begin_slot:ind_end_slot) = cur_EH_state;
+            if cur_EH_state ==1   
+                EH_collect_seq(ind_node,ind_begin_slot:ind_end_slot) = (EnergyHarvest.EH_pos_max(cur_pos,ind_node) -EnergyHarvest.EH_pos_min(cur_pos,ind_node)).*rand_EH_collect_prob(1,ind_EH_change)+EnergyHarvest.EH_pos_min(cur_pos,ind_node); %在各个时隙所能采集到的能量
             end
         end
-        % 处理边界情况
-        ind_EH_change = num_EH_change;
-        ind_begin_slot = (ind_begin_pos -1)*MAC.N_Slot + (ind_EH_change - 1)*k_cor+1;
-        ind_end_slot = (ind_begin_pos -1)*MAC.N_Slot + ind_EH_change*k_cor;        
-        max_slot_ind = ind_end_pos * MAC.N_Slot;    
-        ind_end_slot = min([ind_end_slot,max_slot_ind]);
-        cur_EH_state = decideNextEH_State( EH_P_tran_cumsum{cur_pos}, cur_EH_state, rand_EH_prob(1,ind_EH_change) ); %确定下一能量采集状态，1为ON，2为OFF状态
-        EH_status_seq(1,ind_begin_slot:ind_end_slot) = cur_EH_state;
-        if cur_EH_state ==1   
-            EH_collect_seq(1,ind_begin_slot:ind_end_slot) = (EnergyHarvest.EH_pos_max(cur_pos) -EnergyHarvest.EH_pos_min(cur_pos)).*rand_EH_collect_prob(1,ind_EH_change)+EnergyHarvest.EH_pos_min(cur_pos); %在各个时隙所能采集到的能量
-        end
     end
+
 %     figure
 %     subplot(311)
 %     bar((1:size(EH_status_seq,2)),EH_status_seq)

@@ -31,12 +31,12 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         end_slot_ind = tmp_ind(end); %所分配时隙的结束位置  
     end       
     % 数据包时间：生成时间和传输时间
-    tran_time_packet = Node.packet_length/Allocate.rate; %传输一个包所需要的时间
-    gen_time_packet = Node.packet_length/Node.Nor_SrcRate; %生成一个包所需要的时间
+    tran_time_packet = Node.packet_length/Node.tranRate; %传输一个包所需要的时间
+    gen_time_packet = Node.packet_length/Allocate.src_rate ; %生成一个包所需要的时间
     
     %% 分析数据包到达队列,这里只统计正常包            
     % 正常数据包
-    cur_arrival_num_packets = ceil(Node.Nor_SrcRate*(end_slot_ind + MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot/Node.packet_length);
+    cur_arrival_num_packets = ceil(Allocate.src_rate *(end_slot_ind + MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot/Node.packet_length);
     tmp_arrival_Queue = zeros(cur_arrival_num_packets,4);
     tmp_arrival_Queue(:,1) = ((1:cur_arrival_num_packets) + size(arrivalQueue,1))'; % 数据包ID-packetID
     last_time_frame = (MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot; %上一超帧所剩余的时间
@@ -89,10 +89,10 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         return;%因为没有分配时隙发送数据，因此不能传输数据包，将直接返回
     end
    %% 分析数据包传输队列
-    tran_times = floor((end_slot_ind - first_slot_ind+1)*MAC.T_Slot.*Allocate.rate./Node.packet_length); %分配的资源可以传输的次数
+    tran_times = floor((end_slot_ind - first_slot_ind+1)*MAC.T_Slot.*Node.tranRate./Node.packet_length); %分配的资源可以传输的次数
     rand('state',rand_seed)            
     rand_PLR = rand(1,tran_times); %产生随机数用来与PLR对比来确定是否丢包
-    cur_PLR = calPLR(Allocate.power, Allocate.rate, Node.packet_length, Node.PL_Fr, cur_shadow, Channel); %计算当前资源下在不同时隙发送时的丢包率     
+    cur_PLR = calPLR(Allocate.power, Node.tranRate, Node.packet_length, Node.PL_Fr, cur_shadow, Channel); %计算当前资源下在不同时隙发送时的丢包率     
     if sum(Allocate.slot)<=0
         % return; %移到函数中将取消该注释，因为没有额外的时隙发送数据，因此不能传输数据包，将直接返回
     end
@@ -110,11 +110,11 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         %判断数据包是否传输成功,并保存传输信息
         if cur_PLR(1,cur_ind_slot)<=rand_PLR(ind_tran) % 数据包传输成功
             tran_packet_state = 1; %传输状态为1，表示传输成功
-            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power,Allocate.rate, tran_packet_state]; %保存传输情况
+            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power,Node.tranRate, tran_packet_state]; %保存传输情况
             ind_begin_buffer = ind_begin_buffer+1;
         else %数据包传输失败
             tran_packet_state = 2; %传输状态为2，表示链路丢包 
-            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power,Allocate.rate, tran_packet_state]; %保存传输情况
+            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power,Node.tranRate, tran_packet_state]; %保存传输情况
         end
         residue_energy = residue_energy - Allocate.power * tran_time_packet; % 更新剩余能量
     end
