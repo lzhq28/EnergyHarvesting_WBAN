@@ -13,6 +13,7 @@
 %         end
 %     end
 %% 初始化系统参数
+    time_1 =clock;
     par = initialParameters(); %初始化系统参数
 %% 配置实验所需参数
     rand_state = 1; %随机种子,建议从1开始的整数
@@ -28,6 +29,8 @@
     [ EH_status_seq, EH_collect_seq, EH_P_tran ] = energyHarvestStatistic( pos_seq, par.EnergyHarvest, par.MAC, rand_state); 
     % 计算PLR的等效门限：平均信噪比门限miu_th
     [ miu_th ] = calEquPLRThreshold( par.Nodes, par.Channel, par.Constraints, precision, re_cal_miu_state);
+    % 优化分配不同身体姿势下的传输功率和数据速率
+    [ AllocatePowerRate, opti_power_problems] = allocateTranPower( miu_th, par);
    
     %% 性能分析
     % 初始化三种不同的队列
@@ -51,8 +54,8 @@
     %% 循环统计分析
     sta_last_EH_status = [];
     sta_re_num_slots = [];
-    sta_Allocate = {}; %统计分配的结果
-    sta_optimize_problems = []; %统计每一帧优化分配的结果
+    sta_AllocateSlots ={}; %统计时隙分配的结果
+    sta_opti_slots_problems = []; %统计时隙优化分配中的问题
     last_end_slot_ind = ones(1,par.Nodes.Num)*par.MAC.N_Slot; %上一超帧分配时隙的结束位置,相对位置
     ind_absolute_slots = zeros(1,par.Nodes.Num);%上一超帧分配时隙的末尾位置在所有时隙中的绝对索引
     for ind_frame = 1:N_Frame %对超帧进行遍历
@@ -75,10 +78,10 @@
         sta_last_EH_status = [sta_last_EH_status;EH_last_status];
         sta_re_num_slots = [sta_re_num_slots ; re_num_slots];
         % 优化资源分配
-        cur_miu_th = miu_th(cur_pos,:);
-        [ Allocate, optimize_problems ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_slots, EH_last_status, EH_P_tran, par);
-        sta_optimize_problems = [sta_optimize_problems; optimize_problems];
-        sta_Allocate{1,ind_frame}= Allocate;
+        [  AllocateSlots, opti_problem  ] = allocateSlots(cur_pos,AllocatePowerRate{1,cur_pos}, re_num_slots, EH_last_status, EH_P_tran, par);
+        sta_opti_slots_problems(1,ind_frame) = opti_problem;
+        sta_AllocateSlots{1,ind_frame} = AllocateSlots;
+        
         
         %% 遍历各个节点的数据包传输
         for ind_node = 1:par.Nodes.Num %对各个节点进行遍历
@@ -86,20 +89,25 @@
             EH_begin_ind = ind_absolute_slots(ind_node)+1;
             EH_end_ind = ind_frame*par.MAC.N_Slot;
             cur_EH_collect = EH_collect_seq(ind_node, EH_begin_ind:EH_end_ind);
+           %% 统计资源分配的结果
+            cur_Allocate.power =  AllocatePowerRate{cur_pos}{ind_node}.power;
+            cur_Allocate.src_rate = AllocatePowerRate{cur_pos}{ind_node}.src_rate;
+            cur_Allocate.slot = AllocateSlots(ind_node,:);
           %% 更新参数
             % 随机种子，所有节点在不同超帧的随机种子都不同
             rand_seed = rand_state*par.Nodes.Num*N_Frame+ (ind_node-1)*N_Frame+(ind_frame-1);
             % 各个节点的数据包传输
-            [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame(ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind(ind_node), Allocate(ind_node), Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
-            
+            [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame(ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind(ind_node), cur_Allocate, Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
         end
     end
+    time_2 =clock;
+    time_cost = etime(time_2,time_1)
+    disp(['程序运行时间：',num2str(time_cost),'s'])
     
     %% 性能统计
     QoS = calQosPerformance( Queue, par.MAC);
     
     %% 展示性能表现
     plotQoSPerformance(QoS, Queue);
-    plotAllocateResults(sta_Allocate);
-    
+    plotAllocateResults( pos_seq, AllocatePowerRate, sta_AllocateSlots);
    
