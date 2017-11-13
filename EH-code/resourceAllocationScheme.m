@@ -1,4 +1,4 @@
-function [ Allocate ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_slots, EH_last_status, EH_P_tran, parameters)
+function [ Allocate, optimize_problems ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_slots, EH_last_status, EH_P_tran, parameters)
 %resourceAllocationScheme 集结器端资源分配策略
 %输入：
 %   cur_pos 当前身体姿势
@@ -10,10 +10,12 @@ function [ Allocate ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_sl
 %   信道参数，Constraints 服务质量约束， EnergyHarvest 能量采集相关参数
 %输出：
 %   Allocate 分配给各个节点的资源：[power,src_rate,slot_ind]
+%   optimize_problems 优化分配功率和优化分配时隙中的问题，0表示没有问题[opt_power_problem,opt_slot_problem]
  
     %% 初始化参数
     % parameters = par
     % cur_miu_th = miu_th(cur_pos,:);
+    optimize_problems = zeros(1,2);
     num_nodes = parameters.Nodes.Num; %节点个数
     tran_rate = parameters.Nodes.tranRate(1); %这里假设所有节点的传输速率都是一样的
     src_rate_max = zeros(1,num_nodes); %能量采集所能传输的最大数据速率
@@ -27,7 +29,7 @@ function [ Allocate ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_sl
     cur_miu_th = miu_th(cur_pos,:);
     P_miu_th = parameters.Nodes.tranRate.*power(10,(cur_miu_th+parameters.Nodes.PL_Fr+parameters.Channel.PNoise)/10)./parameters.Channel.Bandwidth; %计算满足丢包率的等效门限传输功率
     
-    %% 优化问题来实现传输功率的分配以及能量采集到能量能传输的数据速率
+    %% 优化问题来实现传输功率的分配以及能量采集到能量能传输的数据速率:这部分可以离线处理
     tmp_v_sdp = sdpvar(1,num_nodes); %中间变量，v=1/((1+a)Ptx+Pct) , Ptx = (1/v-Pct)/(1+a)
     src_rate_sdp = sdpvar(1,num_nodes); %给各个节点分配的数据源速率
     Cons = [];
@@ -38,11 +40,18 @@ function [ Allocate ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_sl
        Cons = [Cons, 1/((1+parameters.PHY.E_a)*parameters.PHY.P_min+parameters.PHY.E_Pct) >=tmp_v_sdp(ind_node)>=1/((1+parameters.PHY.E_a)*parameters.PHY.P_max+parameters.PHY.E_Pct)];
     end
     Obj =  -sum(src_rate_sdp);
-    Opti_results = optimize(Cons,Obj);
+   % Ops = sdpsettings('verbose',1,'solver','fmincon');
+    Opti_results_power = optimize(Cons,Obj);
+    optimize_problems(1,1) = Opti_results_power.problem;
+    if Opti_results_power.problem == 0
+        disp('************* Success: success allocate power ****************')
+    else
+        disp('************* Error: falied allocate power ****************')
+    end
     total_src_rate = value(sum(src_rate_sdp));
-    tran_power=(1./value(tmp_v_sdp)-parameters.PHY.E_Pct)./(1+parameters.PHY.E_a)
+    tran_power=(1./value(tmp_v_sdp)-parameters.PHY.E_Pct)./(1+parameters.PHY.E_a);
     src_rate_max=value(src_rate_sdp);
-    
+ 
     %% 确定数据速率
     src_rate = min(parameters.Nodes.Nor_SrcRates, src_rate_max);
     
@@ -59,14 +68,12 @@ function [ Allocate ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_sl
     end
     % 根据平均位置进行节点排序
     [tmp_values, order_nodes] = sort(average_location_nodes,'ascend'); 
-     
-    
+
     %% 优化分配各个节点的时隙
     g_sdp = intvar(1,num_nodes); %节点分配时隙位置与普通位置之间的间隔时隙数
     n_sdp = intvar(1,num_nodes); %分配给节点的时隙数
     Cons = [];
-    Obj1 = 0;
-    Obj2 = 0;
+    Obj = 0;
     %确定目标函数
     before_slots = {};
     for ind_node =1:num_nodes 
@@ -79,11 +86,8 @@ function [ Allocate ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_sl
         before_slots{1,ind_node} = tmp_obj; 
     end
     for ind_node =1:num_nodes 
-        Obj1 =  Obj1 + (num_nodes + 1 - order_nodes(ind_node))*g_sdp(1,ind_node)+ (num_nodes - order_nodes(ind_node))*n_sdp(1,ind_node);
-        Obj2 = Obj2 +  before_slots{1,ind_node} - average_location_nodes(1,ind_node);
+        Obj = Obj +  before_slots{1,ind_node} - average_location_nodes(1,ind_node);
     end
-    Obj1 = Obj1 - sum(average_location_nodes);
-    
     
     %确定约束函数
     for ind_node =1:num_nodes
@@ -91,12 +95,26 @@ function [ Allocate ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_sl
         Cons = [Cons, n_sdp(1,ind_node)>=0, g_sdp(1,ind_node)>=0];
     end
     Cons = [Cons, sum(n_sdp+g_sdp)<=parameters.MAC.N_Slot];
-    Ops = sdpsettings('verbose',1,'solver','cplex');
-    Opti_results = optimize(Cons,-Obj1,Ops)
-    value(g_sdp)
-    value(n_sdp)
-    
-    assign(g_sdp,[0,0,0,0,0])
-    assign(g_sdp,[0,0,0,0,0])
+    Ops = sdpsettings('verbose',0,'solver','cplex');
+    Opti_results_slot = optimize(Cons,-Obj,Ops); 
+    optimize_problems(1,1) = Opti_results_slot.problem;
+    if Opti_results_slot.problem == 0
+        disp('************* Success: success allocate power ****************')
+    else
+        disp('************* Error: falied allocate power ****************')
+    end
+    % 所分配的资源
+    for ind_node =1:num_nodes
+        Allocate(ind_node).power = tran_power(1,ind_node);
+        Allocate(ind_node).src_rate = src_rate(1,ind_node);
+        begin_ind = value(before_slots{1,ind_node})+1;
+        end_ind = value(before_slots{1,ind_node}) + value(n_sdp(1,ind_node));
+        if end_ind > parameters.MAC.N_Slot
+            disp(['error: max allocated num of slots exceed the MAC.N_slot'])
+        end
+        disp(strcat(['(ind_node,begin_slot,end_slot):',num2str(ind_node),',',num2str(begin_ind),',',num2str(end_ind)]))
+        Allocate(ind_node).slot =  zeros(1, parameters.MAC.N_Slot);
+        Allocate(ind_node).slot(1,begin_ind:end_ind) = 1;        
+    end
 end
 

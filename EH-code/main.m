@@ -52,6 +52,8 @@
     %% 循环统计分析
     sta_last_EH_status = [];
     sta_re_num_slots = [];
+    sta_Allocate = {}; %统计分配的结果
+    sta_optimize_problems = []; %统计每一帧优化分配的结果
     last_end_slot_ind = ones(1,par.Nodes.Num)*par.MAC.N_Slot; %上一超帧分配时隙的结束位置,相对位置
     for ind_frame = 1:N_Frame %对超帧进行遍历
         cur_pos = pos_seq(ind_frame); %当前节点的身子姿势 
@@ -74,18 +76,21 @@
         sta_re_num_slots = [sta_re_num_slots ; re_num_slots];
         % 优化资源分配
         cur_miu_th = miu_th(cur_pos,:);
-
+        [ Allocate, optimize_problems ] = resourceAllocationScheme( cur_pos, cur_miu_th, re_num_slots, EH_last_status, EH_P_tran, par);
+        sta_optimize_problems = [sta_optimize_problems; optimize_problems];
+        sta_Allocate{1,ind_frame}= Allocate;
+        
         %% 遍历各个节点的数据包传输
         for ind_node = 1:par.Nodes.Num %对各个节点进行遍历
             cur_shadow = shadow_seq(ind_node,((ind_frame-1)*par.MAC.N_Slot+1):(ind_frame*par.MAC.N_Slot)); %当前期间的阴影衰落的值
             %% 更新参数
             % 随机种子，所有节点在不同超帧的随机种子都不同
             rand_seed = rand_state*par.Nodes.Num*N_Frame+ (ind_node-1)*N_Frame+(ind_frame-1) ;
-            % 先使用固定的资源分配来编写节点性能统计函数
-            Allocate(ind_node).power = par.PHY.P_min;
-            Allocate(ind_node).src_rate = par.Nodes.Nor_SrcRates(ind_node);
-            Allocate(ind_node).slot = zeros(1, par.MAC.N_Slot); %这里用来测试，直接将所有时隙分配给节点
-            Allocate(ind_node).slot(1,20:40) =1;
+% % %             % 先使用固定的资源分配来编写节点性能统计函数
+% % %             Allocate(ind_node).power = par.PHY.P_min;
+% % %             Allocate(ind_node).src_rate = par.Nodes.Nor_SrcRates(ind_node);
+% % %             Allocate(ind_node).slot = zeros(1, par.MAC.N_Slot); %这里用来测试，直接将所有时隙分配给节点
+% % %             Allocate(ind_node).slot(1,20:40) =1;
             % 模拟各个节点的数据包传输
             [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame(ind_frame, cur_shadow, last_end_slot_ind(ind_node), Allocate(ind_node), Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
             
