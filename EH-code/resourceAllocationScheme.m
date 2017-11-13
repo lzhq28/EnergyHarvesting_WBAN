@@ -26,7 +26,6 @@ function [ Allocate, optimize_problems ] = resourceAllocationScheme( cur_pos, cu
     for ind_node= 1:num_nodes
         EH_P_on(1,ind_node) =  parameters.EnergyHarvest.EH_P_state{cur_pos,ind_node}(1);
     end
-    cur_miu_th = miu_th(cur_pos,:);
     P_miu_th = parameters.Nodes.tranRate.*power(10,(cur_miu_th+parameters.Nodes.PL_Fr+parameters.Channel.PNoise)/10)./parameters.Channel.Bandwidth; %计算满足丢包率的等效门限传输功率
     
     %% 优化问题来实现传输功率的分配以及能量采集到能量能传输的数据速率:这部分可以离线处理
@@ -49,8 +48,8 @@ function [ Allocate, optimize_problems ] = resourceAllocationScheme( cur_pos, cu
         disp('************* Error: falied allocate power ****************')
     end
     total_src_rate = value(sum(src_rate_sdp));
-    tran_power=(1./value(tmp_v_sdp)-parameters.PHY.E_Pct)./(1+parameters.PHY.E_a);
-    src_rate_max=value(src_rate_sdp);
+    tran_power=(1./value(tmp_v_sdp)-parameters.PHY.E_Pct)./(1+parameters.PHY.E_a)
+    src_rate_max=value(src_rate_sdp)
  
     %% 确定数据速率
     src_rate = min(parameters.Nodes.Nor_SrcRates, src_rate_max);
@@ -68,13 +67,12 @@ function [ Allocate, optimize_problems ] = resourceAllocationScheme( cur_pos, cu
     end
     % 根据平均位置进行节点排序
     [tmp_values, order_nodes] = sort(average_location_nodes,'ascend'); 
-
-    %% 优化分配各个节点的时隙
+    % 定义基本变量
     g_sdp = intvar(1,num_nodes); %节点分配时隙位置与普通位置之间的间隔时隙数
     n_sdp = intvar(1,num_nodes); %分配给节点的时隙数
     Cons = [];
     Obj = 0;
-    %确定目标函数
+    %确定每个时隙的初始位置
     before_slots = {};
     for ind_node =1:num_nodes 
         tmp_obj =0;
@@ -85,35 +83,43 @@ function [ Allocate, optimize_problems ] = resourceAllocationScheme( cur_pos, cu
         tmp_obj = tmp_obj + g_sdp(1,ind_node); 
         before_slots{1,ind_node} = tmp_obj; 
     end
+    %确定约束函数
+    t_slot = parameters.MAC.T_Slot;
+    P_th = parameters.Constraints.Nor_PLR_th;
+    for ind_node =1:num_nodes
+        % Cons = [Cons, ceil(tran_rate*n_sdp(1,ind_node)*t_slot/(parameters.Nodes.packet_length(1,ind_node)))>= ceil(src_rate(1,ind_node)*(re_num_slots(ind_node)+before_slots{1,ind_node})*t_slot/(P_th*parameters.Nodes.packet_length(1,ind_node)))];
+        sense_time = (re_num_slots(ind_node)+before_slots{1,ind_node} + n_sdp(1,ind_node))*t_slot - parameters.Nodes.packet_length(1,ind_node)/tran_rate;
+        Cons = [Cons, tran_rate*n_sdp(1,ind_node)*t_slot/(parameters.Nodes.packet_length(1,ind_node))>= (src_rate(1,ind_node)*sense_time/((1-P_th)*parameters.Nodes.packet_length(1,ind_node))+1)];
+        Cons = [Cons, n_sdp(1,ind_node)>=1, g_sdp(1,ind_node)>=0];
+    end
+    %确定目标函数
     for ind_node =1:num_nodes 
         Obj = Obj +  before_slots{1,ind_node} - average_location_nodes(1,ind_node);
     end
-    
-    %确定约束函数
-    for ind_node =1:num_nodes
-        Cons = [Cons, tran_rate*n_sdp(1,ind_node)>=src_rate(1,ind_node)*(re_num_slots(ind_node)+before_slots{1,ind_node})];
-        Cons = [Cons, n_sdp(1,ind_node)>=0, g_sdp(1,ind_node)>=0];
-    end
     Cons = [Cons, sum(n_sdp+g_sdp)<=parameters.MAC.N_Slot];
-    Ops = sdpsettings('verbose',0,'solver','cplex');
+    Ops = sdpsettings('verbose',1,'solver','cplex');
     Opti_results_slot = optimize(Cons,-Obj,Ops); 
-    optimize_problems(1,1) = Opti_results_slot.problem;
+    optimize_problems(1,1) = Opti_results_slot.problem; 
     if Opti_results_slot.problem == 0
-        disp('************* Success: success allocate power ****************')
+        disp('************* Success: success allocate slot ****************')
     else
-        disp('************* Error: falied allocate power ****************')
+        disp('************* Error: falied allocate slot ****************')
     end
+%     value(g_sdp)
+%     value(n_sdp)
+%     check(Cons)
     % 所分配的资源
     for ind_node =1:num_nodes
         Allocate(ind_node).power = tran_power(1,ind_node);
         Allocate(ind_node).src_rate = src_rate(1,ind_node);
+        Allocate(ind_node).src_rate_max = src_rate_max(1,ind_node);
         begin_ind = value(before_slots{1,ind_node})+1;
         end_ind = value(before_slots{1,ind_node}) + value(n_sdp(1,ind_node));
         if end_ind > parameters.MAC.N_Slot
-            disp(['error: max allocated num of slots exceed the MAC.N_slot'])
+            disp(['error: max allocated num of slots exceed the MAC.N_slot']);
         end
-        disp(strcat(['(ind_node,begin_slot,end_slot):',num2str(ind_node),',',num2str(begin_ind),',',num2str(end_ind)]))
-        Allocate(ind_node).slot =  zeros(1, parameters.MAC.N_Slot);
+        disp(strcat(['(ind_node,begin_slot,end_slot):',num2str(ind_node),',',num2str(begin_ind),',',num2str(end_ind)]));
+        Allocate(ind_node).slot =  zeros(1,parameters.MAC.N_Slot);
         Allocate(ind_node).slot(1,begin_ind:end_ind) = 1;        
     end
 end

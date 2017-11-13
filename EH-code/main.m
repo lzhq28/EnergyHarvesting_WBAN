@@ -18,7 +18,7 @@
     rand_state = 1; %随机种子,建议从1开始的整数
     slot_or_frame_state =0; %阴影衰落是每个时隙不同，还是每个超帧不同，值为0表示每个时隙不同，值为1表示每个超帧不同
     pos_hold_time = 40*100; %每个姿势保持的时间，单位ms
-    N_Frame = 1000; %实验的总超帧数
+    N_Frame = 100; %实验的总超帧数
     ini_pos = 1; %初始化身体姿势为静止状态
     re_cal_miu_state = 0; %是否重新计算miu值，值为0表示不重新计算，而是从文件中读取，否则重新计算。
     precision = 0.0001; %在计算miu时的PLR与PLR_th之间的差值精度
@@ -34,7 +34,7 @@
     for ind_node = 1:par.Nodes.Num
         Queue(ind_node).tranQueue = []; %数据包传输队列，包含数据包传输的信息:[packetID, gen_frameID, t_gen_offset, tran_frameID, t_tran_offset, t_tran_cost, tran_power, tran_rate, tran_state]
         Queue(ind_node).arrivalQueue = []; %数据包达到队列， [pacektID,frameID,t_gen_offset,packetType]
-        Queue(ind_node).bufferQueue = [0,1,1,1e+7]; %缓存状态队列, [frameID, beginIndex, endIndex, residue_energy]
+        Queue(ind_node).bufferQueue = [0,1,1,0]; %缓存状态队列, [frameID, beginIndex, endIndex, residue_energy]
     end   
     Allocate ={}; %初始化资源分配
     Nodes={}; %初始化各个节点的基本信息
@@ -48,13 +48,13 @@
         Nodes(ind_node).tranRate = par.Nodes.tranRate(ind_node); % 固定传输速率
     end
      
-    
     %% 循环统计分析
     sta_last_EH_status = [];
     sta_re_num_slots = [];
     sta_Allocate = {}; %统计分配的结果
     sta_optimize_problems = []; %统计每一帧优化分配的结果
     last_end_slot_ind = ones(1,par.Nodes.Num)*par.MAC.N_Slot; %上一超帧分配时隙的结束位置,相对位置
+    ind_absolute_slots = zeros(1,par.Nodes.Num);%上一超帧分配时隙的末尾位置在所有时隙中的绝对索引
     for ind_frame = 1:N_Frame %对超帧进行遍历
         cur_pos = pos_seq(ind_frame); %当前节点的身子姿势 
         % 各个节点的基本信息
@@ -83,16 +83,14 @@
         %% 遍历各个节点的数据包传输
         for ind_node = 1:par.Nodes.Num %对各个节点进行遍历
             cur_shadow = shadow_seq(ind_node,((ind_frame-1)*par.MAC.N_Slot+1):(ind_frame*par.MAC.N_Slot)); %当前期间的阴影衰落的值
-            %% 更新参数
+            EH_begin_ind = ind_absolute_slots(ind_node)+1;
+            EH_end_ind = ind_frame*par.MAC.N_Slot;
+            cur_EH_collect = EH_collect_seq(ind_node, EH_begin_ind:EH_end_ind);
+          %% 更新参数
             % 随机种子，所有节点在不同超帧的随机种子都不同
-            rand_seed = rand_state*par.Nodes.Num*N_Frame+ (ind_node-1)*N_Frame+(ind_frame-1) ;
-% % %             % 先使用固定的资源分配来编写节点性能统计函数
-% % %             Allocate(ind_node).power = par.PHY.P_min;
-% % %             Allocate(ind_node).src_rate = par.Nodes.Nor_SrcRates(ind_node);
-% % %             Allocate(ind_node).slot = zeros(1, par.MAC.N_Slot); %这里用来测试，直接将所有时隙分配给节点
-% % %             Allocate(ind_node).slot(1,20:40) =1;
-            % 模拟各个节点的数据包传输
-            [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame(ind_frame, cur_shadow, last_end_slot_ind(ind_node), Allocate(ind_node), Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
+            rand_seed = rand_state*par.Nodes.Num*N_Frame+ (ind_node-1)*N_Frame+(ind_frame-1);
+            % 各个节点的数据包传输
+            [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame(ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind(ind_node), Allocate(ind_node), Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
             
         end
     end
@@ -102,6 +100,6 @@
     
     %% 展示性能表现
     plotQoSPerformance(QoS, Queue);
-    
+    plotAllocateResults(sta_Allocate);
     
    

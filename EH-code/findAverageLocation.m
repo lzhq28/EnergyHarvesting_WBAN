@@ -70,7 +70,7 @@ function [average_location] = findAverageLocation( cur_EH_last_status, cur_tran_
  
     ind = find(tmp_EH_cum>=energy_cost);
     average_location = ind(1);    
-    disp(strcat(['average_location:',num2str(average_location),',(energy_cost,EH_cum):',num2str(energy_cost),',',num2str(tmp_EH_cum(average_location))]))
+    %disp(strcat(['average_location:',num2str(average_location),',(energy_cost,EH_cum):',num2str(energy_cost),',',num2str(tmp_EH_cum(average_location))]));
  
 end
 

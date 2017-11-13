@@ -1,8 +1,9 @@
-function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPerFrame(cur_ind_frame, cur_shadow, last_end_slot_ind, Allocate, Node, MAC, Channel, Constraints, tranQueue, arrivalQueue, bufferQueue, rand_seed)
+function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPerFrame(cur_ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind, Allocate, Node, MAC, Channel, Constraints, tranQueue, arrivalQueue, bufferQueue, rand_seed)
 %nodeTranPerFrame 每个节点在所分配的资源的条件下的数据传输情况
 %输入：
 %   cur_ind_frame 当前超帧的索引号
 %   cur_shadow 当前节点在当前超帧各个时隙内的阴影衰落
+%   cur_EH_collect 从上一超帧分配时隙结束位置后的时隙开始该节点在各个时隙中的能量采集值
 %   last_end_slot_ind 上一超帧分配时隙的末尾位置
 %   tranQueue 数据包传输队列，包含数据包传输的信息
 %   arrivalQueue 数据包达到队列
@@ -30,9 +31,10 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         first_slot_ind = tmp_ind(1); %分配时隙的开始位置，用于计算各个时隙的丢包率
         end_slot_ind = tmp_ind(end); %所分配时隙的结束位置  
     end       
+    
     % 数据包时间：生成时间和传输时间
     tran_time_packet = Node.packet_length/Node.tranRate; %传输一个包所需要的时间
-    gen_time_packet = Node.packet_length/Allocate.src_rate ; %生成一个包所需要的时间
+    gen_time_packet = Node.packet_length/Allocate.src_rate; %生成一个包所需要的时间
     
     %% 分析数据包到达队列,这里只统计正常包            
     % 正常数据包
@@ -56,7 +58,7 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
     ind_begin_buffer = bufferQueue(end,2); %读取上一超帧所剩的
     residue_energy = bufferQueue(end,4); %读取上一超帧所剩的能量
     tmp_ind_begin_buffer = ind_begin_buffer;
-    if (ind_end_buffer-ind_begin_buffer) > Node.num_packet_buffer %判断当前队列中的数据包是否大于缓存的最大数，如果大于将。
+    if (ind_end_buffer-ind_begin_buffer) > Node.num_packet_buffer %判断当前队列中的数据包是否大于缓存的最大数。
         ind_begin_buffer = ind_end_buffer - Node.num_packet_buffer + 1;
         tmp_range = tmp_ind_begin_buffer:(ind_begin_buffer-1);
         tmp_len = size(tmp_range,2);
@@ -84,8 +86,11 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
     
     % 如果没有分配时隙，将跳出循环
     if sum(Allocate.slot)<=0
+        sum_EH_collect = sum(cur_EH_collect); %这段时间内采集到的能量
+        residue_energy = residue_energy + sum_EH_collect; %更新剩余能量
         bufferQueue = [bufferQueue;cur_ind_frame,ind_begin_buffer,ind_end_buffer,residue_energy]; %更新缓存队列
-        last_end_slot_ind = end_slot_ind; %时隙末尾位置
+        last_end_slot_ind = end_slot_ind; %时隙末尾位置   
+        disp(['Warn：没有分配时隙，跳出传输过程。'])
         return;%因为没有分配时隙发送数据，因此不能传输数据包，将直接返回
     end
    %% 分析数据包传输队列
@@ -97,15 +102,25 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         % return; %移到函数中将取消该注释，因为没有额外的时隙发送数据，因此不能传输数据包，将直接返回
     end
     tmp_tran_packets = [];
+    % 传输前先更新能量
+    end_offset = first_slot_ind - 1 + MAC.N_Slot - last_end_slot_ind;
+    sum_EH_collect = sum(cur_EH_collect(1,1:end_offset)); %这段时间内采集到的能量
+    residue_energy = residue_energy + sum_EH_collect; %更新剩余能量
+    cur_ind_slot = first_slot_ind; %初始化当前时刻的时隙索引
     for ind_tran = 1:tran_times
         cur_ind_slot = ceil(((ind_tran-1)*tran_time_packet+ first_slot_ind*MAC.T_Slot)/MAC.T_Slot);
         % 判断缓存中是否还有数据包
         if ind_begin_buffer > ind_end_buffer
             break; %当缓存中没有数据包时将跳出循环
         end
-        % 判断是否有能量传输数据
-        if residue_energy < 0
-            break; % 如果没有能量将会停止传输数据包
+        % 更新剩余能量     
+        cur_offset = cur_ind_slot + MAC.N_Slot - last_end_slot_ind;
+        sum_EH_collect = sum(cur_EH_collect(1,(end_offset+1):(cur_offset-1))); %这段时间内采集到的能量
+        end_offset = cur_offset-1;
+        residue_energy = residue_energy + sum_EH_collect; %更新剩余能量
+        % 判断剩余能量传输数据是否足够传输一个数据包
+        if residue_energy < Allocate.power * tran_time_packet
+            continue; % 如果没有能量将会停止此次传输，继续采集能量，等待下次发送数据
         end
         %判断数据包是否传输成功,并保存传输信息
         if cur_PLR(1,cur_ind_slot)<=rand_PLR(ind_tran) % 数据包传输成功
@@ -118,6 +133,8 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         end
         residue_energy = residue_energy - Allocate.power * tran_time_packet; % 更新剩余能量
     end
+    sum_EH_collect = sum(cur_EH_collect(1,(end_offset+1):(end_slot_ind + MAC.N_Slot - last_end_slot_ind))); %这段时间内采集到的能量
+    residue_energy = residue_energy + sum_EH_collect; %更新剩余能量
     tranQueue = [tranQueue; tmp_tran_packets];
     bufferQueue = [bufferQueue;cur_ind_frame,ind_begin_buffer,ind_end_buffer,residue_energy]; %更新缓存队列
     last_end_slot_ind = end_slot_ind; %时隙末尾位置
