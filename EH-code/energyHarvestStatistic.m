@@ -1,4 +1,4 @@
-function [ EH_status_seq, EH_collect_seq ] = energyHarvestStatistic( pos_seq, EnergyHarvest, MAC, rand_state)
+function [ EH_status_seq, EH_collect_seq, EH_P_tran] = energyHarvestStatistic( pos_seq, EnergyHarvest, MAC, rand_state)
 %energyHarvestStatistic 此处显示有关此函数的摘要
 % 输入
 %   pos_seq 各个超帧下的身体姿势状态
@@ -6,7 +6,9 @@ function [ EH_status_seq, EH_collect_seq ] = energyHarvestStatistic( pos_seq, En
 %   MAC MAC相关参数，包含超帧长度以及时隙长度等
 %   rand_state 随机种子
 % 输出
-%   EH_seq 在能量采集下的
+%   EH_status_seq 各个节点在各个时隙下的能量采集状态，1表示ON状态，2表示OFF状态
+%   EH_collect_seq 各个节点在各个时隙下采集到的能量
+%   EH_P_tran 各个节点在各个身体姿势下的能量采集转移矩阵
 
     % EnergyHarvest = par.EnergyHarvest
     % MAC = par.MAC
@@ -16,7 +18,7 @@ function [ EH_status_seq, EH_collect_seq ] = energyHarvestStatistic( pos_seq, En
     % 获取各个身体姿势下的能量采集状态转移矩阵Ptran, Ptran,ij表示状态i转移到状态j的概率
     EH_P_tran = {}; %各个身子姿势下的能量ON和OFF的状态转移矩阵，Pij表示状态i转移到状态j的概率
     EH_ini_state = ones(1,num_node); %初始状态为1
-    k_cor = EnergyHarvest.t_cor_EH/MAC.T_Slot; %相关时隙数，及同一个能量采集状态所维持的时隙数
+    k_cor = EnergyHarvest.k_cor;%ceil(EnergyHarvest.t_cor_EH/MAC.T_Slot); %相关时隙数，及同一个能量采集状态所维持的时隙数
     for ind_pos = 1:num_pos
         for ind_node = 1:num_node
             EH_P_tran{ind_pos,ind_node} = tranMatrix(EnergyHarvest.EH_P_ini{ind_pos,ind_node},EnergyHarvest.EH_P_state{ind_pos,ind_node});

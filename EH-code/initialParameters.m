@@ -13,7 +13,7 @@ function parameters = initialParameters()
     PHY.RateSet = [121.4, 242.8, 485.6, 971.2]; % 传输速率集
     % 能耗模型参数：Econ=(1+E_a)*Ptx*t+Pct*t
     PHY.E_a = 2.4; % 电路能耗与发射能耗相关参数
-    PHY.E_Pct = 0.5*0.001; % 固定的电路能耗，0.5uw,0.5*0.001mw,单位为mw
+    PHY.E_Pct = 50*0.001; % 固定的电路能耗，0.5uw,0.5*0.001mw,单位为mw
     parameters.PHY = PHY; % 能量模型相关参数
    
    %% MAC
@@ -45,7 +45,7 @@ function parameters = initialParameters()
                     [5.7060	7.5404	3.8987	3.5210	1.9647]]; % 注意：这个应该需要进行调整，因为不同姿势下的信道参数相差不大
     Nodes.Nor_SrcRates = [40,68,34,50,35]; % 各个节点的正常包的数据速率，单位kbps
     Nodes.Emer_SrcRates = [10,10,10,10,10]; % 各个节点的紧急包的的数据速率,单位kbps
-    Nodes.tranRates = repmat(parameters.PHY.RateSet(3), 1, Nodes.Num); % 配置的节点传输速率
+    Nodes.tranRate = repmat(parameters.PHY.RateSet(3), 1, Nodes.Num); % 配置的节点传输速率
     Nodes.packet_length = repmat(500,1,Nodes.Num);
     Nodes.buffer_size = repmat(100*1000,1,Nodes.Num); %缓存的大小，单位bit
     Nodes.num_packet_buffer = floor(Nodes.buffer_size./Nodes.packet_length); %节点缓存所能保存包的数量
@@ -61,7 +61,7 @@ function parameters = initialParameters()
     %% Constraints
     Constraints.Nor_Delay_th = 500; % 普通包时延门限，单位ms
     Constraints.Emer_Delay_th = 400; % 紧急包时延门限，单位ms
-    Constraints.Nor_PLR_th = 0.1; %普通包丢包率门限
+    Constraints.Nor_PLR_th = 0.05; %普通包丢包率门限
     Constraints.Emer_PLR_th = 0.05; %紧急包丢包率门限
     parameters.Constraints = Constraints;
     
@@ -79,6 +79,7 @@ function parameters = initialParameters()
                                 [0.4,0.35;0.6,0.65],[0.42,0.38;0.58,0.62],[0.4,0.35;0.6,0.65], [0.42,0.38;0.58,0.62], [0.65,0.58;0.35,0.42],
                                 [0.45,0.35;0.55,0.65],[0.53,0.45;0.47,0.55],[0.47,0.50;0.53,0.5],[0.65,0.58;0.35,0.42],[0.78,0.82;0.22,0.18]}; %初始化状态转移矩阵
     EnergyHarvest.t_cor_EH = 10; % 单个能量采集状态所维持的时间，一般设置为T_Slot的整数倍,单位ms
+    EnergyHarvest.k_cor = ceil(EnergyHarvest.t_cor_EH/MAC.T_Slot); %相关时隙数，及同一个能量采集状态所维持的时隙数
     parameters.EnergyHarvest = EnergyHarvest;
 
     

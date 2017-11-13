@@ -14,6 +14,7 @@ function [ QoS ] = calQosPerformance( Queue, MAC)
         ind_overflow = find(Queue(ind_node).tranQueue(:,9) ==4);
         suc_num = Queue(ind_node).tranQueue(end,1);
         % 计算丢包率：时延超限丢包和排队溢出丢包以及总的丢包
+        QoS(ind_node).PLR_pathloss = size(ind_pathloss,1)/(suc_num+size(ind_pathloss,1));
         QoS(ind_node).PLR_overflow = size(ind_overflow,1)/suc_num;
         QoS(ind_node).PLR_overdelay = size(ind_overdelay,1)/suc_num;
         QoS(ind_node).PLR_ave = (size(ind_overflow,1)+size(ind_overdelay,1))/suc_num;

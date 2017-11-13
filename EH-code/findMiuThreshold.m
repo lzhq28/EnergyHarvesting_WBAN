@@ -16,6 +16,8 @@ function [ miu_th ] = findMiuThreshold(sigma, packet_length, PLR_th, Channel, pr
         else
             break;
         end
+    end
+    while 1
         [PLR_ave,P_sum] = calAvePLR(sigma, miu_dB_min, packet_length, Channel.BCH_n); %计算平局丢包率
         if(PLR_ave<PLR_th) %需要减小左边界
             miu_dB_min = miu_dB_min - 10;
