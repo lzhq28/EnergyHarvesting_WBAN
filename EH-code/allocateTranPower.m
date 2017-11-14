@@ -24,14 +24,15 @@ function [ AllocatePowerRate, opti_problems ] = allocateTranPower( miu_th, param
         end
         P_miu_th = parameters.Nodes.tranRate.*power(10,(miu_th(cur_pos,:)+parameters.Nodes.PL_Fr+parameters.Channel.PNoise)/10)./parameters.Channel.Bandwidth; %计算满足丢包率的等效门限传输功率
         %% 优化问题来实现传输功率的分配以及能量采集到能量能传输的数据速率:这部分可以离线处理
-        tmp_v_sdp = sdpvar(1,num_nodes); %中间变量，v=1/((1+a)Ptx+Pct) , Ptx = (1/v-Pct)/(1+a)
+        v_sdp = sdpvar(1,num_nodes); %中间变量，v=1/((1+a)Ptx+Pct) , Ptx = (1/v-Pct)/(1+a)
         src_rate_sdp = sdpvar(1,num_nodes); %给各个节点分配的数据源速率
+        PLR_th = parameters.Constraints.Nor_PLR_th;
         Cons = [];
         for ind_node = 1:num_nodes      
-           Cons = [Cons, EH_P_on(1,ind_node)*EH_pos_min(1,ind_node)*tran_rate>=src_rate_sdp(1,ind_node)/tmp_v_sdp(1,ind_node)]; 
+           Cons = [Cons, EH_P_on(1,ind_node)*((EH_pos_min(1,ind_node)+EH_pos_max(1,ind_node))/2)*tran_rate>=src_rate_sdp(1,ind_node)/(v_sdp(1,ind_node)*(1-PLR_th))]; 
            Cons = [Cons, src_rate_sdp(1,ind_node)>=0];
-           Cons = [Cons, tmp_v_sdp(ind_node)<=1./((1+parameters.PHY.E_a)*P_miu_th(ind_node)+parameters.PHY.E_Pct)];
-           Cons = [Cons, 1/((1+parameters.PHY.E_a)*parameters.PHY.P_min+parameters.PHY.E_Pct) >=tmp_v_sdp(ind_node)>=1/((1+parameters.PHY.E_a)*parameters.PHY.P_max+parameters.PHY.E_Pct)];
+           Cons = [Cons, v_sdp(ind_node)<=1./((1+parameters.PHY.E_a)*P_miu_th(ind_node)+parameters.PHY.E_Pct)];
+           Cons = [Cons, 1/((1+parameters.PHY.E_a)*parameters.PHY.P_min+parameters.PHY.E_Pct) >=v_sdp(ind_node)>=1/((1+parameters.PHY.E_a)*parameters.PHY.P_max+parameters.PHY.E_Pct)];
         end
         Obj =  -sum(src_rate_sdp);
        % Ops = sdpsettings('verbose',1,'solver','fmincon');
@@ -43,13 +44,11 @@ function [ AllocatePowerRate, opti_problems ] = allocateTranPower( miu_th, param
             disp('************* Error: falied allocate power ****************')
         end
         total_src_rate = value(sum(src_rate_sdp));
-        tran_power=(1./value(tmp_v_sdp)-parameters.PHY.E_Pct)./(1+parameters.PHY.E_a)
+        tran_power=(1./value(v_sdp)-parameters.PHY.E_Pct)./(1+parameters.PHY.E_a)
         src_rate_max=value(src_rate_sdp)
-        %% 确定数据速率
+        %% 确定数据速率,将数据速率限制在[min_src_rate,normal_src_rate]之间
         src_rate = min(parameters.Nodes.Nor_SrcRates, src_rate_max);
-        src_rate = max(src_rate, parameters.Nodes.Nor_SrcRates);
-        
-        
+        src_rate = max(src_rate, parameters.Nodes.min_SrcRates);
         tmp_allocate={};
         for ind_node =1:num_nodes
             tmp_allocate{1,ind_node}.power = tran_power(1,ind_node);
