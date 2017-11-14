@@ -34,7 +34,6 @@ function plotQoSPerformance( QoS, Queue )
         xlabel('Index of superframe')
         ylabel('Number of packets in buffer')
         title(strcat(['Node',num2str(ind_node)]))
-    end
-
+    end    
 end
 

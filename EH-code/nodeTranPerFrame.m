@@ -31,19 +31,17 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         first_slot_ind = tmp_ind(1); %分配时隙的开始位置，用于计算各个时隙的丢包率
         end_slot_ind = tmp_ind(end); %所分配时隙的结束位置  
     end       
-    
     % 数据包时间：生成时间和传输时间
     tran_time_packet = Node.packet_length/Node.tranRate; %传输一个包所需要的时间
     gen_time_packet = Node.packet_length/Allocate.src_rate; %生成一个包所需要的时间
     
     %% 分析数据包到达队列,这里只统计正常包            
-    % 正常数据包
-    cur_arrival_num_packets = ceil(Allocate.src_rate *(end_slot_ind + MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot/Node.packet_length);
+    cur_arrival_num_packets = ceil(Allocate.src_rate * (end_slot_ind + MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot/Node.packet_length);
     tmp_arrival_Queue = zeros(cur_arrival_num_packets,4);
     tmp_arrival_Queue(:,1) = ((1:cur_arrival_num_packets) + size(arrivalQueue,1))'; % 数据包ID-packetID
     last_time_frame = (MAC.N_Slot - last_end_slot_ind)*MAC.T_Slot; %上一超帧所剩余的时间
     for tmp_ind = 1:cur_arrival_num_packets 
-        cur_sum_time = (gen_time_packet * tmp_ind); %要产生当前包所积累的时间
+        cur_sum_time = min((gen_time_packet * tmp_ind),(end_slot_ind + MAC.N_Slot - last_end_slot_ind - tran_time_packet)*MAC.T_Slot); %要产生当前包所积累的时间     
         next_frame_or_not =(cur_sum_time-last_time_frame)>0; % 该包是否在当前帧产生
         tmp_arrival_Queue(tmp_ind,2) = cur_ind_frame - 1 + next_frame_or_not; % 超帧ID-frameID
         tmp_arrival_Queue(tmp_ind,3) = cur_sum_time + last_end_slot_ind*MAC.T_Slot - next_frame_or_not * MAC.T_Frame; % 数据包在当前超帧中产生的时间(或偏移量)-t_gen_offset

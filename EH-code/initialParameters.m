@@ -1,6 +1,10 @@
 %%%%%%%%%%%%%%%%%% 初始化参数 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parameters = initialParameters()
-   
+function parameters = initialParameters(deltaPL)
+% 
+%输入
+%   deltaPL 改变信道衰落中阴影衰落的均值，用来模拟环境的变化
+%输出
+%   parameters 系统参数
    %% PHY
     % 传输功率
     PHY.P_dB = -30:3:0; % 传输功率的取值范围，单位dBm
@@ -39,11 +43,12 @@ function parameters = initialParameters()
     Nodes.PL_n = [3.11,3.23,3.35,3.45,3.11]; % 节点路径损耗系数
     Nodes.PL_P0 = [35.2,41.2,32.2,32.5,35.2];%参考位置（10cm）出的路径损耗值
     Nodes.PL_d0 =10; % 参考距离为10cm，单位cm
-    Nodes.PL_Fr = Nodes.PL_P0 + 10.*Nodes.PL_n.*log10(Nodes.Distance./Nodes.PL_d0); % PL = PL_Fr+X
+    Nodes.PL_Fr = Nodes.PL_P0 + 10.*Nodes.PL_n.*log10(Nodes.Distance./Nodes.PL_d0)+ deltaPL; % PL = PL_Fr+X+deltaPL
     Nodes.Sigma = [[6.0475,	4.8124,	5.1064,	2.6247,	2.2669],
                     [4.9483, 7.2704, 4.2025,3.0444,	2.5985],
                     [5.7060	7.5404	3.8987	3.5210	1.9647]]; % 注意：这个应该需要进行调整，因为不同姿势下的信道参数相差不大
     Nodes.Nor_SrcRates = [40,68,34,50,35]; % 各个节点的正常包的数据速率，单位kbps
+    Nodes.min_SrcRates = [10,20,8,10,8]; %各个节点的最小数据速率，小于该数据速率表示数据无效
     Nodes.Emer_SrcRates = [10,10,10,10,10]; % 各个节点的紧急包的的数据速率,单位kbps
     Nodes.tranRate = repmat(parameters.PHY.RateSet(3), 1, Nodes.Num); % 配置的节点传输速率
     Nodes.packet_length = repmat(500,1,Nodes.Num);

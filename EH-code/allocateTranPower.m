@@ -47,6 +47,9 @@ function [ AllocatePowerRate, opti_problems ] = allocateTranPower( miu_th, param
         src_rate_max=value(src_rate_sdp)
         %% 确定数据速率
         src_rate = min(parameters.Nodes.Nor_SrcRates, src_rate_max);
+        src_rate = max(src_rate, parameters.Nodes.Nor_SrcRates);
+        
+        
         tmp_allocate={};
         for ind_node =1:num_nodes
             tmp_allocate{1,ind_node}.power = tran_power(1,ind_node);

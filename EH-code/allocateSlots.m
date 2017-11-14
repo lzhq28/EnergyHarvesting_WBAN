@@ -57,11 +57,11 @@ function [  AllocateSlots, opti_problem ] = allocateSlots(cur_pos, allocatePower
         Obj = Obj +  before_slots{1,ind_node} - average_location_nodes(1,ind_node);
     end
     Cons = [Cons, sum(n_sdp+g_sdp)<=parameters.MAC.N_Slot];
-    Ops = sdpsettings('verbose',1,'solver','cplex');
+    Ops = sdpsettings('verbose',0,'solver','cplex');
     Opti_results_slot = optimize(Cons,-Obj,Ops); 
     opti_problem = Opti_results_slot.problem; 
     if Opti_results_slot.problem == 0
-        disp('************* Success: success allocate slot ****************')
+        %disp('************* Success: success allocate slot ****************')
     else
         disp('************* Error: falied allocate slot ****************')
     end
@@ -73,7 +73,7 @@ function [  AllocateSlots, opti_problem ] = allocateSlots(cur_pos, allocatePower
         if end_ind > parameters.MAC.N_Slot
             disp(['error: max allocated num of slots exceed the MAC.N_slot']);
         end
-        disp(strcat(['(ind_node,begin_slot,end_slot):',num2str(ind_node),',',num2str(begin_ind),',',num2str(end_ind)]));
+        %disp(strcat(['(ind_node,begin_slot,end_slot):',num2str(ind_node),',',num2str(begin_ind),',',num2str(end_ind)]));
         AllocateSlots(ind_node,begin_ind:end_ind) =  1;    
     end
 end

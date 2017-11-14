@@ -6,7 +6,8 @@ function [ miu_th ] = calEquPLRThreshold( Nodes, Channel, Constraints, precision
 %   Constraints 服务质量约束
 %   precision 搜索精度
 %   re_cal_miu_state  是否重新计算miu值，值为0表示不重新计算，而是从文件中读取，否则重新计算。
-    miu_path_name = 'miu_parameter.mat';
+    [ path_names ] = configurePaths( );
+    miu_path_name = path_names.miu_th;
     if exist(miu_path_name,'file') && ~re_cal_miu_state
         disp('************Load miu threshold from file************')
         load(miu_path_name); % 从文件中加载miu_th
