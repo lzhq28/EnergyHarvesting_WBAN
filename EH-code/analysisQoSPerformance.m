@@ -34,9 +34,11 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max)
         end
     end
     
-    %% 画出仿真结果
+    %% 配置颜色
     num_nodes = size(sta_Delay,1);
     color_set = linspecer(num_nodes);
+    
+    %% 画出仿真结果
     x_range = (0:deltaPL_ind_max-1)*deltaPL_step
     figure
     subplot(221)
@@ -83,12 +85,40 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max)
     legend('Node1','Node2','Node3','Node4','Node5')
     
     %% 展示性能表现
-    show_deltaPL_ind =1;
+    show_deltaPL_ind =10;
     deltaPL =  (show_deltaPL_ind -1)*deltaPL_step;
     par = initialParameters(deltaPL); %初始化系统参数
-    cur_Queue = load_data{1,deltaPL_ind}.Queue;
+    cur_Queue = load_data{1,show_deltaPL_ind}.Queue;
     cur_QoS = calQosPerformance( cur_Queue, par.MAC);
     plotQoSPerformance(cur_QoS , cur_Queue);
-    plotAllocateResults( load_data{1,deltaPL_ind}.pos_seq, load_data{1,deltaPL_ind}.AllocatePowerRate, load_data{1,deltaPL_ind}.sta_AllocateSlots);
+    plotAllocateResults( load_data{1,show_deltaPL_ind}.pos_seq, load_data{1,show_deltaPL_ind}.AllocatePowerRate, load_data{1,show_deltaPL_ind}.sta_AllocateSlots);
+    
+    % 展示不同节点的能量采集情况，与时隙对齐
+    cur_pos_seq = load_data{1,show_deltaPL_ind}.pos_seq;
+    cur_EH_status_seq = load_data{1,show_deltaPL_ind}.EH_status_seq;
+    cur_EH_collect_seq = load_data{1,show_deltaPL_ind}.EH_collect_seq;
+    % 画出在各个时隙的能量采集图
+    figure
+    subplot(211)
+    for ind_node = 1:num_nodes
+        hold on
+        plot(cur_EH_status_seq(ind_node,15000:15800),'-','linewidth',2,'color',color_set(ind_node,:))
+    end
+    xlabel('Index of slots')
+    ylabel('Energy Harvest Status (1:ON, 2:OFF)')
+    title('Energy Harvest Status (1:ON, 2:OFF)')
+    legend('Node1','Node2','Node3','Node4','Node5')
+    subplot(212)
+    for ind_node = 1:num_nodes
+        hold on
+        plot(cur_EH_collect_seq(ind_node,15000:15800),'-','linewidth',2,'color',color_set(ind_node,:))
+    end
+    grid on
+    xlabel('Index of slots')
+    ylabel('Collected energy in each slot (uJ)')
+    title('Collect energy in each slot')
+    legend('Node1','Node2','Node3','Node4','Node5')
+    
+    
 end
 
