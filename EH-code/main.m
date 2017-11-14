@@ -24,14 +24,14 @@
         rand_state = 1; %随机种子,建议从1开始的整数
         slot_or_frame_state =0; %阴影衰落是每个时隙不同，还是每个超帧不同，值为0表示每个时隙不同，值为1表示每个超帧不同
         pos_hold_time = 40*100; %每个姿势保持的时间，单位ms
-        N_Frame = 100; %实验的总超帧数
+        N_Frame = 1000; %实验的总超帧数
         ini_pos = 1; %初始化身体姿势为静止状态
         re_cal_miu_state = 0; %是否重新计算miu值，值为0表示不重新计算，而是从文件中读取，否则重新计算。
         precision = 0.0001; %在计算miu时的PLR与PLR_th之间的差值精度
         % 计算所有超帧的姿势序列和每个时隙的阴影衰落
         [shadow_seq, pos_seq] = shadowStatistic( N_Frame, ini_pos, pos_hold_time, par.Nodes, par.Postures, par.MAC, rand_state, slot_or_frame_state);
         % 初始化所有时隙的能量采集状态
-        [ EH_status_seq, EH_collect_seq, EH_P_tran ] = energyHarvestStatistic( pos_seq, par.EnergyHarvest, par.MAC, rand_state); 
+        [ EH_status_seq, EH_collect_seq, EH_P_tran] = energyHarvestStatistic( pos_seq, par.EnergyHarvest, par.MAC, rand_state); 
         % 计算PLR的等效门限：平均信噪比门限miu_th
         [ miu_th ] = calEquPLRThreshold( par.Nodes, par.Channel, par.Constraints, precision, re_cal_miu_state);
         % 优化分配不同身体姿势下的传输功率和数据速率
@@ -116,19 +116,12 @@
         disp(['deltaPL:',num2str(deltaPL),'程序运行时间：',num2str(time_cost),'s'])
         % 保存仿真结果
         path_names = configurePaths(); %各种路径名字
-        save_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);
+        save_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);   
         parsave(save_path_name, deltaPL, Queue, AllocatePowerRate, sta_AllocateSlots, shadow_seq, pos_seq, EH_status_seq, EH_collect_seq, EH_P_tran)
     end
-    
+
     %% 性能统计
-    deltaPL =  (deltaPL_ind_max-1)*deltaPL_step;
-    path_names = configurePaths(); %各种路径名字
-    load_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);
-    load(load_path_name)
-    par = initialParameters(deltaPL); %初始化系统参数 
-    QoS = calQosPerformance( Queue, par.MAC);    
+     analysisQoSPerformance(deltaPL_step, deltaPL_ind_max)
     
-    %% 展示性能表现
-    plotQoSPerformance(QoS, Queue);
-    plotAllocateResults( pos_seq, AllocatePowerRate, sta_AllocateSlots);
+
    

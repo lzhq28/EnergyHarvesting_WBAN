@@ -2,7 +2,7 @@ function  plotAllocateResults( pos_seq, AllocatePowerRate, sta_AllocateSlots)
 %plotAllocateResults 将给各个节点的资源分配结果进行展示
 
     % 基本参数
-    num_sample = 30; %采样多少点进行画图
+    num_sample = 100; %采样多少点进行画图
     num_nodes = size(sta_AllocateSlots{1,1},1);    
     num_frame = size(sta_AllocateSlots,2);
     sample_step = 1;
