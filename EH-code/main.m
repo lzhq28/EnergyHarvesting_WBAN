@@ -3,15 +3,15 @@
     clc
     clear all
     matlab_ver='2015';% '2012'or'2015'
-    if  strcmp(matlab_ver,'2012')
-        if(matlabpool('size')==0) %没有打开并行
-            matlabpool local; %按照local配置的进行启动多个matlab worker
-        end
-    else
-        if(isempty(gcp('nocreate'))==1) %没有打开并行
-            parpool local; %按照local配置的进行启动多个matlab worker
-        end
-    end
+%     if  strcmp(matlab_ver,'2012')
+%         if(matlabpool('size')==0) %没有打开并行
+%             matlabpool local; %按照local配置的进行启动多个matlab worker
+%         end
+%     else
+%         if(isempty(gcp('nocreate'))==1) %没有打开并行
+%             parpool local; %按照local配置的进行启动多个matlab worker
+%         end
+%     end
     deltaPL_ind_max = 10;
     deltaPL_step = 2; %单位dBm
     parfor deltaPL_ind =1:deltaPL_ind_max
@@ -121,7 +121,8 @@
     end
 
     %% 性能统计
-     analysisQoSPerformance(deltaPL_step, deltaPL_ind_max)
+     show_deltaPL_ind =1;
+     analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind)
     
 
    

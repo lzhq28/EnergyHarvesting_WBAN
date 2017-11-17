@@ -1,4 +1,4 @@
-function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max)
+function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind)
 %analysisQoSPerformance 分析系统服务质量结果，数据主要是从文件中读取
 %输入
 %   deltaPL_step deltaPL的步长
@@ -85,7 +85,7 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max)
     legend('Node1','Node2','Node3','Node4','Node5')
     
     %% 展示性能表现
-    show_deltaPL_ind =10;
+    %show_deltaPL_ind =10;
     deltaPL =  (show_deltaPL_ind -1)*deltaPL_step;
     par = initialParameters(deltaPL); %初始化系统参数
     cur_Queue = load_data{1,show_deltaPL_ind}.Queue;
