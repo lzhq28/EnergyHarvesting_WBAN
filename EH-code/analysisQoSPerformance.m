@@ -1,14 +1,14 @@
-function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind)
+function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind, t_cor_EH)
 %analysisQoSPerformance 分析系统服务质量结果，数据主要是从文件中读取
 %输入
 %   deltaPL_step deltaPL的步长
 %   deltaPL_ind_max deltaPL的最大实验次数
-
+%   t_cor_EH 能量采集相关时间
     % 从文件中加载中间数据结果
     load_data = {}; %加载的数据
     for deltaPL_ind =1:deltaPL_ind_max
         deltaPL =  (deltaPL_ind-1)*deltaPL_step;
-        path_names = configurePaths(); %各种路径名字
+        path_names = configurePaths(t_cor_EH); %各种路径名字
         load_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);
         load_data{1,deltaPL_ind}=load(load_path_name);
     end
@@ -118,7 +118,5 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind
     ylabel('Collected energy in each slot (uJ)')
     title('Collect energy in each slot')
     legend('Node1','Node2','Node3','Node4','Node5')
-    
-    
 end
 
