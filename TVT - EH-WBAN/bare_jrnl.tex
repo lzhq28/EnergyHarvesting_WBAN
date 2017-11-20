@@ -405,62 +405,14 @@
 % was not built to handle multiple paragraphs
 %
 
-\author{Zhiqiang~Liu,~\IEEEmembership{Student Member, IEEE}
-        Bin~Liu,~\IEEEmembership{Member, IEEE}
-        and~Chang~Wen~Chen~,\IEEEmembership{Fellow,~IEEE}% <-this % stops a space
-\thanks{Copyright (c) 2015 IEEE. Personal use of this material is permitted. However, permission to use this material for any other purposes must be obtained from the IEEE by sending a request to pubs-permissions@ieee.org.}
-\thanks{The authors are with the Key Laboratory of Wireless-Optical Communications, School of Information Science and Technology, University of Science and Technology of China, Hefei, Anhui, China. e-mail: (yingluo@mail.ustc.edu.cn, plhong@ustc.edu.cn, ruolinsu@mail.ustc.edu.cn, kpxue@ustc.edu.cn).}}% <-this % stops a space
-%\thanks{Manuscript received April 19, 2005; revised August 26, 2015.}}
-%\markboth{IEEE Transactions on Vehicular Technology}
-%{}
-
-%\address[1]{Key Laboratory of Wireless-Optical Communications, Chinese Academy of Sciences, School of Information Science and Technology, University of Science and Technology of China, No. 96 Jinzhai Road, Hefei, Anhui Province, 230026, P. R. China}       % 第1个单位的地址
-%\address[add2]{** University, Beijing, China}         % 第2 个单位的地址
-
-% note the % following the last \IEEEmembership and also \thanks -
-% these prevent an unwanted space from occurring between the last author name
-% and the end of the author line. i.e., if you had this:
-%
-% \author{....lastname \thanks{...} \thanks{...} }
-%                     ^------------^------------^----Do not want these spaces!
-%
-% a space would be appended to the last name and could cause every name on that
-% line to be shifted left slightly. This is one of those "LaTeX things". For
-% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
-% "AB" then you have to do: "\textbf{A}\textbf{B}"
-% \thanks is no different in this regard, so shield the last } of each \thanks
-% that ends a line with a % and do not let a space in before the next \thanks.
-% Spaces after \IEEEmembership other than the last one are OK (and needed) as
-% you are supposed to have spaces between the names. For what it is worth,
-% this is a minor point as most people would not even notice if the said evil
-% space somehow managed to creep in.
+\author{Zhiqiang~Liu,~\IEEEmembership{Student Member, IEEE},
+        Bin~Liu,~\IEEEmembership{Member, IEEE},
+        and~Chang~Wen~Chen,~\IEEEmembership{Fellow,~IEEE}% <-this % stops a space
+\thanks{Zhiqiang Liu is with the Key Laboratory of Electromagnetic Space Information, Chinese Academy of Sciences, Department of Electrical Engineering and Information Science, University of Science and Technology of China, Hefei 230027, China (e-mail: lzhq28@mail.ustc.edu.cn).}% <-this % stops a space
+\thanks{Bin Liu is with the Key Laboratory of Electromagnetic Space Information, Chinese Academy of Sciences, School of Information and Technology, University of Science and Technology of China, Hefei 230027, China (e-mail: flowice@ustc.edu.cn).}
+\thanks{Chang Wen Chen is with Department of Computer Science and Engineering, University at Buffalo, State University of New York, New York 002837, USA (e-mail: chencw@buffalo.edu).}}
 
 
-
-% The paper headers
-%\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
-%{}
-% The only time the second header will appear is for the odd numbered pages
-% after the title page when using the twoside option.
-%
-% *** Note that you probably will NOT want to include the author's ***
-% *** name in the headers of peer review papers.                   ***
-% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
-% you desire.
-
-
-
-
-% If you want to put a publisher's ID mark on the page you can do it like
-% this:
-%\IEEEpubid{0000--0000/00\$00.00~\copyright~2015 IEEE}
-% Remember, if you use this you must call \IEEEpubidadjcol in the second
-% column for its text to clear the IEEEpubid mark.
-
-
-
-% use for special paper notices
-%\IEEEspecialpapernotice{(Invited Paper)}
 
 
 
@@ -521,38 +473,8 @@ In this section,
 
 \subsection{Scenario, node and transmission model}
 
-\begin{equation}
-    \sum\limits_{{c_i}} {{x_{{c_i},{d_j}}}}  \le 1,\left( {\forall {d_j} \in {\Phi _D}} \right)
-\end{equation}
-\begin{equation}
-    \sum\limits_{{d_j}} {{x_{{c_i},{d_j}}}}  \le m,\left( {\forall {c_i} \in {\Phi _C}} \right)
-\end{equation}
-
-Based on the above analysis, the signal to interference plus noise ratio (SINR) of the $c_i$-th CU and the $d_j$-th D2D pair can be presented as follows:
-
-\begin{equation}
-    \label{equ:SINR_for_CU}
-    {R_{{c_i}}} = \frac{{{p_{{c_i}}}{g_{{c_i}B}}}}{{{n_0} + \sum\limits_{{d_j}} {{x_{{c_i},{d_j}}}{p_{{d_j}}}{g_{{d_j}B}}} }},
-\end{equation}
-\begin{equation}
-    \label{equ:SINR_for_DU}
-    {R_{{d_j}}} = \frac{{{p_{{d_j}}}{g_{{d_j}}}}}{{{n_0} + {p_{{c_i}}}{g_{{c_i}{d_j}}} + \sum\limits_{\scriptstyle{d_k} \ne {d_j}\hfill\atop \scriptstyle{d_k} \in {\Phi _D}\hfill} {{x_{{c_i},{d_k}}}{p_{{d_k}}}{g_{{d_k}{d_j}}}} }},
-\end{equation}
-where $p_{c_i}$ and $p_{d_j}$ are the transmission power of the $c_i$-th CU and the $d_j$-th EH-DP in a time slot, respectively. ${x_{c_i,d_j}( c_i \in {\Phi _C}, d_j \in \Phi _D) }$ is the multiplex indicator parameter. $n_0$ is the noise power, which equals to $B_W \!\cdot\! {\rho _n}$, where $B_W$ is the uplink channel bandwidth and ${\rho _n}$ is the density of noise. $g_{{u_1}{u_2}} \left( {{u_1},{u_2} \in \left\{ {B,{\Phi _C},{\Phi _D}} \right\}} \right) $, denotes the channel gain between transmitting node $u_1$ and receiving node $u_2$, which accounts for the path loss and Rayleigh fading and is expressed as
-\begin{equation}\label{equ:channel_gain}
-    {g_{{u_1}{u_2}}} = L_{{u_1}{u_2}}^{ - \alpha } \cdot \left| {{h_{{u_1}{u_2}}}} \right|,
-\end{equation}
-where $L_{{u_1}{u_2}}$ is the distance between $u_1$ and $u_2$. $\alpha$ is the path-loss exponent between $u_1$ and $u_2$. ${h_{{u_1}{u_2}}} \!\sim\! {\cal C}{\cal N}(0,1)$ is modeled as zero-mean complex Gaussian random variables with unit variance, characterizing the Rayleigh fading.
-
 \subsection{Energy model}
-In this scenario, each EH-DP uses the harvested energy to transmit their local data. For the $d_j$-th EH-DP, $E_{d_j}^t$ units of energy can be harvested in the $t$-th time slot where $E_{d_j}^t \ge 0$. $\left\{ {E_{{d_j}}^1,E_{{d_j}}^2, \ldots ,E_{{d_j}}^t, \ldots ,E_{{d_j}}^T} \right\}$ is the time sequence of harvested energy in $T$ time slots. $E_{d_j}^t$ is also an i.i.d. sequence with Compound Poisson distribution: $E_{{d_j}}^t = \sum\limits_{n = 1}^{N\left( t \right)} {U_{{d_j}}^n} $ \cite{mitran2012optimal}, where $N(t)$, the number of energy packets arriving at the time slot $t$, is assumed to be a homogeneous Poisson process with intensity $\lambda_{d_j}$. $U_{d_j}^n$ is the size of the $n$-th energy packet in $N(t)$. In addition, the $\lambda_{d_j}$ and $U_{d_j}^n$ are called as EH efficiency of the $d_j$-th EH-DP.
-
-Let $B^t_{d_j}$ depicts the amount of available energy in the battery for transmission at the time slot $t$ of the $d_j$. The transmitted power $p^t_{d_j}$ is constrained by the available energy $B^t_{d_j}$ in the battery:
-\begin{align*}
- {p^t_{d_j}} \le {B^t_{d_j}}, \left( { {B^t_{d_j}} = {B^{t - 1}_{d_j}} - {p^{t - 1}_{d_j}}+ {E^{t-1}_{d_j}} } \right).
-\end{align*}
-
-We assume that the energy are only for communication purposes. Existing energy in the battery can be retrieved without any loss and the battery capacity is large enough so that every quanta of incoming energy can be stored in the battery. This assumption is practically valid for the current circumstance of the technology in which batteries have very large capacities compared to the efficiency of harvested energy flow \cite{sharma2010optimal}. Besides, it is assumed that the CSI of all the involved links, and the ESI of all EH-DPs in each time slot are acquired by the BS so that the BS is capable of controlling the resource allocation.
+In this scenario, each EH-DP uses the harvested energy to transmit their local data. For the $d_j$-th EH-DP, $E_{d_j}^t$ units of energy can be harvested in the $t$-th time slot where $E_{d_j}^t \ge 0$. $\left\{ {E_{{d_j}}^1,E_{{d_j}}^2, \ldots ,E_{{d_j}}^t, \ldots ,E_{{d_j}}^T} \right\}$ is the time sequence of harvested energy in $T$ time slots. 
 \subsection{Mathematic model}
 optimization problem
 
@@ -564,67 +486,16 @@ In this section, two algorithms are explained at first, and the computational co
 \subsection{Outer approximation algorithm}
  
 
-
-
 \subsection{Energy-aware space matching algorithm}
-%Due to the high complexity of finding solutions to the resource allocation problems, which jointly consider the spectrum matching problem and the power allocation problem, we decompose the resource allocation problems by firstly solving the spectrum matching problem, and secondly dealing with the power allocation strategy.
-Energy-aware Space Matching (ESM) algorithm solves the maximization problem \textbf{P1} by decomposing the problem into two steps. In the first step, the ESM implements a spectrum matching scheme to obtain the multiplex indicator parameter $X$; In the second step, the power allocation scheme is solved based on the first step so as to obtain the power variable sets $P_C$ and $P_D$.
 
-The first step, ESM should determine the spectrum matching indicator parameter $X$. As we all know, due to the fading characteristic of wireless communications, one simplest and fastest way to determine the matching parameter is based on distance constraint. But, how to set the distance and define the distance matching rules with joint consideration of available energy state and channel condition is the most important thing. %To ensure the mutual interference between CUs and EH-DPs as small as possible, the optimum matching distance between the matched CU and EH-DP is better to set up as far as possible. However,
-In our model, according to the available power and the transmission rate constraints, the distance between CU $c_i$ and EH-DP $d_j$ must satisfy the following restraint if they can be matched:
-\begin{align*}
-    \scalebox{0.98}{${\left| {{L_{{c_i}{d_j}}}} \right|}$} & \scalebox{0.98}{${\ge {\left( {\frac{{{p_{{d_j}}}\cdot{{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} - {n_0}\mathop {r_{{d_j}}^{th}}\limits^ \wedge  }}{{\mathop {r_{{d_j}}^{th}}\limits^ \wedge  \cdot\mathop {r_{{c_i}}^{th}}\limits^ \wedge  \left( {{p_{{d_j}}}\cdot{{\left| {{L_{{d_j}B}}} \right|}^{ - \alpha }} + {n_0}} \right)\cdot{{\left| {{L_{{c_i}B}}} \right|}^\alpha }}}} \right)^{{\rm{ - }}{1 \mathord{\left/ {\vphantom {1 \alpha }} \right.  \kern-\nulldelimiterspace} \alpha }}} }$}\\
-     &\scalebox{0.98}{${ \ge {\left[ {\left( {\frac{{{{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }}}}{\psi }} \right)\left( {1 - \frac{{\phi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} + {n_0} \cdot \psi  \cdot \mathop {r_{{d_j}}^{th}}\limits^ \wedge  }}{{\psi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} \cdot {p_{{d_j}}} + \phi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }}}}} \right)} \right]^{{\rm{ - }}{1 \mathord{\left/  {\vphantom {1 \alpha }} \right.  \kern-\nulldelimiterspace} \alpha }}} }$}
-\end{align*}
-where $\psi$ represents \scalebox{0.95}{${\mathop {r_{{d_j}}^{th}}\limits^ \wedge  \!\cdot\!\mathop {r_{{c_i}}^{th} \!\cdot\! }\limits^ \wedge  {\left| {{L_{{d_j}B}}} \right|^{ \!-\! \alpha }}\!\cdot\!{\left| {{L_{{c_i}B}}} \right|^\alpha }}$}, $\phi$ is \scalebox{0.95}{${\mathop {r_{{d_j}}^{th}}\limits^ \wedge  \cdot\mathop {r_{{c_i}}^{th}}\limits^ \wedge  \cdot{\left| {{L_{{c_i}B}}} \right|^\alpha } \cdot {n_0}}$}. The relevant derivation can be seen in Appendix A. Obviously, the value of ${L_{c_i d_j}}$ is proportional to ${L_{c_i B }}$ and inversely proportional to ${L_{d_j B }}$ and ${p_{d_j}}$. Calculating the relevant minimum required distance for all EH-DPs is a time-consuming process. Hence, we consider to set a uniform standard. In order to let as many EH-DPs as possible access network, we must consider the worst case. According to the relationship of ${L_{c_i d_j}}$ between the other variables, the EH-DP $\mathop d\limits^\sim(\mathop d\limits^\sim \in {\Phi _D})$, which owns the minimum available transmission power and the worst channel quality (minimum distance from base station), is chosen. Furthermore, the CU $\mathop c\limits^\sim(\mathop c\limits^\sim \in {\Phi _C})$ which is farthest away from BS is chosen. Hence, we can obtain the following corollary:
 \newtheorem{corollary}{\rm {\textbf{Corollary}}}
 \renewcommand\thecorollary{\arabic{corollary}}
 \begin{corollary}
-\emph {In order to ensure the matched CU and EH-DPs have a feasible power allocation solution, the distance $d_{EH}$ must satisfy a minimum value}:\par
-\begin{equation*}
-    \scalebox{0.95} {${{d_{EH}} = \left| {{L_{{\mathop c\limits^\sim}{\mathop d\limits^\sim}}}} \right| \ge {\left( {\frac{{{p_{{\mathop d\limits^\sim}}} \cdot {{\left| {{L_{{\mathop d\limits^\sim}}}} \right|}^{ - \alpha }} - {n_0}\mathop {r_{{\mathop d\limits^\sim}}^{th}}\limits^ \wedge  }}{{\mathop {r_{{\mathop d\limits^\sim}}^{th}}\limits^ \wedge   \cdot \mathop {r_{{\mathop c\limits^\sim}}^{th}}\limits^ \wedge  \left( {{p_{{\mathop d\limits^\sim}}} \cdot {{\left| {{L_{{\mathop d\limits^\sim}B}}} \right|}^{ - \alpha }} + {n_0}} \right) \cdot {{\left| {{L_{{\mathop c\limits^\sim}B}}} \right|}^\alpha }}}} \right)^{ - {1 \mathord{\left/
- {\vphantom {1 \alpha }} \right.
- \kern-\nulldelimiterspace} \alpha }}}}$}
-\label{thm:1}
-\end{equation*}
+
 \end{corollary}
 \emph{Proof}: The proof of this corollary is provided in Appendix A.
 
-The $d_{EH}$ is the minimum requisite multiplex distance, which is decided with joint consideration of the available energy and channel conditions. To solve the spectrum matching scheme in a faster and simpler way, ESM divides the cell area into two parts: Central Part (CP) and Edge Part (EP) according to $d_{EH}$. EH-DPs in different parts \{CP or EP\} can randomly reuse the CUs in the opposite part \{EP or CP\} to ensure the minimum distance constraint. Therefore, as shown in Fig. \ref{fig:ESM_model}, a cellular network with $R$ radius is divided into six 60 degree sectors \cite{lohani2016multiuser}. The six sectors are named as 1 to 6 in counterclockwise order from north to south. Each sector is grouped into two parts: Central Part (CP) and Edge Part (EP) by $d_{EH}$. Moreover, to ensure the next power allocation step has a feasible solution, there are two matching rules we should be complied with:
-\begin{itemize}
-    \item EH-DPs in different parts \{CP or EP\} can randomly reuse the CUs in the opposite part \{EP or CP\} of the sectors which are opposite from each EH-DP sector. For example, as Fig. \ref{fig:ESM_model} illustrates, the EH-DPs in the EP (yellow) or CP (blue) part of the sixth sector can randomly multiplex the spectrum resource of CUs in the CP (yellow) or EP (blue) part of the opposite sectors \{2,3,4\} of the sixth sector;
-    \item EH-DPs in the same and adjacent sector can not reuse the same CU spectrum resource. As Fig. \ref{fig:ESM_model} shows, the spectrum resource of one CU reused by the EH-DP in the sixth sector can not be reused by EH-DPs in the sector 5 and 1 at the same time.
-\end{itemize}
-Based on the first rule, the division of CP and EP insures that the interference between CUs and EH-DPs is under control, which can effectively satisfy transmission rate requirements with the limitation of available energy. Likewise, the second rule makes sure that the mutual interference between EH-DPs is under control.
-\begin{figure}[!htb]
-    \centering
-        \includegraphics[width=0.4\textwidth,height=0.28\textheight]{ESM_model}
-        \caption{Energy-aware Space Matching model}
-    \label{fig:ESM_model}
-\end{figure}
 
-%We will take the sixth sector as a simple example to vividly explain the matching rules of ESM in detail. As Fig. \ref{fig:ESM_model} illustrated, each sector is separated into two parts \{CP, EP\} by $d_{EH}$. The EH-DPs in the sixth sector can randomly reuse the spectrum resource of CUs in its opposite sectors which are summarized as \{2,3,4\}. In order to make sure the following power allocation scheme has a feasible solution, there are two matching rules must be obeyed. The first one is for the possible matching between CU and EH-DP. The matched CU and EH-DP should come from different parts. In this way we can avoid serious interference between CU and D2D. The second one is for the possible matching between EH-DPs which reuse the same spectrum resource. The EH-DPs coming from the same or adjacent sectors can not reuse the same spectrum resource of one CU for avoiding possible severe interference. Thus, the spectrum resource of one CU reused by the EH-DP in the sixth sector can not be reused by EH-DPs in sector 5 and 1 at the same time.
-
-The second step, after obtaining the integer values of the multiplex indicator $\mathop X\limits^ \wedge   = \left\{ {{{\mathop x\limits^ \wedge  }_{{c_i},{d_j}}}} \right\}$, the proper power should be allocated between the matched CU and multiple EH-DPs to maximize the transmission rate of the whole network. Thus, the system transmission rate maximization problem can be divided into $N_C$ subproblems due to the spectrum orthogonality of different CUs. Therefore, for any $c_i,(c_i \in \Phi _C)$, we have:
-\begin{subequations}\label{math:ESM_subpro}
-\begin{align}
-    \mathop {\max }\limits_{\left\{ {{p_{{c_i}}},{P_D}} \right\}} &\;\log \left( {1 + {R_{{c_i}}}} \right) + \sum\limits_{{d_j} = 1}^{{N_D}} {{{\mathop x\limits^ \wedge  }_{{c_i},{d_j}}}\log \left( {1 + {R_{{d_j}}}} \right)}, \label{ESM_subpro1} \\
-    s.t. \quad &\log \left( {1 + {R_{{c_i}}}} \right) \ge r_{{c_i}}^{th}, \label{ESM_subpro2} \\
-    & \log \left( {1 + {R_{{d_j}}}} \right) \ge r_{{d_j}}^{th},\label{ESM_subpro3}\\
-    & (\ref{sum_throughput4})\sim(\ref{sum_throughput5}),\label{ESM_subpro4}
-\end{align}
-\end{subequations}
-where EH-DP $d_j$ belongs to ${\Phi _D}$ and reuses the spectrum resource of the CU $c_i$ at the same time.
-
-The above subproblem is also a non-concave maximization problem. But, we can obtain its theoretical lower bound by the approximation of (\ref{low approximate algorithm}) and the variables substitution of ${p_{c_i}} = {e^{\mathop {{p_{c_i}}}\limits^\sim }}, {p_{d_j}} = {e^{\mathop {{p_{d_j}}}\limits^\sim }}$:
-\begin{subequations}\label{math:ESM_concave_lower_model}
-\begin{align}
-    \mathop {\max }\limits_{\left\{ {\mathop {p_c^i}\limits^ \sim  ,\mathop {{P_D}}\limits^ \sim  } \right\}} &\;\mathop {{{f_{{c_i}}}}}\limits^ \sim  \left( {\mathop X\limits^ \wedge  ,\mathop {{p_{{c_i}}}}\limits^ \sim  ,\mathop {{P_D}}\limits^ \sim  } \right) + \sum\limits_{{d_j} = 1}^{{N_D}} {{{\mathop x\limits^ \wedge  }_{_{{c_i},{d_j}}}}\mathop {{{f_{{d_j}}}}}\limits^ \sim  \left( {\mathop X\limits^ \wedge  ,{{\mathop P\limits^ \sim  }_C},\mathop {{P_D}}\limits^ \sim  } \right)} , \label{ESM_concave_lower_model1} \\
-    s.t.\quad &\mathop {{{f_{{c_i}}}}}\limits^ \sim  \left( {\mathop X\limits^ \wedge  ,\mathop {{p_{{c_i}}}}\limits^ \sim  ,\mathop {{P_D}}\limits^ \sim  } \right) \ge r_{{c_i}}^{th}, \label{ESM_concave_lower_model2} \\
-    & \mathop {{{f_{{d_j}}}}}\limits^ \sim  \left( {\mathop X\limits^ \wedge  ,{{\mathop P\limits^ \sim  }_C},\mathop {{P_D}}\limits^ \sim  } \right) \ge r_{{d_j}}^{th},\label{ESM_concave_lower_model3}\\
-    & (\ref{OA_concave_lower_model4})\sim(\ref{OA_concave_lower_model5}).\label{OA_concave_lower_model6}
-\end{align}
-\end{subequations}
 
 With the convexity of \emph{log-exp-sum}, the problem (\ref{math:ESM_concave_lower_model}) can be easily proved to be a concave maximization problem about relevant power parameters of CU and EH-DPs. The pseudo code of ESM can be detailedly expressed by Algorithm \ref{alg:ESM}.
 
@@ -659,309 +530,35 @@ With the convexity of \emph{log-exp-sum}, the problem (\ref{math:ESM_concave_low
 \scalebox{0.95}{${R_{sum}^{ESM} = {R_{sum}}\left( {\mathop X\limits^ \wedge  ,\exp \left( {\mathop {P_C^{}}\limits^ \wedge  } \right),\exp \left( {\mathop {P_D^{}}\limits^ \wedge  } \right)} \right)}$}.
 \end{algorithm}
 
-\subsection{Complexity of OAA and ESM}
-Hijazi et al. \cite{hijazi2010outer} provided an example where outer approximation takes an exponential number of iterations about $2^n$, in which $n$ is the variables that need to be solved, and equals $N_C+N_D$ in this paper. In ESM, the system only needs to implement the proper matching method for each D2D, and solve $N_C$ sub-problems of power allocation. Thus, the complexity of ESM can be expressed as $O(N_C \cdot N_D)$ in the worst case.
+ 
+
 
 \renewcommand\arraystretch{1.2}
-\begin{table}[!htb]
-\footnotesize
-\centering
-\caption{The comparison of complexity of OAA and ESM }{\label{tab:1} 示例表格}
-\begin{tabular}{|m{0.2\columnwidth}<{\centering}| m{0.25\columnwidth}<{\centering}| m{0.2\columnwidth}<{\centering}|}
-  \hline
-  &  { {OAA}} & {ESM}  \\
-  \hline
-  % \multicolumn{2} {|c|} {Cellular pathloss (dB)}  & $128.1 + 37.6\text{log}_{10}{d_c}$(Km) \\
-  %\hline
-  % \multicolumn{2} {|c|} {D2D pathloss (dB)}  & $148 + 40\text{log}{_{10}}{d_d}$(Km) \\
-  {complexity} & $O(2^{N_C\!+\!N_D})$ & $O({N_C \!\cdot\! N_D})$  \\
-  \hline
-  %\bottomrule
- \end{tabular}
-\end{table}
 
 \section{Simulation results} \label{sec:simulation_results}
-In this section, the performance of the two proposed algorithms and the characteristics of the EH-DCCN are investigated in the performance of the average achievable system rate and the matching probability of EH-DPs. The matching probability of EH-DPs represents the ratio of the matched EH-DPs in $N_D$. To evaluate the effectiveness of the proposed algorithms, there are two comparison schemes should be described. The first one is the exhaustive searching method, which can enumerate all possible solutions, and thus attain an optimal solution. The second one is a graph-color method \cite{cai2015graph}, which is one of typical resource allocation algorithms in classical D2D communication. Besides, all of the simulation model and algorithms are coded in the MATLAB.
+In this section, the performance of the two proposed algorithms and the characteristics of the EH-DCCN are investigated in the performance of the average achievable system rate and the matching probability of EH-DPs. The matching probability of EH-DPs represents the ratio of the matched EH-DPs in $N_D$.  
 
-However, the computational complexity of the exhaustive searching method increases exponentially with the number of the users \cite{jiang2007papr}. Hence, it is difficult to implement the exhaustive searching method under large-scale scenario with large number of users. Therefore, we only compare the proposed algorithms OAA and ESM with the two comparison schemes under a small-scale scenario with 5 EH-DPs and different numbers of CUs (from 2 to 6). The scenario with the similar scale is set to validate the performance of algorithms proposed in \cite{yin2015pricing,cai2015graph}. Moreover, under the large-scale scenario with 100 EH-DPs and different numbers of CUs (from 30 to 100), the performance of the two proposed algorithms is also evaluated by comparing with the graph-color method. Meanwhile, the characteristics of the network are investigated.
-%In this section, in order to validate the effectiveness of the two algorithms and analysis the characteristics of the network, we analyze system performance in the terms of sum rate and matching probability of EH-DPs in different scenarios. The sum rate is the sum transmission rate including CUs and EH-DPs, and the matching probability of EH-DPs represents the ratio of the matched EH-DPs in $N_D$. The scenario difference is reflected by two aspects. Firstly, we use the user distribution ratio between CUs and EH-DPs to reflect the difference of sum node numbers. The second is the difference of EH efficiency of each EH-DP. For simplicity, we only change the arrival rate of energy packets which represented by ${\lambda _{{d_j}}}$.
+ 
 
 \subsection{Simulation setup}
-Above all, the detailed cellular network simulation settings should be illustrated. We consider a cellular network demonstrated by Fig. \ref{fig:system_model} with one Base Station (BS), $N_C$ CUs and $N_D$ EH-DPs. The BS is always located in the center of the cell, and the radius of the cellular network is 800 meters. The CUs and EH-DPs are randomly and uniformly distributed in the cell, and the position of all users is known by BS. Furthermore, the distance between receiver and sender of each EH-DP is randomly distributed in the range of 20 meters to 50 meters.
-\begin{table}[h]
-\footnotesize
-\centering
-\caption{EH-powered D2D simulation scenario parameters}{\label{tab:2} 示例表格}
- \begin{tabular}{|m{0.12\columnwidth}<{\centering}| m{0.4\columnwidth}<{\centering}| m{0.23\columnwidth}<{\centering}|}
-  \hline
-   \multicolumn{3} {|c|}  {{Scenario settings}} \\
-  \hline
-  %\toprule
-  \multicolumn{2} {|c|}  { {Description}} & {Value}  \\
-  \hline
-   \multicolumn{2} {|c|}  {BS position} & at the center of the cell \\
-  \hline
-   \multicolumn{2} {|c|} {CUs and EH-DPs position} & uniformly random distribution\\
-  \hline
-   \multicolumn{2} {|c|} {distance between sender and receiver of one EH-DP} & random distribution in [20,50]m \\
-  \hline
-   \multicolumn{3} {|c|}  {{Simulation parameters settings}} \\
-  \hline
-  {Parameter} & {Description} & {Value}  \\
-  \hline
-   $R$ & radius of the cell & 800m \\
-  \hline
-   $N_C$ & sum number of CUs & large scale:[30:10:100] small scale:[2:1:6] \\
-  \hline
-   $N_D$ & sum number of EH-DPs & large scale:100 small scale:5 \\
-  \hline
-   $B_W$ &  uplink bandwidth of each orthogonal CU channel & 180KHz \\
-  \hline
-   ${\rho _n}$ & thermal noise density & -174dBm/Hz \\
-  \hline
-   $\alpha$ & path loss exponent for users& 4 \\
-  \hline
-   $P^{max}_{c_i}$ & maximum transmission power constraints of CU & 20dBm \\
-  \hline
-   $P^{max}_{d_j}$ & maximum transmission power constraints of $d_i$-th EH-DP & 17dBm \\
-  \hline
-   $N(t)$ & the number of arriving energy packets in time slot $t$ & Possion distribution with $\lambda$ of [1:1:6]\\
-  \hline
-   $U_{d_i}^n$ & average energy for each energy packet & 0.0005watt\\
-  \hline
-   $m$ & the maximum reusable EH-DPs of one CU & 3 \\
-  \hline
-   $r_{c_i}^{th}$ & minimum transmission rate threshold of CU & 1bps/Hz \\
-  \hline
-   $r_{d_j}^{th}$ & minimum transmission rate threshold of $d_i$-th EH-DP & 2bps/Hz \\
-  \hline
-  %\bottomrule
- \end{tabular}
-\end{table}
-
-In order to study the effectiveness of the proposed algorithms and the characteristics of the EH-DCCN, we set up a small-scale scenario and a large-scale scenario. In each scenario, the energy packet arrival process for every EH-DP is supposed to be i.i.d random sample. This sample can be regarded as a statistic process obeying Poisson distribution with same parameter $\lambda$. Therefore, the energy packet arrival process, which is represented by $\lambda_{d_j}(\lambda_{d_j}=\lambda)$, is only considered as the variance of the EH efficiency. In the large-scale scenario, we define the ratio of CU and EH-DP numbers as ${{{N_C}} \mathord{\left/ {\vphantom {{{N_C}} {{N_D}}}} \right.  \kern-\nulldelimiterspace} {{N_D}}}$. For each simulation scenario with different ratios or EH efficiencies, for example a scenario has a ratio of 0.5, we generate the corresponding random scenario about 100 times and average the performance of transmission rate and matching probability. All of the detailed network parameters used in this paper are demonstrated by Table \ref{tab:2}.
-%For the D2D communication underlaying cellular networks, the ratio of CU and EH-DP numbers (${{{N_C}} \mathord{\left/ {\vphantom {{{N_C}} {{N_D}}}} \right.  \kern-\nulldelimiterspace} {{N_D}}}$) will essentially influence the system performance. Hence, in order to study the effectiveness of the proposed algorithms, we set up different scenarios with different ratios under fixed EH efficiency for each EH-DP, and compare the achievable average system performance. In this paper, the variance of the ratio is represented by a variable number of CUs and a fixed number of EH-DPs.
-
-%Besides, the performance under different EH efficiencies is also investigated in the simulation. For simplicity, the energy packet arrival process, which is represented by $\lambda_{d_j}$, is only considered as the variance of the EH efficiency. Furthermore, the energy packet arrival process for every EH-DP is supposed to be i.i.d random sample. This sample can be regard as a statistic process obeying Poisson distribution with same parameter $\lambda$. For each simulation scenario with different ratios or EH efficiencies, for example a scenario has a ratio of 0.5, we generate the corresponding random scenario about 100 times and average the performance of the system rate and matching probability. All of the detailed network parameters used in this paper are demonstrated by Table \ref{tab:2}.
-
-\subsection{The effectiveness of the proposed algorithms under small-scale scenario}
-Considering the high computational complexity of the exhaustive searching scheme for the scenarios with large number of users, a small-scale scenario is set to validate the effectiveness of the proposed algorithms. The small-scale scenario consists of 5 EH-DPs and different numbers of CUs (from 2 to 6). Under this small-scale scenario, the performances of the proposed algorithms and the comparison schemes in terms of average (avg.) achievable transmission rate and matching probability are demonstrated by Fig. \ref{fig:com:rate} and Fig. \ref{fig:com:match}, respectively. In this simulation, the EH efficiency $\lambda$ is set as 2.
-\begin{figure}[!htb]
-    \centering
-        \includegraphics[width=0.45\textwidth,height=0.28\textheight]{small-scale}
-        \caption{The avg. achievable rate under the small-scale scenario}
-    \label{fig:com:rate}
-\end{figure}
-\begin{figure}[!htb]
-    \centering
-        \includegraphics[width=0.45\textwidth,height=0.28\textheight]{match-prob}
-        \caption{The avg. matching probability under the small-scale scenario}
-    \label{fig:com:match}
-\end{figure}
-%\begin{figure}[!htb]
-%  \centering
-%  \subfigure[sum rate]{
-%    \label{fig:com:sum_rate} %% label for first subfigure
-%    \includegraphics[width=0.45\textwidth,height=0.28\textheight]{sum-rate}}
-%  \subfigure[CU rate]{
-%    \label{fig:com:CU_rate} %% label for second subfigure
-%    \includegraphics[width=0.45\textwidth,height=0.28\textheight]{CU-rate}}
-%  \caption{The avg. achievable transmission rate under the small-scale scenario}
-%  \label{fig:com:rate} %% label for entire figure
-%\end{figure}
-
-As shown in Fig. \ref{fig:com:rate} and Fig. \ref{fig:com:match}, the differences of sum rate and matching probability between OAA and the optimal exhaustive searching scheme are about 0.2bit/s/Hz and 0.1, respectively. Hence, a vivid conclusion can be made that OAA can attain an approximate optimal sum rate and matching probability by comparing with the optimal exhaustive searching scheme. Simultaneously, although there is a gap about 2bit/s/Hz in sum rate between the ESM and the optimal scheme, ESM also can obtain a suboptimal performance, while owning the lowest computational complexity and satisfying the transmission rate requirements of users.
-
-Moreover, two principle reasons can explain the poorest performance of the graph-color method. Firstly, the graph-color method randomly allocates channel resource of CU based on the constructed graph and the interference negligible distance (INS) and SIR limited area (SLA). The INS is a fixed value and the SLA is only based on channel state but ignores the energy feature. Thus, the spectrum resource matching strategy will be invalid if the available energy of D2D pairs cannot achieve their transmission rate requirements under the corresponding interference. Secondly, the graph-color method tries its best to allocate proper D2D pairs for each CU, one after the other, which will lead to unbalanced distribution of resources. In other words, some CUs share their channels with multiple D2D pairs, but some CUs are not paired with any D2D links. Finally, the unbalanced distribution of resources will result in large mutual interference among D2D links, and thus the sum transmission rate is not substantially improved.
-
-Furthermore, the average CU rate in Fig. \ref{fig:com:rate} shows the different characteristics of the above algorithms. Under the graph-color method, the CUs own the smallest interference from EH-DPs due to the unsuccessful matching, and thus CUs have the best transmission rate than other algorithms. On the contrary, the optimal exhaustive searching scheme and the OAA have the highest matching probability, which will result in that the CUs suffer the largest interference from EH-DPs. Hence, the transmission rate performance of CUs in optimal scheme and OAA is the lowest than others. Based on this, the transmission rate of the heuristic algorithm ESM is performed in the middle of all algorithms. Besides, when the node numbers of CUs are little, the number of EH-DPs reusing the same channel resource is higher. This phenomenon will result in the more interference to the CUs, and thus the avg. achievable transmission rate of CUs is smaller. Hence, the avg. achievable rate of CUs will increase with the raise of the number of CUs.
 
 
 
-\subsection{Simulation results in large-scale scenario} \label{sub:ratio-perform}
-%\begin{figure}
-%    \begin{minipage}[t]{0.45\linewidth}
-%    \centering
-%    \includegraphics[width=3.3in]{nodes-SE.eps}
-%    \caption{Avg. throughput of different numbers of CUs}
-%    \label{fig:nodes-rate}
-%    \end{minipage}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%    \begin{minipage}[t]{0.45\linewidth}
-%    \centering
-%    \includegraphics[width=3.3in]{nodes-match.eps}
-%    \caption{Avg. matching probability of different numbers of CUs}
-%    \label{fig:nodes-access}
-%    \end{minipage}
-%\end{figure*}
-%
-There are two principle purposes to design the large-scale scenario. The first one is to evaluate the performance of the proposed algorithms. The second one is to investigate the influence of different ratios on performance. The large-scale scenario is set with 100 EH-DPs and different numbers of CUs (from 30 to 100). In this simulation, the EH efficiency $\lambda$ is also set as 2. The average achievable rate and the matching probability are illustrated in detail by Fig. \ref{fig:large:rate} and \ref{fig:nodes-access}, respectively.
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.45\textwidth,height=0.28\textheight]{large-scale}
-\caption{The avg. achievable rate VS. different ratios of CU and EH-DP numbers under large-scale scenario}
-\label{fig:large:rate}
-\end{figure}
-%\begin{figure}[!htb]
-%  \centering
-%  \subfigure[sum rate]{
-%    \label{fig:large:sum_rate} %% label for first subfigure
-%    \includegraphics[width=0.45\textwidth,height=0.28\textheight]{rate-large}}
-%  \subfigure[EH-DP rate]{
-%    \label{fig:large:EH-DP_rate} %% label for second subfigure
-%    \includegraphics[width=0.45\textwidth,height=0.28\textheight]{cu-large}}
-%  \caption{The avg. achievable rate VS. different ratios of the CU and EH-DP numbers under large-scale scenario}
-%  \label{fig:large:rate} %% label for entire figure
-%\end{figure}
-%\begin{figure}[!htb]
-%\centering
-%\includegraphics[width=0.5\textwidth,height=0.3\textheight]{rate-large}
-%\caption{The avg. achievable system rate under different ratios of the CU and EH-DP numbers}
-%\label{fig:nodes-rate}
-%\end{figure}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.45\textwidth,height=0.28\textheight]{match-large}
-\caption{The avg. matching probability VS. different ratios of CU and EH-DP numbers under large-scale scenario}
-\label{fig:nodes-access}
-\end{figure}
-
-There are three important phenomena can be seen in Fig. \ref{fig:large:rate} and Fig. \ref{fig:nodes-access}. The first one is that our proposed algorithms still outperform the performance of graph-color in terms of transmission rate and matching probability.
-
-The second, the performance of ESM in sum rate gradually approaches to the optimal lower bound of OAA along with the increasing of the ratio. When the ratio is not less than 0.6, the difference of sum rate between the ESM and the OAA is less than 1 bit/s/Hz. The same phenomenon can be also reflected by the matching probability of EH-DPs in Fig. \ref{fig:nodes-access}. The average matching probability of EH-DPs in the ESM is gradually increasing to the OAA, and closing to one hundred percentage as the ratio rises. It vividly implies that the ESM can obtain the approximate performance of the theoretical tight lower bound on the original problem under the scenarios with the balanced distribution between the CUs and EH-DPs. With low computational complexity, the ESM is more suitable for the scenarios with the large scale of users and a higher ratio.
-
-Thirdly, as demonstrated by the average achievable rate of EH-DP in Fig. \ref{fig:large:rate}, the ESM and the OAA are concentrated on different aspects aiming at improving the system performance. In another word, the ESM is more concerned with the rate improvement of EH-DPs. On the contrary, the OAA pays more attention to the rate improvement of CUs.
-
-The above phenomenon can be interpreted as follows:
-
-The OAA can acquire the optimal lower bound of the original maximization problem by the iteration process. To obtain the maximal transmission rate, the OAA will let EH-DPs match the corresponding CU as many as possible under the interference constraints. On the contrary, the maximum number of EH-DPs reusing same CU in the ESM is less than the OAA in nature. The ESM scheme only can make each CU maintain at most two EH-DPs essentially. Hence, there will be more interference for each CU in the OAA than the ESM when the ratio is low. But the number of EH-DPs multiplexing one CU in the OAA exceeds that in the ESM. Hence, the system rate and the matching probability in the OAA are still better than the ESM. This explanation is also be proved in the simulation of the variation of the average system rate in Fig. \ref{fig:large:rate}.  As we can see in this figure, due to the matching property of the ESM, the average sum rate of the ESM is lower than the OAA when the ratio is less than 0.6. This phenomenon also explains why the ESM gets poor performance under the scenarios with lower ratio of CU and EH-DP numbers.
-
-%The average reusing distance between CU and EH-DPs, and between EH-DPs reusing the same spectrum resource can also explain the difference in performance between the two algorithms. As illustrated by Fig. \ref{fig:nodes-ava-dis}, the first thing we should demonstrated is the average reusing distance between CU and EH-DPs that reusing the same spectrum resource is decreased with the raise of CU numbers, and the distance between EH-DPs is increased. That is because each algorithm can choose a more appropriate CU for EH-DPs with the increasing of CU numbers. Thus, the numbers of EH-DPs reusing the same CU are gradually decreasing. Besides, the average distance between CU and EH-DP of ESM is smaller than OAA, and the distance between EH-DPs is larger. This is also because of the reusing allocation property difference between two algorithms.
 
 \subsection{The influence of different EH efficiencies on performance}
-Under the same large-scale scenarios of section \ref{sub:ratio-perform}, the impact of EH efficiency $\lambda$ on performance is also investigated. As demonstrated by Fig. \ref{fig:ee-access} and Fig. \ref{fig:ee-rate}, the matching probability is gradually increasing with the rise of $\lambda$, especially under the scenarios with lower ratio such as under 0.3. This is because the EH-DPs' ability to tolerate interference is increasing as the harvested energy rises. So, more and more EH-DPs can multiplex the spectrum resource of one CU at the same time under the control of interference. Therefore, the sum transmission rate is also growing with the rise of EH efficiency. However, as illustrated by Fig. \ref{fig:ee-access} and Fig. \ref{fig:ee-rate}, the influence of the growth of harvested energy on performance in the ESM is not more instinct than the OAA. This phenomenon can be mainly explained by the reason that although the growth of energy can make EH-DPs possible to bear more interference, the matching rules in the ESM will not be changed. In other words, the maximum tolerable EH-DP numbers of one CU in the ESM will not be changed due to the space matching property. Thus, the performance of the ESM is more stable than the OAA. But, the performance of the ESM can approach the OAA under the scenarios with the large ratio such as up to 0.8.
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.45\textwidth,height=0.28\textheight]{all-ee-match}
-\caption{The avg. matching probability VS. different EH efficiencies under large-scale scenario}
-\label{fig:ee-access}
-\end{figure}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.45\textwidth,height=0.28\textheight]{all-ee-rate}
-\caption{The avg. achievable rate VS. different EH efficiencies under large-scale scenario}
-\label{fig:ee-rate}
-\end{figure}
-
-In addition, we can get some crucial conclusions from the performance of OAA. Due to the maximum transmission power constraints, the rise of EH efficiency cannot always increase the system performance. From the simulation results, the matching probability is close to 1 when the EH efficiency reaches 5 and the ratio is 0.3. The more distinct phenomenon can be seen in sum rate as Fig. \ref{fig:ee-rate} shows. The system rate is not rising when the $\lambda$ equals 5. Besides, when the ratio is 0.5 or 0.8, the OAA performs stably when EH efficiency $\lambda$ reaches 4 or 2 in aspects of the matching probability and sum rate, respectively. Thus, we can conclude that the ratio of CU and EH-DP numbers must be above 0.8 when EH efficiency is 2, and ratio is 0.5 or 0.3 when EH efficiency is 4 or 5, respectively. This conclusion can give an insight needed for the central controller to deploy EH-powered D2D communication underlaying cellular networks.
-%
-%\begin{figure*}[!htb]
-%\centering
-%    \subfigure[number of CUs $N_C$ is 30]{
-%        \label{fig:ee-access30}
-%        \includegraphics[width=0.38\textwidth]{ee-access30}
-%    }\hspace{-.7in}
-%    \subfigure[number of CUs $N_C$ is 50]{
-%        \label{fig:ee-access50}
-%        \includegraphics[width=0.38\textwidth]{ee-access50}
-%    }\hspace{-.7in}
-%    \subfigure[number of CUs $N_C$ is 80]{
-%        \label{fig:ee-access80}
-%        \includegraphics[width=0.38\textwidth]{ee-access80}
-%    }
-%\caption{the influence of EH efficiency on ave. matching probability under different numbers of CUs }
-%\label{fig:ee-access}
-%\end{figure*}
-%\begin{figure*}[!htb]
-%\centering
-%    \subfigure[number of CUs $N_C$ is 30]{
-%        \label{fig:ee-rate30}
-%        \includegraphics[width=0.38\textwidth]{ee-rate30}
-%    }\hspace{-.7in}
-%    \subfigure[number of CUs $N_C$ is 50]{
-%        \label{fig:ee-rate50}
-%        \includegraphics[width=0.38\textwidth]{ee-rate50}
-%    }\hspace{-.7in}
-%    \subfigure[number of CUs $N_C$ is 80]{
-%        \label{fig:ee-rate80}
-%        \includegraphics[width=0.38\textwidth]{ee-rate80}
-%    }
-%\caption{the influence of EH efficiency on ave. sum rate under different numbers of CUs }
-%\label{fig:ee-rate}
-%\end{figure*}
 
 
 \section{Conclusion} \label{sec:conclusion}
-In this paper, we study the resource allocation scheme for EH-powered D2D communication underlaying cellular networks. Unlike the conventional D2D communications, the achievable energy will become another significant issue that resource allocation schemes must be considered in the EH-powered D2D communication. Thus, we investigate a sum-rate maximization problem in terms of the available energy and the transmission rate requirement under a single cellular network. Due to the optimization problem being a non-concave MINLP, we obtain the optimal lower bound of the original problem by a concave approximation and OAA algorithm. At the same time, because of the high complexity of OAA, we propose a heuristic algorithm, which is named Energy-aware Space Matching (ESM) algorithm. ESM decomposes the original problem into the spectrum matching problem and the power allocation problem. And then, ESM firstly solves the spectrum matching problem, and then allocates the proper power for the matched CU and EH-DPs. The time complexity of OAA and ESM in the worst case are $O(2^{N_C+N_D})$ and $O({N_C \cdot N_D})$, respectively. Obviously, the ESM own a lower complexity than OAA.
-
-In the simulation, different scenarios with different ratios and EH efficiencies are set to assess the effectiveness of the two algorithms and study the characteristics of the EH-powered D2D communication. From simulations, some vivid results can be obtained. First of all, simulation results imply that our considered resource allocation strategy is more effective than the strategy only based on channel state information under EH-DCCN. Secondly, the ESM algorithm with low computational complexity is more suitable for the scenarios with higher ratio than OAA. Finally, it is better to keep the ratio above 0.8 when EH efficiency of EH-DPs is low, and the EH efficiency of EH-DPs is up to 5 if the user density of EH-DPs is larger than CUs. This results can give some insights for the central controller to deploy EH-DCCN in the future.
+In this paper, 
 
 
-
-% if have a single appendix:
-%\appendix[Proof of the Zonklar Equations]
-% or
-%\appendix  % for no appendix heading
-% do not use \section anymore after \appendix, only \section*
-% is possibly needed
-
-% use appendices with more than one appendix
-% then use \section to start each appendix
-% you must declare a \section before using any
-% \subsection or using \label (\appendices by itself
-% starts a section numbered zero.)
-%
-
+ 
 
 \appendices
 \section{proof of \textbf{corollary \ref{thm:1}}}
 According to the reusing rules of the ESM, the distance among EH-DPs reusing the same spectrum of one CU is enough far away from each other. Hence, the interference among EH-DPs can be approximately ignored. Based on this, the minimum reusing radius $d_{EH}$ is approximately determined by the CU and the EH-DP reusing the same spectrum resource. Hence, according to the transmission rate requirement, the matched CU $c_i$ and EH-DP $d_j$ must satisfy the following constraints:
-%Thus, in order to make sure the every EH-DP {\color{red}has opportunity to transmission}, the EH-DP which owns the minimum available transmission power and the worst channel quality (minimum distance from base station) will be chosen for study the minimum reusing radius. According to the minimum transmission rate constraints of the matching CU and EH-DP:
-\begin{equation*}
-    \left\{ \begin{array}{l}
-    \log \left( {1 + \frac{{{p_{c_i }} \cdot {{\left| {{L_{c_i B}}} \right|}^{ - \alpha }}}}{{{n_0} + {p_{d_j }} \cdot {{\left| {{L_{d_j B}}} \right|}^{ - \alpha }}}}} \right) \ge r_{c_i }^{th},\\
-    \log \left( {1 + \frac{{{p_{d_j }} \cdot {{\left| {{L_{d_j }}} \right|}^{ - \alpha }}}}{{{n_0} + {p_{c_i}} \cdot {{\left| {{L_{c_i d_j }}} \right|}^{ - \alpha }}}}} \right) \ge r_{d_j }^{th}.
-\end{array} \right.
-\end{equation*}
 
-It can be converted as follow when all variables are equal or larger than zero:\par
-\begin{equation*}
-    \left\{ \begin{array}{l}
-    \frac{{{p_{c_i}} \cdot {{\left| {{L_{c_i B}}} \right|}^{ - \alpha }}}}{{{n_0} + {p_{d_j }} \cdot {{\left| {{L_{d_j B}}} \right|}^{ - \alpha }}}} \ge \mathop {r_{c_i }^{th}}\limits^ \wedge,  \\
-    \frac{{{p_{d_j }} \cdot {{\left| {{L_{d_j }}} \right|}^{ - \alpha }}}}{{{n_0} + {p_{c_i}} \cdot {{\left| {{L_{c_i d_j }}} \right|}^{ - \alpha }}}} \ge \mathop {r_{d_j }^{th}}\limits^ \wedge,
-\end{array} \right.
-\end{equation*}
-where $\mathop {r_{{c_i}}^{th}}\limits^ \wedge   = \exp \left( {r_{{c_i}}^{th}} \right) - 1,\mathop {r_{{d_j}}^{th}}\limits^ \wedge   = \exp \left( {r_{{d_j}}^{th}} \right) - 1$. Thus, we can obtain the following inequality conditions:
-\begin{equation*}
-    \left\{ \begin{array}{l}
-    {p_{c_i}} \ge \mathop {r_{c_i }^{th}}\limits^ \wedge  \left( {{p_{d_j }} \cdot {{\left| {{L_{d_j B}}} \right|}^{ - \alpha }} + {n_0}} \right) \cdot {\left| {{L_{c_i B}}} \right|^\alpha },\\
-    \left| {{L_{c_i d_j }}} \right| \ge {\left( {\frac{{{p_{d_j }} \cdot {{\left| {{L_{d_j }}} \right|}^{ - \alpha }} - {n_0}\mathop {r_{d_j }^{th}}\limits^ \wedge  }}{{\mathop {r_{d_j }^{th}}\limits^ \wedge   \cdot {p_{c_i}}}}} \right)^{ - {1 \mathord{\left/
-    {\vphantom {1 \alpha }} \right.
-    \kern-\nulldelimiterspace} \alpha }}}.
-    \end{array} \right.
-\end{equation*}
-
-Put ${p_{{c_i}}}$ into $\left| {{L_{{c_i}{d_j}}}} \right|$:
-\begin{align*}
-    \scalebox{0.98}{${\left| {{L_{{c_i}{d_j}}}} \right|}$} & \scalebox{0.98}{${\ge {\left( {\frac{{{p_{{d_j}}}\cdot{{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} - {n_0}\mathop {r_{{d_j}}^{th}}\limits^ \wedge  }}{{\mathop {r_{{d_j}}^{th}}\limits^ \wedge  \cdot\mathop {r_{{c_i}}^{th}}\limits^ \wedge  \left( {{p_{{d_j}}}\cdot{{\left| {{L_{{d_j}B}}} \right|}^{ - \alpha }} + {n_0}} \right)\cdot{{\left| {{L_{{c_i}B}}} \right|}^\alpha }}}} \right)^{{\rm{ - }}{1 \mathord{\left/ {\vphantom {1 \alpha }} \right.  \kern-\nulldelimiterspace} \alpha }}} }$}\\
-     &\scalebox{0.98}{${ \ge {\left[ {\left( {\frac{{{{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }}}}{\psi }} \right)\left( {1 - \frac{{\phi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} + {n_0} \cdot \psi  \cdot \mathop {r_{{d_j}}^{th}}\limits^ \wedge  }}{{\psi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} \cdot {p_{{d_j}}} + \phi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }}}}} \right)} \right]^{{\rm{ - }}{1 \mathord{\left/  {\vphantom {1 \alpha }} \right.  \kern-\nulldelimiterspace} \alpha }}} }$}
-\end{align*}
-where $\psi$ represents \scalebox{0.95}{${\mathop {r_{{d_j}}^{th}}\limits^ \wedge  \!\cdot\!\mathop {r_{{c_i}}^{th} \!\cdot\! }\limits^ \wedge  {\left| {{L_{{d_j}B}}} \right|^{ \!-\! \alpha }}\!\cdot\!{\left| {{L_{{c_i}B}}} \right|^\alpha }}$}, $\phi$ is \scalebox{0.95}{${\mathop {r_{{d_j}}^{th}}\limits^ \wedge  \cdot\mathop {r_{{c_i}}^{th}}\limits^ \wedge  \cdot{\left| {{L_{{c_i}B}}} \right|^\alpha } \cdot {n_0}}$}.
-%\begin{equation*}
-%    \scalebox{0.95} {${ &\begin{array}{l} \left| {{L_{{c_i}{d_j}}}} \right| \ge {\left( {\frac{{{p_{{d_j}}}\cdot{{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} - {n_0}\mathop {r_{{d_j}}^{th}}\limits^ \wedge  }}{{\mathop {r_{{d_j}}^{th}}\limits^ \wedge  \cdot\mathop {r_{{c_i}}^{th}}\limits^ \wedge  \left( {{p_{{d_j}}}\cdot{{\left| {{L_{{d_j}B}}} \right|}^{ - \alpha }} + {n_0}} \right)\cdot{{\left| {{L_{{c_i}B}}} \right|}^\alpha }}}} \right)^{{\rm{ - }}{1 \mathord{\left/  {\vphantom {1 \alpha }} \right.  \kern-\nulldelimiterspace} \alpha }}}\\
-%    &\ge {\left( {1 - \frac{{{n_0} \cdot \psi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} + {n_0} \cdot \psi  \cdot \mathop {r_{{d_j}}^{th}}\limits^ \wedge  }}{{\psi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }} \cdot {p_{{d_j}}} + {n_0} \cdot \psi  \cdot {{\left| {{L_{{d_j}}}} \right|}^{ - \alpha }}}}} \right)^{{\rm{ - }}{1 \mathord{\left/  {\vphantom {1 \alpha }} \right.
-% \kern-\nulldelimiterspace} \alpha }}}
-%\end{array}}$}.
-%\end{equation*}\par
-As illustrated by the above inequality function, if the EH-DP $d_j$ can reuse the CU $c_i$'s spectrum resource to transmit, we can obtain the minimum reusing distance between the matched CU $c_i$ and EH-DP $d_j$. Obviously, the value of ${L_{c_i d_j}}$ is proportional to ${L_{c_i B }}$ and inversely proportional to ${L_{d_j B }}$ and ${p_{d_j}}$. In order to let as many EH-DPs as possible can multiplex CU's spectrum resource, we must consider the worst case. According to the relationship of ${L_{c_i d_j}}$ between the other variables, the EH-DP $\mathop d\limits^\sim(\mathop d\limits^\sim \in {\Phi _D})$, which owns the minimum available transmission power and the worst channel quality (minimum distance from base station), is chosen. Furthermore, the CU $\mathop c\limits^\sim(\mathop c\limits^\sim \in {\Phi _C})$ which is farthest away from BS is chosen. Hence, the minimum matching radius $d_{EH}$, which ensures as many EH-DPs as possible can multiplex cellular spectrum resources, is shown as follow:
-\begin{equation*}
-    \scalebox{0.95} {${{d_{EH}} = \left| {{L_{{\mathop c\limits^\sim}{\mathop d\limits^\sim}}}} \right| \ge {\left( {\frac{{{p_{{\mathop d\limits^\sim}}} \cdot {{\left| {{L_{{\mathop d\limits^\sim}}}} \right|}^{ - \alpha }} - {n_0}\mathop {r_{{\mathop d\limits^\sim}}^{th}}\limits^ \wedge  }}{{\mathop {r_{{\mathop d\limits^\sim}}^{th}}\limits^ \wedge   \cdot \mathop {r_{{\mathop c\limits^\sim}}^{th}}\limits^ \wedge  \left( {{p_{{\mathop d\limits^\sim}}} \cdot {{\left| {{L_{{\mathop d\limits^\sim}B}}} \right|}^{ - \alpha }} + {n_0}} \right) \cdot {{\left| {{L_{{\mathop c\limits^\sim}B}}} \right|}^\alpha }}}} \right)^{ - {1 \mathord{\left/
- {\vphantom {1 \alpha }} \right.
- \kern-\nulldelimiterspace} \alpha }}}}$}.
-\end{equation*}
-
-
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
+ 
 
 
 % use section* for acknowledgment
@@ -1014,21 +611,18 @@ The authors sincerely thank the anonymous referees for their invaluable suggesti
 %\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
 % or if you just want to reserve a space for a photo:
 \newpage
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{Ying_Luo.eps}}]{Ying Luo}
- received the B.S. and M.S. degree from the department of Information Engineering, South West University of Science and  Technology (SWUST), in 2012 and 2015. She is currently working toward the Ph.D. degree in Information and Communication Engineering from the Department of Electronic Engineering and Information Science (EEIS), University of Science and Technology of China (USTC). Her research interests has focused on the analysis of heterogeneous cellular networks.
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{ZhiqiangLiu.eps}}]{Zhiqiang Liu}
+received the B.S degrees in electrical engineering from University of Science and Technology of China, Hefei, Anhui, China, in 2013, and he is currently pursuing the Ph.D. degree in electrical engineering from University of Science and Technology of China. His research interests lie resource allocation, energy-saving and Quality of Service guarantee in wireless body area networks. 
 \end{IEEEbiography}%
 \vspace{-20em}
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{Peilin_Hong.eps}}]{Peilin Hong}
-    received her B.S. and M.S. degrees from the Department of Electronic Engineering and Information Science (EEIS), University of Science and Technology of China (USTC), in 1983 and 1986. Currently, she is a Professor and Advisor for Ph.D. candidates in the Department of EEIS, USTC. Her research interests include next-generation Internet, policy control, IP QoS, and information security. She has published 2 books and over 150 academic papers in several journals and conference proceedings.
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{BinLiu.eps}}]{Bin Liu}
+received the B.S. and M.S. degrees, both in electrical engineering, from University of Science and Technology of China, Hefei, Anhui, China, in 1998 and 2001, respectively, and the Ph.D. degree in electrical engineering from Syracuse University, Syracuse, NY, in 2006. Currently, he is an Associate Professor with the School of Information Science and Technology, University of Science and Technology of China. His research interests are signal processing and communications in wireless sensor and body area networks.
 \end{IEEEbiography}%
 \vspace{-20em}
-\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{Ruolin_Su.eps}}]{Ruolin Su}
-     received the B.S. degree from the Department of Communications Engineering, Harbin Institute of Technology, China, in 2016. Currently, she is pursuing the M.S. degree at the Department of Electronic Engineering and Information Science, University of Science and Technology of China. Her current research interest is resource allocation in device-to-device communication.
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{ChangwenChen.eps}}]{Chang Wen Chen}
+   (F'04) is a Professor of Computer Science and Engineering at the State University of New York at Buffalo, USA. Previously, he was Allen S. Henry Endowed Chair Professor at Florida Institute of Technology from 2003 to 2007, a faculty member at the University of Missouri - Columbia from 1996 to 2003 and at the University of Rochester, Rochester, NY, from 1992 to 1996. He has been the Editor-in-Chief for IEEE Trans. Multimedia since 2014. He has also served as the Editor-in-Chief for IEEE Trans. Circuits and Systems for Video Technology from January 2006 to December 2009 and an Editor for Proceedings of IEEE, IEEE TMM, IEEE JSAC, IEEE JETCAS, and IEEE Multimedia Magazine. He and his students have received eight (8) Best Paper Awards or Best Student Paper Awards and have been placed among Best Paper Award finalists many times. He is a recipient of Sigma Xi Excellence in Graduate Research Mentoring Award in 2003, Alexander von Humboldt Research Award in 2009, and SUNY-Buffalo Exceptional Scholar - Sustained Achievements Award in 2012. He is an IEEE Fellow and an SPIE Fellow. 
 \end{IEEEbiography}%
-\vspace{-20em}
-\begin{IEEEbiography}[{\includegraphics[width=1.2in,height=2in,clip,keepaspectratio]{Kaiping_Xue.eps}}]{Kaiping Xue}
-    was born in 1980. He graduated with a B.S. degree from the Department of Information Security, University of Science and Technology of China (USTC), in 2003 and received a Ph.D. degree from the Department of Electronic Engineering and Information Science (EEIS), USTC, in 2007. Currently, he is an Associate Professor in the Department of Information Security and Department of EEIS, USTC. His research interests include next-generation Internet, distributed networks and network security.
-\end{IEEEbiography}%
+ 
 
 
 % You can push biographies down or up by placing
