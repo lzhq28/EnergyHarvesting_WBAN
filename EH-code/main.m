@@ -14,7 +14,7 @@
     end
     deltaPL_ind_max = 10;
     deltaPL_step = 2; %单位dBm
-    parfor deltaPL_ind =1:deltaPL_ind_max
+    parfor deltaPL_ind =1:deltaPL_ind_max  
         %% 初始化系统参数
         % deltaPL_ind = deltaPL_ind_max;
         time_1 =clock;

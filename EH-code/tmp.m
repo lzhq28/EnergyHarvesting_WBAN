@@ -21,3 +21,15 @@ parfor deltaPL =1:10
     pathInfo = strcat(['QoS_deltaPL-',num2str(deltaPL),'.mat']);
     parsave(pathInfo, QoS)
 end
+
+%% 观察目标函数
+N_max = 100;
+x=0:1:2*N_max
+y=(power(N_max,2)-power((N_max-x),2))/power(N_max,2)
+figure
+plot(x,y)
+hold on
+plot([N_max,N_max],[0,1])
+text(N_max,0.5,' \leftarrow B_{i}');
+xlabel('Transmission bits with allocated slots')
+ylabel('Equivalent performance')

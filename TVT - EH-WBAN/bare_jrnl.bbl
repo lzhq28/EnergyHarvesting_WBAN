@@ -1,0 +1,42 @@
+\begin{thebibliography}{1}
+
+\bibitem{mitran2012optimal}
+M.~P, ``On optimal online policies in energy harvesting systems for compound
+  poisson energy arrivals,'' in {\em IEEE International Symposium on
+  Information Theory Proceedings (ISIT)}, pp.~960--964, 2012.
+
+\bibitem{sharma2010optimal}
+V.~Sharma, U.~Mukherji, V.~Joseph, and S.~Gupta, ``Optimal energy management
+  policies for energy harvesting sensor nodes,'' {\em IEEE Transactions on
+  Wireless Communications}, vol.~9, no.~4, pp.~1326--1336, 2010.
+
+\bibitem{lohani2016multiuser}
+S.~Lohani, R.~A. Loodaricheh, E.~Hossain, and V.~K. Bhargava, ``On multiuser
+  resource allocation in relay-based wireless-powered uplink cellular
+  networks,'' {\em IEEE Transactions on Wireless Communications}, vol.~15,
+  no.~3, pp.~1851--1865, 2016.
+
+\bibitem{hijazi2010outer}
+H.~Hijazi, P.~Bonami, and A.~Ouorou, ``An outer-inner approximation for
+  separable {MINLP}s,'' {\em LIF, Facult{\'e} des Sciences de Luminy,
+  Universit{\'e} de Marseille, Tech. Rep}, 2010.
+
+\bibitem{cai2015graph}
+X.~Cai, J.~Zheng, and Y.~Zhang, ``A graph-coloring based resource allocation
+  algorithm for {D2D} communication in cellular networks,'' in {\em IEEE
+  International Conference on Communications (ICC)}, pp.~5429--5434, IEEE,
+  2015.
+
+\bibitem{jiang2007papr}
+T.~Jiang, W.~Xiang, P.~C. Richardson, J.~Guo, and G.~Zhu, ``{PAPR} reduction of
+  {OFDM} signals using partial transmit sequences with low computational
+  complexity,'' {\em IEEE Transactions on Broadcasting}, vol.~53, no.~3,
+  pp.~719--724, 2007.
+
+\bibitem{yin2015pricing}
+R.~Yin, G.~Yu, H.~Zhang, Z.~Zhang, and G.~Y. Li, ``Pricing-based interference
+  coordination for {D2D} communications in cellular networks,'' {\em IEEE
+  Transactions on Wireless Communications}, vol.~14, no.~3, pp.~1519--1532,
+  2015.
+
+\end{thebibliography}

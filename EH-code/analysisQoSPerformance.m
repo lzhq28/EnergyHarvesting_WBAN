@@ -5,6 +5,7 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind
 %   deltaPL_ind_max deltaPL的最大实验次数
 %   t_cor_EH 能量采集相关时间
     % 从文件中加载中间数据结果
+    %t_cor_EH = par.EnergyHarvest.t_cor_EH
     load_data = {}; %加载的数据
     for deltaPL_ind =1:deltaPL_ind_max
         deltaPL =  (deltaPL_ind-1)*deltaPL_step;
@@ -39,7 +40,7 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind
     color_set = linspecer(num_nodes);
     
     %% 画出仿真结果
-    x_range = (0:deltaPL_ind_max-1)*deltaPL_step
+    x_range = (0:deltaPL_ind_max-1)*deltaPL_step;
     figure
     subplot(221)
     for ind_node = 1:num_nodes
@@ -102,7 +103,7 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind
     subplot(211)
     for ind_node = 1:num_nodes
         hold on
-        plot(cur_EH_status_seq(ind_node,15000:15800),'-','linewidth',2,'color',color_set(ind_node,:))
+        plot(cur_EH_status_seq(ind_node,12000:15800),'-','linewidth',2,'color',color_set(ind_node,:))
     end
     xlabel('Index of slots')
     ylabel('Energy Harvest Status (1:ON, 2:OFF)')
@@ -111,7 +112,7 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind
     subplot(212)
     for ind_node = 1:num_nodes
         hold on
-        plot(cur_EH_collect_seq(ind_node,15000:15800),'-','linewidth',2,'color',color_set(ind_node,:))
+        plot(cur_EH_collect_seq(ind_node,12000:15800),'-','linewidth',2,'color',color_set(ind_node,:))
     end
     grid on
     xlabel('Index of slots')
