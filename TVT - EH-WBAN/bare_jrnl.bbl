@@ -1,3 +1,61 @@
-\begin{thebibliography}{}
+\begin{thebibliography}{10}
+
+\bibitem{salayma2017wireless}
+M.~Salayma, A.~Al-Dubai, I.~Romdhani, and Y.~Nasser, ``Wireless body area
+  network (wban): A survey on reliability, fault tolerance, and technologies
+  coexistence,'' {\em ACM Computing Surveys (CSUR)}, vol.~50, no.~1, p.~3,
+  2017.
+
+\bibitem{movassaghi2014wireless}
+S.~Movassaghi, M.~Abolhasan, J.~Lipman, D.~Smith, and A.~Jamalipour, ``Wireless
+  body area networks: A survey,'' {\em IEEE Communications Surveys \&
+  Tutorials}, vol.~16, no.~3, pp.~1658--1686, 2014.
+
+\bibitem{zhang2017medium}
+R.~Zhang, H.~Moungla, J.~Yu, and A.~Mehaoua, ``Medium access for concurrent
+  traffic in wireless body area networks: Protocol design and analysis,'' {\em
+  IEEE Transactions on Vehicular Technology}, vol.~66, no.~3, pp.~2586--2599,
+  2017.
+
+\bibitem{razzaque2017qos}
+M.~Razzaque, M.~T. Hira, and M.~Dira, ``Qos in body area networks: A survey,''
+  {\em ACM Transactions on Sensor Networks (TOSN)}, vol.~13, no.~3, p.~25,
+  2017.
+
+\bibitem{ibarra2016qos}
+E.~Ibarra, A.~Antonopoulos, E.~Kartsakli, J.~J. Rodrigues, and C.~Verikoukis,
+  ``Qos-aware energy management in body sensor nodes powered by human energy
+  harvesting,'' {\em IEEE Sensors Journal}, vol.~16, no.~2, pp.~542--549, 2016.
+
+\bibitem{luo2017resource}
+Y.~Luo, P.~Hong, R.~Su, and K.~Xue, ``Resource allocation for energy
+  harvesting-powered d2d communication underlaying cellular networks,'' {\em
+  IEEE Transactions on Vehicular Technology}, 2017.
+
+\bibitem{zang2016accelerometer}
+W.~Zang, S.~Zhang, and Y.~Li, ``An accelerometer-assisted transmission power
+  control solution for energy-efficient communications in wban,'' {\em IEEE
+  Journal on Selected Areas in Communications}, vol.~34, no.~12,
+  pp.~3427--3437, 2016.
+
+\bibitem{liu2017transmission}
+Z.~Liu, B.~Liu, and C.~W. Chen, ``Transmission-rate-adaption assisted
+  energy-efficient resource allocation with qos support in wbans,'' {\em IEEE
+  Sensors Journal}, vol.~17, no.~17, pp.~5767--5780, 2017.
+
+\bibitem{hao2017energy}
+Y.~Hao, L.~Peng, H.~Lu, M.~M. Hassan, and A.~Alamri, ``Energy harvesting based
+  body area networks for smart health,'' {\em Sensors}, vol.~17, no.~7,
+  p.~1602, 2017.
+
+\bibitem{akhtar2017energy}
+F.~Akhtar and M.~H. Rehmani, ``Energy harvesting for self-sustainable wireless
+  body area networks,'' {\em IT Professional}, vol.~19, no.~2, pp.~32--40,
+  2017.
+
+\bibitem{kansal2007power}
+A.~Kansal, J.~Hsu, S.~Zahedi, and M.~B. Srivastava, ``Power management in
+  energy harvesting sensor networks,'' {\em ACM Transactions on Embedded
+  Computing Systems (TECS)}, vol.~6, no.~4, p.~32, 2007.
 
 \end{thebibliography}

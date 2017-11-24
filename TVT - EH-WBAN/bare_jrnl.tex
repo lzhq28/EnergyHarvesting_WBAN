@@ -216,8 +216,8 @@ Energy harvesting (EH)-powered WBAN, which can provide uninterrupted work, has a
 However, the time-varying and heterogeneous EH states of different sensors  become an important factor when designing the resource allocation schemes in EH-powered WBAN.
 In this paper, we propose a novel two-phase resource allocation scheme, which optimizes the allocation of transmission power, source rate and slots to improve the QoS performance of EH-powered WBAN. In the first phase, we analysis the relationship between the QoS performance and the source rate for satisfying the Energy Neutral Operation (ENO), and then a joint Power-Rate Control Scheme (PRCS) is proposed to optimize the source rate and transmission power for ensuring the long-term QoS performance based on the statistical properties of EH. 
 Moreover, we design a QoS Aware Slot Allocation Scheme (QASAS) to dynamically adjust the time slot allocation to cope with the time-varying EH states for obtaining better short-term QoS performance in the second phase.
-Finally, numerical simulation results demonstrate that the proposed joint Power-Rate-Slot resource allocation of EH-powered WBAN can effectively exploit the time-varying EH to improve both long-term and short-term QoS performance, and .
-
+Finally, numerical simulation results demonstrate that the proposed joint Power-Rate-Slot resource allocation of EH-powered WBAN can effectively exploit the time-varying EH to improve both long-term and short-term QoS performance.
+%% 还需要进行一定的修改 20171124
 
 \end{abstract}
 
@@ -228,22 +228,42 @@ Finally, numerical simulation results demonstrate that the proposed joint Power-
 
 
 
-% For peer review papers, you can put extra information on the cover
-% page as needed:
-% \ifCLASSOPTIONpeerreview
-% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
-% \fi
-%
-% For peerreview papers, this IEEEtran command inserts a page break and
-% creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
 
 
 \section{Introduction}
+With the rapid development of sensor and wireless communication technologies, wireless body area network (WBAN) can replace complex and wired healthcare requirement to continuously monitor the body's vital signals and provide real-time feedback to the user and doctors without causing any discomfort and interrupting their daily lifestyle \cite{salayma2017wireless,movassaghi2014wireless}. 
+WBAN typically consists of several lower-power, miniaturized and lightweight on-body or implanted sensor nodes to monitor physiological parameters, which are collected and further transmitted to remote medical servers by one energy-efficient hub (Mobile phone or PDA) for various medical and healthcare applications \cite{zhang2017medium}. 
+Generally, most of these applications are life critical and require a long lifetime without interrupting user's daily lifestyle, while still have a strict guarantee of Quality of Service (QoS) in terms of packet loss, delay and so on \cite{razzaque2017qos}.
 
-this is introduction
+However, the limited battery capacity, constrained by the size and weight of sensors nodes, cannot support the long term operation without interruption.  Besides, replacing battery or taking off sensors to charge power is not always practical especially for some implanted sensors, which also causes the interruption of the health monitoring system \cite{ibarra2016qos,luo2017resource}. Although the classical energy saving technologies make efforts to explore different energy efficient schemes in aspects of MAC protocol design, power control schemes and cross-layer resource scheduling strategies to prolong the system lifetime \cite{zhang2017medium,zang2016accelerometer,liu2017transmission}, the ultimate goal 'uninterrupted work' cannot be ensured. 
+Fortunately, Energy Harvesting (EH) technology, which can collect energy from various sources around human body, has recently been considered as a promising solution to overcome the bottleneck of energy limited WBANs \cite{hao2017energy}. For instance, EH-powered sensors can scavenge energy from a variety of limitless ambient sources (e.g., light, heat, electromagnetic radiation) or the body itself (e.g., locomotion, breathing, heartbeat, lactate), and then convert it to usable electric energy for providing continuous power \cite{akhtar2017energy}. Thus, EH-powered WBANs have the potential ability to achieve infinite lifetime and perpetual operation, which is called Energy Neutral Operation (ENO) \cite{kansal2007power}.
+Furthermore, sensors can also combine several types of EH sources for acquiring more energy to support more strict QoS requirements \cite{ibarra2016qos}.
+Therefore, researchers pay more and more attentions on how to keep in ENO state with considering the QoS performance in EH-powered WBAN.
 
+However, due to the limitation of the sensor size, the energy harvester cannot always satisfy the ENO requirement and the collected energy is scarce. In addition, sensors in different positions on the body may have different types of EH and the energy collection rates are heterogeneous. Meanwhile, harvesters with energy source from the human body have time-varying states caused by the dynamic body movement status. Thus, the time-varying and heterogeneous EH states become a significant factor to design the effective resource allocation scheme for ENO state. 
+Therefore, it is highly meaningful to do some resource management researches on EH-powered WBAN with considering the QoS performance.
+
+ 
+
+
+
+
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+ 
 
 \section{Related works}
 This is related works
@@ -376,7 +396,7 @@ This is system model
 \renewcommand\arraystretch{1.2}
 
 \section{Simulation results} \label{sec:simulation_results}
-In this section, the performance of the two proposed algorithms and the characteristics of the EH-DCCN are investigated in the performance of the average achievable system rate and the matching probability of EH-DPs. The matching probability of EH-DPs represents the ratio of the matched EH-DPs in $N_D$.  
+In this section, the performance of the two proposed algorithms and the characteristics of the EH-DCCN are investigated in the performance of the average achievable system rate and the matching probability of EH-DPs. The matching probability of EH-DPs represents the ratio of the matched EH-DPs in $N_D$. 
 
  
 
@@ -392,18 +412,17 @@ In this section, the performance of the two proposed algorithms and the characte
 In this paper, 
 
 
- 
 
-\appendices
-\section{proof of \textbf{corollary \ref{thm:1}}}
-According to the reusing rules of the ESM, the distance among EH-DPs reusing the same spectrum of one CU is enough far away from each other. Hence, the interference among EH-DPs can be approximately ignored. Based on this, the minimum reusing radius $d_{EH}$ is approximately determined by the CU and the EH-DP reusing the same spectrum resource. Hence, according to the transmission rate requirement, the matched CU $c_i$ and EH-DP $d_j$ must satisfy the following constraints:
+%%%\appendices
+%%%\section{proof of \textbf{corollary \ref{thm:1}}}
+%%%According to the reusing rules of the ESM, the distance among EH-DPs reusing the same spectrum of one CU is enough far away from each other. Hence, the interference among EH-DPs can be approximately ignored. Based on this, the minimum reusing radius $d_{EH}$ is approximately determined by the CU and the EH-DP reusing the same spectrum resource. Hence, according to the transmission rate requirement, the matched CU $c_i$ and EH-DP $d_j$ must satisfy the following constraints:
 
  
 
 
 % use section* for acknowledgment
 \section*{Acknowledgment}
-The authors sincerely thank the anonymous referees for their invaluable suggestions that have led to the present improved version of the original manuscript. This work is supported in part by the National Natural Science Foundation of China under Grant No.61671420, No.61672484, No. 61379129, and the Fundamental Research Funds for the Central Universities.
+%%%The authors sincerely thank the anonymous referees for their invaluable suggestions that have led to the present improved version of the original manuscript. This work is supported in part by the National Natural Science Foundation of China under Grant No.61671420, No.61672484, No. 61379129, and the Fundamental Research Funds for the Central Universities.
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
 \ifCLASSOPTIONcaptionsoff
