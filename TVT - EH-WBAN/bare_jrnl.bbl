@@ -11,6 +11,11 @@ S.~Movassaghi, M.~Abolhasan, J.~Lipman, D.~Smith, and A.~Jamalipour, ``Wireless
   body area networks: A survey,'' {\em IEEE Communications Surveys \&
   Tutorials}, vol.~16, no.~3, pp.~1658--1686, 2014.
 
+\bibitem{dagdeviren2017energy}
+C.~Dagdeviren, Z.~Li, and Z.~L. Wang, ``Energy harvesting from the animal/human
+  body for self-powered electronics,'' {\em Annual Review of Biomedical
+  Engineering}, vol.~19, no.~1, 2017.
+
 \bibitem{zhang2017medium}
 R.~Zhang, H.~Moungla, J.~Yu, and A.~Mehaoua, ``Medium access for concurrent
   traffic in wireless body area networks: Protocol design and analysis,'' {\em
@@ -57,5 +62,99 @@ F.~Akhtar and M.~H. Rehmani, ``Energy harvesting for self-sustainable wireless
 A.~Kansal, J.~Hsu, S.~Zahedi, and M.~B. Srivastava, ``Power management in
   energy harvesting sensor networks,'' {\em ACM Transactions on Embedded
   Computing Systems (TECS)}, vol.~6, no.~4, p.~32, 2007.
+
+\bibitem{leng2017resource}
+S.~Leng and A.~Yener, ``Resource allocation in body area networks for energy
+  harvesting healthcare monitoring,'' in {\em Handbook of Large-Scale
+  Distributed Computing in Smart Healthcare}, pp.~553--587, Springer, 2017.
+
+\bibitem{wahbah2014characterization}
+M.~Wahbah, M.~Alhawari, B.~Mohammad, H.~Saleh, and M.~Ismail,
+  ``Characterization of human body-based thermal and vibration energy
+  harvesting for wearable devices,'' {\em IEEE Journal on emerging and selected
+  topics in circuits and systems}, vol.~4, no.~3, pp.~354--363, 2014.
+
+\bibitem{xia20140}
+L.~Xia, J.~Cheng, N.~E. Glover, and P.~Chiang, ``0.56 v,--20 dbm rf-powered,
+  multi-node wireless body area network system-on-a-chip with
+  harvesting-efficiency tracking loop,'' {\em IEEE Journal of Solid-State
+  Circuits}, vol.~49, no.~6, pp.~1345--1355, 2014.
+
+\bibitem{el201610}
+D.~El-Damak and A.~P. Chandrakasan, ``A 10 nw--1 $\mu$w power management ic
+  with integrated battery management and self-startup for energy harvesting
+  applications,'' {\em IEEE Journal of Solid-State Circuits}, vol.~51, no.~4,
+  pp.~943--954, 2016.
+
+\bibitem{bluetooth2010}
+S.~Bluetooth, ``Bluetooth core specification version 4.0,'' {\em Specification
+  of the Bluetooth System}, 2010.
+
+\bibitem{kramer2006energy}
+M.~Kramer and A.~Geraldy, ``Energy measurements for micaz node,'' {\em
+  University of Kaiserslautern, Kaiserslautern, Germany, Technical Report
+  KrGe06}, 2006.
+
+\bibitem{wong20131}
+A.~C.~W. Wong, M.~Dawkins, G.~Devita, N.~Kasparidis, A.~Katsiamis, O.~King,
+  F.~Lauria, J.~Schiff, and A.~J. Burdett, ``A 1 v 5 ma multimode ieee 802.15.
+  6/bluetooth low-energy wban transceiver for biotelemetry applications,'' {\em
+  IEEE Journal of Solid-State Circuits}, vol.~48, no.~1, pp.~186--198, 2013.
+
+\bibitem{mosavat2017maximizing}
+H.~Mosavat-Jahromi, B.~Maham, and T.~A. Tsiftsis, ``Maximizing spectral
+  efficiency for energy harvesting-aware wban,'' {\em IEEE journal of
+  biomedical and health informatics}, vol.~21, no.~3, pp.~732--742, 2017.
+
+\bibitem{varan2016delay}
+B.~Varan and A.~Yener, ``Delay constrained energy harvesting networks with
+  limited energy and data storage,'' {\em IEEE Journal on Selected Areas in
+  Communications}, vol.~34, no.~5, pp.~1550--1564, 2016.
+
+\bibitem{shan2015discrete}
+F.~Shan, J.~Luo, W.~Wu, M.~Li, and X.~Shen, ``Discrete rate scheduling for
+  packets with individual deadlines in energy harvesting systems,'' {\em IEEE
+  Journal on Selected Areas in Communications}, vol.~33, no.~3, pp.~438--451,
+  2015.
+
+\bibitem{tutuncuoglu2012optimum}
+K.~Tutuncuoglu and A.~Yener, ``Optimum transmission policies for battery
+  limited energy harvesting nodes,'' {\em IEEE Transactions on Wireless
+  Communications}, vol.~11, no.~3, pp.~1180--1189, 2012.
+
+\bibitem{alhawari2016power}
+M.~Alhawari, T.~Tekeste, B.~Mohammad, H.~Saleh, and M.~Ismail, ``Power
+  management unit for multi-source energy harvesting in wearable electronics,''
+  in {\em Circuits and Systems (MWSCAS), 2016 IEEE 59th International Midwest
+  Symposium on}, pp.~1--4, IEEE, 2016.
+
+\bibitem{dionisi2016autonomous}
+A.~Dionisi, D.~Marioli, E.~Sardini, and M.~Serpelloni, ``Autonomous wearable
+  system for vital signs measurement with energy-harvesting module,'' {\em IEEE
+  Transactions on Instrumentation and Measurement}, vol.~65, no.~6,
+  pp.~1423--1434, 2016.
+
+\bibitem{shaviv2016universally}
+D.~Shaviv and A.~{\"O}zg{\"u}r, ``Universally near optimal online power control
+  for energy harvesting nodes,'' {\em IEEE Journal on Selected Areas in
+  Communications}, vol.~34, no.~12, pp.~3620--3631, 2016.
+
+\bibitem{liu2015optimal}
+B.~Liu, S.~Yu, and C.~W. Chenz, ``Optimal resource allocation in energy
+  harvesting-powered body sensor networks,'' in {\em Future Information and
+  Communication Technologies for Ubiquitous HealthCare (Ubi-HealthTech), 2015
+  2nd International Symposium on}, pp.~1--5, IEEE, 2015.
+
+\bibitem{wei2015power}
+S.~Wei, W.~Guan, and K.~R. Liu, ``Power scheduling for energy harvesting
+  wireless communications with battery capacity constraint,'' {\em IEEE
+  Transactions on Wireless Communications}, vol.~14, no.~8, pp.~4640--4653,
+  2015.
+
+\bibitem{ozel2011transmission}
+O.~Ozel, K.~Tutuncuoglu, J.~Yang, S.~Ulukus, and A.~Yener, ``Transmission with
+  energy harvesting nodes in fading wireless channels: Optimal policies,'' {\em
+  IEEE Journal on Selected Areas in Communications}, vol.~29, no.~8,
+  pp.~1732--1743, 2011.
 
 \end{thebibliography}

@@ -215,8 +215,8 @@ The limited energy of sensors in WBAN cannot support the long term work with the
 Energy harvesting (EH)-powered WBAN, which can provide uninterrupted work, has attracted more attention from both macadamia and industry. 
 However, the time-varying and heterogeneous EH states of different sensors  become an important factor when designing the resource allocation schemes in EH-powered WBAN.
 In this paper, we propose a novel two-phase resource allocation scheme, which optimizes the allocation of transmission power, source rate and slots to improve the QoS performance of EH-powered WBAN. In the first phase, we analysis the relationship between the QoS performance and the source rate for satisfying the Energy Neutral Operation (ENO), and then a joint Power-Rate Control Scheme (PRCS) is proposed to optimize the source rate and transmission power for ensuring the long-term QoS performance based on the statistical properties of EH. 
-Moreover, we design a QoS Aware Slot Allocation Scheme (QASAS) to dynamically adjust the time slot allocation to cope with the time-varying EH states for obtaining better short-term QoS performance in the second phase.
-Finally, numerical simulation results demonstrate that the proposed joint Power-Rate-Slot resource allocation of EH-powered WBAN can effectively exploit the time-varying EH to improve both long-term and short-term QoS performance.
+Moreover, we design a QoS Aware Slot Allocation Scheme (QASAS) to dynamically adjust the time slot allocation to cope with the time-varying and heterogeneous EH states for obtaining better short-term QoS performance in the second phase.
+Finally, numerical simulation results demonstrate that the proposed joint the Power-Rate-Slot resource allocation scheme of EH-powered WBAN can effectively exploit the time-varying EH to improve both long-term and short-term QoS performance.
 %% 还需要进行一定的修改 20171124
 
 \end{abstract}
@@ -233,7 +233,7 @@ Finally, numerical simulation results demonstrate that the proposed joint Power-
 
 
 \section{Introduction}
-With the rapid development of sensor and wireless communication technologies, wireless body area network (WBAN) can replace complex and wired healthcare requirement to continuously monitor the body's vital signals and provide real-time feedback to the user and doctors without causing any discomfort and interrupting their daily lifestyle \cite{salayma2017wireless,movassaghi2014wireless}. 
+With the rapid development of sensor and wireless communication technologies, wireless body area network (WBAN) can replace complex and wired healthcare requirement to continuously monitor the body's vital signals and provide real-time feedback to the user and doctors without causing any discomfort and interrupting their daily lifestyle \cite{salayma2017wireless,movassaghi2014wireless,dagdeviren2017energy}. 
 WBAN typically consists of several lower-power, miniaturized and lightweight on-body or implanted sensor nodes to monitor physiological parameters, which are collected and further transmitted to remote medical servers by one energy-efficient hub (Mobile phone or PDA) for various medical and healthcare applications \cite{zhang2017medium}. 
 Generally, most of these applications are life critical and require a long lifetime without interrupting user's daily lifestyle, while still have a strict guarantee of Quality of Service (QoS) in terms of packet loss, delay and so on \cite{razzaque2017qos}.
 
@@ -242,39 +242,82 @@ Fortunately, Energy Harvesting (EH) technology, which can collect energy from va
 Furthermore, sensors can also combine several types of EH sources for acquiring more energy to support more strict QoS requirements \cite{ibarra2016qos}.
 Therefore, researchers pay more and more attentions on how to keep in ENO state with considering the QoS performance in EH-powered WBAN.
 
-However, due to the limitation of the sensor size, the energy harvester cannot always satisfy the ENO requirement and the collected energy is scarce. In addition, sensors in different positions on the body may have different types of EH and the energy collection rates are heterogeneous. Meanwhile, harvesters with energy source from the human body have time-varying states caused by the dynamic body movement status. Thus, the time-varying and heterogeneous EH states become a significant factor to design the effective resource allocation scheme for ENO state. 
+Due to the limitation of the sensor size, the energy harvester cannot always satisfy the ENO requirement and the collected energy is scarce. In addition, sensors in different positions on the body may have different types of EH and the energy collection rates are heterogeneous. Meanwhile, harvesters with energy sources from the human body have time-varying states caused by the dynamic body movement status. Thus, the time-varying and heterogeneous EH states become a significant factor to design the effective resource allocation scheme for ENO state. 
 Therefore, it is highly meaningful to do some resource management researches on EH-powered WBAN with considering the QoS performance.
 
+
+\subsection{Related works}
+
+Compared with EH-powered wireless sensor networks (WSNs), the human body contains more bio-energy sources  besides the ambient source for various kinds of energy harvesters in WBANs \cite{leng2017resource}. Generally, these bio-energy sources can be classified into biochemical and biomechnical energy sources. The biochemical energy sources convert electrochemical reactions to electricity for implanted body sensors, while the harvesters can scavenge energy from the voluntary and involuntary actions of the human body as biomechnical energy sources \cite{akhtar2017energy}. The scavenged energy can be converted to  electric potential by appropriated harvesters, and then stored into a rechargeable battery or a super-capacitor for powering up wireless body sensors \cite{wahbah2014characterization}. The energy harvesting efficiency can be improved to harvest more energy through the elaborate hardware circuit design \cite{xia20140}\cite{el201610}. Therefore, the available power density by harvesting energy from human body gradually reaches $\mu W$ range, which will be able to run low-low-power-consuming wireless devices, such as Bluetooth4.0 \cite{bluetooth2010}, MicaZ \cite{kramer2006energy}, MultiMode \cite{wong20131} and so on. However, the harvesting process of human body sensors is unstable and time-varying due to the dynamic body movement status \cite{hao2017energy}. In addition, the different positions of sensors or different types of energy harvesters have heterogeneous energy harvesting rates. Therefore, the resource allocation scheme for EH-powered WBAN should be able to cope with time-varying and heterogeneous EH states for better utilizing the scavenged energy.
+
+In the literature, some researches have been focused on the resource allocation schemes for EH-powered WBANs. Generally, these resource allocations schemes can be divided into two categories in terms of the priori knowledge of the channel state, data state and energy state for the transmitter, i. e. the offline schemes \cite{mosavat2017maximizing,varan2016delay,shan2015discrete,tutuncuoglu2012optimum} and the online schemes \cite{leng2017resource,ibarra2016qos,alhawari2016power,dionisi2016autonomous,shaviv2016universally,liu2015optimal,wei2015power,ozel2011transmission}. 
+For the offline schemes, it is assumed that the transmitter have perfect priori knowledge of the channel state, data state and the energy state when it allocates resources \cite{leng2017resource}. 
+In \cite{tutuncuoglu2012optimum}, the short-term throughput and the transmission completion time were regarded as the objective function to obtain the optimum power allocation with a deadline constraint and finite energy storage capacity, while energy arrivals were assumed as a priori known. 
+Shan et al. \cite{shan2015discrete} proposed a general framework to transform the continuous-rate model into practical discrete transmission rates with keeping the optimality, and the per-application quality-of-service (QoS) could be guaranteed by the optimal rate scheduling algorithm for an EH enabled transmitter, assuming that the information regarding packets and harvesting is known in advance. 
+Varan et al., \cite{varan2016delay} considered the throughput maximization problem with finite energy and data storage constraints, and new notions of water pumps and overflow bins were added to the directional waterfilling for solving the energy scheduling problem. 
+In \cite{wei2015power}, the weighted sum of the outage probabilities was the objective function to minimize in the power control policy, while the harvested energy was known as a priori to the scheduler. However, due to the non-convex objective function, a near-optimal offline scheme was designed with only high signal-to-noise ratios.
+The above offline resource allocation schemes commonly construct the convex optimization problems and analytical solutions to obtain the optimal resource allocation results with perfect non-causal and priori knowledge. Thus, offline schemes can only serve as a benchmark of the resource allocation schemes, or the EH states are predictable for some stable energy sources.   
+
+Compared with the offline schemes, only the causal information and statistical knowledge of energy states, data states and channel states can be utilized in the online schemes to manage the data packets and the collected energy. 
+% online 思路：由长用方法-》逐渐引入：多个节点+长期和短期QoS服务问题
+Ozel et al., \cite{ozel2011transmission} maximized the number of bits sent by a deadline given only the distributions of the energy arrivals and channel fade levels. 
+Leng and Yener \cite{leng2017resource} maximized the long-term expected throughput under the energy constraints, and the close-form expression of optimal transmission power was obtained by formulating the Largrangian and solving the KKT conditions.
+However, these long-term throughput cannot meet the specific application requirements for these heterogeneous body sensors in WBANs. In addition, the QoS requirements are not carefully taken into consideration in the optimization problems.
+Liu et al., \cite{liu2015optimal} modeled the transmission power and time allocation optimization problem as a Markov decision process (MDP) to provide a sustainable and high quality service for EH-powered WBAN. 
+However, MDP based resource allocation schemes have the high complexity for wireless devices with limited computational capabilities in WBANs, and they are highly dependent on the accuracy models of channel fading level, energy arrivals and data arrivals, which are hardly obtained in practice. 
+To achieve the best possible QoS, authors of \cite{ibarra2016qos} proposed a joint power-QoS control scheme for making optimal use of harvested energy to efficiently transmit the respective data packets of only one sensor in WBAN. However, the channel fading was not considered in the scheme, which could not deal with the dynamic link characteristics in WBANs. In addition, the time-varying and heterogeneous EH states of different body sensors were not considered.
  
 
-
-
-
+%%\cite{leng2017resource} online and offline
+%%online:
+%%\cite{leng2017resource}
+%%\cite{ibarra2016qos}
+%%\cite{alhawari2016power}
+%%\cite{dionisi2016autonomous}
+%%\cite{shaviv2016universally}
+%%\cite{liu2015optimal}
+%%\cite{wei2015power}
+%%\cite{ozel2011transmission}
+%%online-offline:
+%%\cite{rezaee2016energy}
+%%\cite{satpathi2016optimal}
+%%QoS:
+%%\cite{loodaricheh2016qos}
+%%\cite{ibarra2016qos}
+%%offline: 
+%%\cite{mosavat2017maximizing}
+%%\cite{varan2016delay}
+%%\cite{shan2015discrete}
+%%\cite{tutuncuoglu2012optimum} 
 
  
+\subsection{Contributions}
+In this paper, we develop an efficient resource allocation scheme for EH-powered WBANs to support both the long-term and short-term QoS requirements, when the energy harvesting states of different body sensors are heterogeneous and time-varying. The important contributions of this paper are expressed as three aspects:
+ \begin{enumerate}
+	 \item As far as we know, this work is the first to joint the transmission power, source rate and time slots to effectively allocate the resources under dynamic link characteristics of heterogeneous body sensors with the time-varying EH states. Therefore, the harvested energy can be efficiently utilized to improving both the long-term and short-term QoS performances.
+	 \item We analyze the relationship between the source rate and the long-term QoS performance of a body sensor for satisfying the Energy Neutral Operation (ENO). Then, we optimize the transmission power and the source rates for different body sensors to improve the long-term QoS performance, which is based on the statistical knowledge of energy harvesting and channel fading. An optimal numerical solution is successfully obtained through the transformation of the non-convex problem.
+	\item The time-varying and heterogeneous EH states will cause the fluctuation of the data queues, which affect the short-term QoS performance. Thus, we carefully predict the states of each sensors based on the energy states and queue states, and then dynamically adjust the time slot allocation to better transmit data packets with harvesting energy for improving the short-term QoS performance.
+ \end{enumerate}
 
- 
+The remainder of this paper is organized as follows. 
+In Section \ref{sec:system_model}
+
+\ref{sec:PRCS}
+
+\ref{sec:QASAS}
+
+\ref{}
+
+\ref{sec:conclusion}
 
 
-
-
-
-
-
-
-
- 
-
-\section{Related works}
-This is related works
-
-\section{System model}
+\section{System model} \label{sec:system_model}
 This is system model
 \subsection{Energy Consumption Model}
 
 \subsection{Energy Harvesting Model}
 
-\section{Long-term Power-Rate Control Scheme}
+\section{Long-term Power-Rate Control Scheme} \label{sec:PRCS}
 
 \subsection{Relationship between Source Rate and Uninterrupted Lifetime}
 
@@ -284,7 +327,7 @@ This is system model
 
 \subsection{Soure Rate Configuration}
 
-\section{Short-term QoS Aware Slot Allocation Scheme}
+\section{Short-term QoS Aware Slot Allocation Scheme} \label{sec:QASAS}
 
 \subsection{Energy Harvesting Process Analysis}
 
@@ -294,7 +337,7 @@ This is system model
 
 \subsection{Slot Allocation Scheme for Energy-Constraint Nodes}
 
-\section{Simulation results}
+\section{Simulation results} \label{sec:simulation}
 
 \subsection{Simulation Setup}
 
@@ -395,18 +438,7 @@ This is system model
 
 \renewcommand\arraystretch{1.2}
 
-\section{Simulation results} \label{sec:simulation_results}
-In this section, the performance of the two proposed algorithms and the characteristics of the EH-DCCN are investigated in the performance of the average achievable system rate and the matching probability of EH-DPs. The matching probability of EH-DPs represents the ratio of the matched EH-DPs in $N_D$. 
-
  
-
-\subsection{Simulation setup}
-
-
-
-
-\subsection{The influence of different EH efficiencies on performance}
-
 
 \section{Conclusion} \label{sec:conclusion}
 In this paper, 
