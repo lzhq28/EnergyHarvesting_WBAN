@@ -157,4 +157,63 @@ O.~Ozel, K.~Tutuncuoglu, J.~Yang, S.~Ulukus, and A.~Yener, ``Transmission with
   IEEE Journal on Selected Areas in Communications}, vol.~29, no.~8,
   pp.~1732--1743, 2011.
 
+\bibitem{ieee2012WBAN}
+I.~S. Association {\em et~al.}, ``Ieee standard for local and metropolitan area
+  networks—part 15.6: Wireless body area networks,'' {\em IEEE Standard for
+  Information Technology, IEEE}, vol.~802, no.~6, pp.~1--271, 2012.
+
+\bibitem{liu2017buffer}
+Z.~Liu, B.~Liu, and C.~W. Chen, ``Buffer-aware resource allocation scheme with
+  energy efficiency and qos effectiveness in wireless body area networks,''
+  {\em IEEE Access}, vol.~5, pp.~20763--20776, 2017.
+
+\bibitem{geisler2017human}
+M.~Geisler, S.~Boisseau, M.~Perez, P.~Gasnier, J.~Willemin, I.~Ait-Ali, and
+  S.~Perraud, ``Human-motion energy harvester for autonomous body area
+  sensors,'' {\em Smart Materials and Structures}, vol.~26, no.~3, p.~035028,
+  2017.
+
+\bibitem{thielen2017human}
+M.~Thielen, L.~Sigrist, M.~Magno, C.~Hierold, and L.~Benini, ``Human body heat
+  for powering wearable devices: From thermal energy to application,'' {\em
+  Energy Conversion and Management}, vol.~131, pp.~44--54, 2017.
+
+\bibitem{seyedi2010energy}
+A.~Seyedi and B.~Sikdar, ``Energy efficient transmission strategies for body
+  sensor networks with energy harvesting,'' {\em IEEE Transactions on
+  Communications}, vol.~58, no.~7, pp.~2116--2126, 2010.
+
+\bibitem{xiao2009transmission}
+S.~Xiao, A.~Dhamdhere, V.~Sivaraman, and A.~Burdett, ``Transmission power
+  control in body area sensor networks for healthcare monitoring,'' {\em IEEE
+  Journal on Selected Areas in Communications}, vol.~27, no.~1, pp.~37--48,
+  2009.
+
+\bibitem{he2011optimal}
+Y.~He, W.~Zhu, and L.~Guan, ``Optimal resource allocation for pervasive health
+  monitoring systems with body sensor networks,'' {\em IEEE Transactions on
+  Mobile Computing}, vol.~10, no.~11, pp.~1558--1575, 2011.
+
+\bibitem{lin2009asymmetric}
+L.~Lin, K.-J. Wong, S.-L. Tan, and S.-J. Phee, ``Asymmetric multihop networks
+  for multi-capsule communications within the gastrointestinal tract,'' in {\em
+  Wearable and Implantable Body Sensor Networks, 2009. BSN 2009. Sixth
+  International Workshop on}, pp.~82--86, IEEE, 2009.
+
+\bibitem{reusens2009characterization}
+E.~Reusens, W.~Joseph, B.~Latr{\'e}, B.~Braem, G.~Vermeeren, E.~Tanghe,
+  L.~Martens, I.~Moerman, and C.~Blondia, ``Characterization of on-body
+  communication channel and energy efficient topology design for wireless body
+  area networks,'' {\em IEEE Transactions on Information Technology in
+  Biomedicine}, vol.~13, no.~6, pp.~933--945, 2009.
+
+\bibitem{d2010statistical}
+R.~D’Errico and L.~Ouvry, ``A statistical model for on-body dynamic
+  channels,'' {\em International journal of wireless information networks},
+  vol.~17, no.~3-4, pp.~92--104, 2010.
+
+\bibitem{goldsmith2005wireless}
+A.~Goldsmith, {\em Wireless communications}.
+\newblock Cambridge university press, 2005.
+
 \end{thebibliography}

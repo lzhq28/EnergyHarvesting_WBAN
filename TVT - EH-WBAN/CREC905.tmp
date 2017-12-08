@@ -308,121 +308,29 @@ In Section \ref{sec:simulation}, the numerical results are discussed and analyze
 \section{System model} \label{sec:system_model}
 In this section, we give the details of node's architecture and WBAN topology in EH-based WBAN. Then, the energy harvesting model is introduced. Finally, the energy consumption model is correspondingly obtained with the dynamic link characteristics.
 
+
+
 \subsection{Node's Architecture and WBAN Topology}
 We consider a classical WBAN which consists of one hub and $N$ EH-powered wireless sensor nodes. 
-Suppose that the hub (such as PDA and mobile phone) has sufficient resources to implement some resource allocation scheme with high computation complexity, and the wireless sensor nodes placed in different positions of the body have limited processing and storage resources with energy harvesters. The set of body sensor nodes is expressed as $\mathcal{C}_{node}=\left\{1,2,\cdots,N \right\}$. As recommended by IEEE 802.15.6 \cite{ieee2012WBAN}, the body sensor nodes collect the vital signals and communicate directly with the hub considering the constrained resources of sensor nodes in a star topology. In addition, a scheduled access mechanism in beacon mode with superframe boundaries is adopted to access the channel without collisions, idle listening and overhearing of sensor nodes for saving scarce energy. One superframe is formed by one beacon and $M$ slots, and the set of slots are expressed as $\mathcal{C}_{slot}=\left\{1,2,...,M\right\}$. In the beacon of superframe, the hub broadcast the beacon packets to configure the transmission rates, source rates and dedicate time slots for each nodes. And the nodes only turn active in its dedicate time slots to transmit data signals, and turn sleep in other slots for saving energy. In each node, the vital signals are collected and packetized in the data queue, which will be transmitted to the hub with the First-In-First-Out (FIFO) queue strategy and the retransmission strategy \cite{liu2017buffer}. Thus, the packet losses only occur in two situations: data queue overflow and the delay over the preset threshold. 
+Suppose that the hub (such as PDA and mobile phone) has sufficient resources to implement some resource allocation scheme with high computation complexity, and the wireless sensor nodes have limited processing and storage resources with energy harvester. \cite{ieee2012WBAN}.
+
+
+
+
+
+
+
 
 \subsection{Energy Harvesting Model}
 
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.4\textwidth]{markov_model}
-\caption{Discrete Two-state Markov Chain of the EH process}
-\label{fig:markov_model}
-\end{figure}
-Due to the different positions and functions of different sensor nodes, the adopted energy harvesters may collect energy from different energy sources. 
-For instance, the sensor node on the foot can utilize the piezoelectric transducer to harvest energy from the body motion \cite{geisler2017human}, and the sensor node for capturing the electrocardiograph (ECG) signal may use a thermoelectric generator to harvest from the body temperature \cite{thielen2017human}. Therefore, the EH states of different nodes are heterogeneous. In this paper, the harvested energy is stored in a rechargeable battery or a super-capacitor, then used to power the body sensor node \cite{akhtar2017energy}. 
-The EH process of each node can be model as a correlated discrete-time Markov chain with two state: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. And the coherence time of the EH process is set to the $k \cdot  t_{slot}$, where $t_{slot}$ is the time length of one time slot in superframe. 
-In the ON state, the energy acquisition rate follows an uniform distribution in range of $[EH_{min}, EH_{max}]$, which is based on intensity of body movement. In addition, the energy acquisition rate in the ON state are different for different sensor nodes. In the OFF state, the energy harvester does not collect any energy. The Markov chain of EH process is shown in Fig. \ref{fig:markov_model}. $p_{01}$ means the transition probability from OFF state to ON state, while $p_{10}$ represents the transition probability from ON state to OFF state. The probability of keeping ON state and OFF state are regarded as $p_{11}=1-p_{10}$ and $p_{00}=1-p_{01}$, respectively. Thus, the transition matrix can be expressed as follows,
-
-\begin{equation}
-{\rm P} = \left[ {
-\begin{matrix}
-   {1 - {p_{01}}} & {{p_{01}}}  \cr 
-   {{p_{10}}} & {1 - {p_{10}}}  \cr 
-\end{matrix} 
- } \right]
-\end{equation}
-
-Then, the steady probabilities of ON state and OFF state are expressed as follows, 
-\begin{equation}
-{\mu _{on}} = {{{p_{01}}} \over {{p_{01}} + {p_{10}}}}
-\end{equation}
-\begin{equation}
-{\mu _{off}} = {{{p_{10}}} \over {{p_{01}} + {p_{10}}}}
-\end{equation}
-
 \subsection{Energy Consumption Model}
-In body sensor nodes, most of the energy is consumed to transmit data packets and recieve ACK packets, while the energy consumption of the processing and beacon listening can be ignored  \cite{xiao2009transmission}. Generally, the transmission energy consumption consists of two parts: the transmit amplifier energy consumption $E_{tx}$ and the circuitry energy consumption $E_{ct}$ \cite{he2011optimal,liu2017buffer}. Thus, the energy model of transmitting packets can be expressed as follows,
-\begin{equation}
-E_{tran} = \left( {1 + \alpha } \right){E_{tx}} + {E_{ct}}
-\end{equation}
-Compared with the energy consumption of transmitting packets, the energy model of receiving packets only contains the circuitry energy consumption $E_{ct}$.
-\begin{equation}
-E_{rec} = {E_{ct}}
-\end{equation}
-where $\alpha$ means the power amplifier inefficiency factor, $E_{tx}=P_{tx}t$ and $E_{ct}=P_{ct}t$. $P_{tx}$ represents the transmission power of the transmitter, and $P_{ct}$ is the circuitry power, which is a constant depending on the specific transmitter \cite{lin2009asymmetric}. 
 
-To improve the QoS requirements，the transmission power should be dynamically adjusted to cope with the time-varying link quality. Thus, the path loss model of wireless links become a important factor for the energy consumption. In this paper, the path loss model $PL\left( d \right)$ for both Light-Of-Sight (LOS) and None-Light-Of-Sight (NLOS) scenarios follows the log normal distribution as recommended by IEEE 802.15.6 \cite{ieee2012WBAN}.
-\begin{equation}\label{eq:PL}
-\small{
-PL\left( d \right) ={PL_{d_0}} + 10n{\log _{10}}\left( {\frac{d}{{{d_0}}}} \right) + {X_\sigma }
-}
-\end{equation}
-where $PL_{d_0}$ is the path loss at the referent distance $d_0$, and $n$ represents the path-loss exponent. The shadowing $X_\sigma$ follows the normal distribution $\mathcal{N}\left( {0,\sigma_{s}^2 } \right)$, and the statistic characteristics are related to the human postures and the environments \cite{reusens2009characterization}\cite{d2010statistical}. 
 
 \section{Long-term Power-Rate Control Scheme} \label{sec:PRCS}
-In this section, the analysis of the relationship between the source rate and the QoS performance is first given in details. Then, the join power and source rate optimal allocation are formulated as a optimization problem. Finally, the optimal numerical solution is given through the convex transformation.
+
 \subsection{Relationship between Source Rate and QoS performance}
-%% 应该需要解释一下为什么要调节数据源速率，尤其是降低采样速率：1）保持数据完整性；2）使用rate-distortion 压缩算法
-As we known, the higher the source rate is, the more energy it needs to be transmitted. When the harvested energy cannot support the current source rate, the packet loss rate of packets will occur. Conversely, the energy will accumulate with the . 
-Thus, the source rate should be dynamically adjusted to the statistic feature of EH process for satisfying the Energy Neutral Operation (ENO). 
-We have three cases on the relationship between the source rate and the QoS performance:
 
-\textbf{Case 1:} When the harvester with minimum energy acquisition rate $EH_{\min}$ in the ON state still can collect enough energy to transmit the packets in a long term, it means the perfect QoS performance can be obtained under the Energy Neutral Operation (NEO).
-\begin{equation}
-0 < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R} \le {\mu _{on}} \cdot {EH_{\min }} \cdot T \\
-\end{equation}
-\begin{equation}
-\Rightarrow {\rm{   }}0 < S \le {{{\mu _{on}} \cdot {EH_{\min }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}}
-\end{equation}
-where $R$ is the transmission rate, and $T$ is the time length of one superframe. If the above inequality can be satisfied, the collected energy is enough to transmit all packets in a long term. Thus, the QoS performance of packets can be guaranteed through the effective resource allocation scheme.
-
-\textbf{Case 2:} When the required energy harvesting rate for the source rate is in range of $[EH_{min}, EH_{max}]$ of the ON state, it means the packet losses may occur due to the time-varying EH states.
-\begin{equation} \footnotesize 
-{\mu _{on}} \cdot {EH_{\min }} \cdot T < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R} \le {\mu _{on}} \cdot {EH_{\max }} \cdot T
-\end{equation}
-\begin{equation} \footnotesize
-\Rightarrow {{{\mu _{on}} \cdot {EH_{\min }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}} < S \le {{{\mu _{on}} \cdot {EH_{\max}} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}}
-\end{equation}
-
-If the source rate satisfies the above inequality, there may be some packets blocked in the data queue. The blocked packets need to be dealt with carefully in the resource allocation scheme, otherwise the short-term QoS performance will become worse.
-
-\textbf{Case 3:} When the maximum energy acquisition rate $EH_{\max}$ cannot support the source rate, it means the packet losses are sure to appear due to the insufficient energy.
-\begin{equation} 
-{\mu _{on}} \cdot {EH_{\max }} \cdot T < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R}
-\end{equation}
-\begin{equation} 
-  \Rightarrow {\rm{   }}{{{\mu _{on}} \cdot {EH_{\max }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}} < S 
-\end{equation}
-
-If the source rate satisfies the above inequality, there must be some packets blocked in the data queue. 
-The resource allocation scheme needs to carefully schedule resources to improve the QoS performance.
-\subsection{Join Power and Source Rate Optimal Allocation Problem}
-With the statistic knowledge of the EH process, the achievable source rate in the dynamic link characteristics should be obtained to better configure the final source rate with little distortion for effective diagnostic, while the long-term QoS constraints are also fully taken into consideration. 
-
-In the resource allocation scheme, the packet loss rate (PLR) as the main QoS metrics is studied. The PLR can be expressed as the function of the bit Signal to Noise Ratio (bit SNR),
-\begin{equation}
-PLR({\gamma }) = 1 - {\left( {1 - {P_{b,B}}({\gamma })} \right)^L}
-\end{equation}
-where bit SNR can be calculated as ${\gamma } =  {10^{\frac{{{P_{tx,dB}} - PL\left( d \right) - {P_{N}}}}{{10}}}} \frac{B}{R}$. $L$ is the length of a packet in bits. $P_{tx,dB}$ is the transmission power in dB. $P_{N}$ is the power of noise. $B$ represents the system bandwidth. $P_{b,B}$ indicates the equivalent bit error rate based on the modulation and the channel coding \cite{goldsmith2005wireless}.
-
-Considering the dynamic link quality, the .
-
-
-In this paper, we investigates the allocation of the source rate and the transmission power under the constraints of the QoS performances by constructing the following join power and source rate optimization problem:
-\begin{subequations}\label{P1:PRCS}
-\begin{align}
-    \textbf{P1:}& \qquad\mathop {\max }\limits_{\small{{P_{tx,i},{S_i}}}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}} } , \label{P1:obj} \\
-    s.t.\quad &{\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}}  \cdot T \le R \cdot T}, \label{P1:con1} \\
-		& {\rm{0}} \le {{{S_i}} \over {1 - PL{R_{i,th}}}},\label{P1:con2}\\
-    & {{{S_i}} \over {1 - PL{R_{i,th}}}} \le {{{{E{H_{i,\max }} + E{H_{i,\min }}} \over 2} \cdot {\mu _{on}} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right]}},\label{P1:con3}\\
-    & {\overline {PL{R_i}}  \le PL{R_{i,th}}},\label{P1:con4}\\
-    & {{P_{tx,\min }} \le {P_{tx,i}} \le {P_{tx,\max }}}, \label{P1:con5}
-\end{align}
-\end{subequations}
-where $PLR_{i,th}$ is the threshold of the packet loss rate for node $i$. $\overline {PL{R_i}}$ represents the average packet loss rate with the allocation transmission power $P_{i}$. $P_{tx,min}$ and $P_{tx,max}$ are the minimum value and the maximum value of the transmission power for the transmitter, and we assume all the nodes have the same type transmitter for the sake of simplicity.
-
+\subsection{Join Power and Source Rate Optimal Allocation}
 
 \subsection{Optimal Numerical Solution}
 
