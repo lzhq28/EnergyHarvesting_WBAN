@@ -322,7 +322,7 @@ Suppose that the hub (such as PDA and mobile phone) has sufficient resources to 
 \end{figure}
 Due to the different positions and functions of different sensor nodes, the adopted energy harvesters may collect energy from different energy sources. 
 For instance, the sensor node on the foot can utilize the piezoelectric transducer to harvest energy from the body motion \cite{geisler2017human}, and the sensor node for capturing the electrocardiograph (ECG) signal may use a thermoelectric generator to harvest from the body temperature \cite{thielen2017human}. Therefore, the EH states of different nodes are heterogeneous. In this paper, the harvested energy is stored in a rechargeable battery or a super-capacitor, then used to power the body sensor node \cite{akhtar2017energy}. 
-The EH process of each node can be model as a correlated discrete-time Markov chain with two state: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. And the coherence time of the EH process is set to the $k \cdot  t_{slot}$, where $t_{slot}$ is the time length of one time slot in superframe. 
+The EH process of each node can be model as a correlated discrete-time Markov chain with two state: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. And the coherence time of the EH process is set to the $t_{cor}=k \cdot  t_{slot}$, where $t_{slot}$ is the time length of one time slot in superframe. 
 In the ON state, the energy acquisition rate follows an uniform distribution in range of $[EH_{min}, EH_{max}]$, which is based on intensity of body movement. In addition, the energy acquisition rate in the ON state are different for different sensor nodes. In the OFF state, the energy harvester does not collect any energy. The Markov chain of EH process is shown in Fig. \ref{fig:markov_model}. $p_{01}$ means the transition probability from OFF state to ON state, while $p_{10}$ represents the transition probability from ON state to OFF state. The probability of keeping ON state and OFF state are regarded as $p_{11}=1-p_{10}$ and $p_{00}=1-p_{01}$, respectively. And the steady probabilities of ON state and OFF state are expressed as follows, 
 \begin{equation}
 {\mu _{on}} = {{{p_{01}}} \over {{p_{01}} + {p_{10}}}}
@@ -440,7 +440,7 @@ P_{tx}{R^{{ - 1}}} & \ge {B^{ - 1}} {10^{\frac{{\mu _{th}+ {PL_{d_0}} + 10n{\log
 \end{split}
 \end{equation} 
 
-Then, we define a new intermediate variable ${v_i} = {1 \over {\left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right]}}$. The optimization problem \textbf{P1} is finally transformed to the form of the Geometric Program (GP), as shown in follows,
+Then, we define a new intermediate variable ${v_i} = {1 \over { {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} }}$. The optimization problem \textbf{P1} is finally transformed to the form of the Geometric Program (GP), as shown in follows,
 
 \begin{subequations}\label{P2:PRCS} \small
 \begin{align}
@@ -476,7 +476,7 @@ Unfortunately, the hub can only know the EH states of nodes in the allocated slo
 
 The energy harvesting process is model as a two-state Markov chain as shown in Fig. \ref{fig:markov_model}. The transition matrix can be expressed as follows,
 \begin{equation}
-{\rm P} = \left[ {
+{\rm \textbf{P}} = \left[ {
 \begin{matrix}
    {1 - {p_{01}}} & {{p_{01}}}  \cr 
    {{p_{10}}} & {1 - {p_{10}}}  \cr 
@@ -484,15 +484,59 @@ The energy harvesting process is model as a two-state Markov chain as shown in F
  } \right]
 \end{equation}
 
+We define the probability of EH state to be in the ON state in a $x$-th slot is denoted by $p(x)$, then after $\tau$ slots, the EH state has been transferred ${\left\lceil\frac{\tau}{k}\right\rceil}$ times. Thus, the probability of the ON state after $\tau$ slots can be calculated as follows \cite{tselishchev2011reducing},
+\begin{equation} \footnotesize \label{eq:P_ON_1}
+\begin{split}
+p(x+\tau) &= \left[\begin{matrix}
+		1 - p(k) & p(k)
+  \end{matrix}\right] 
+	\cdot \textbf{P}^{\left\lceil\frac{\tau}{k}\right\rceil} \cdot
+	\left[\begin{matrix}
+		0\\
+		1
+  \end{matrix}\right]  \\
+  &= {{{p_{01}}} \over Q}+ {{p\left( k \right) \cdot {p_{10}} - \left( {{\rm{1}} - p\left( k \right)} \right) \cdot {p_{01}}} \over Q} \cdot {\left( {1 - Q} \right)^{\left\lceil {{\tau  \over k}} \right\rceil }}
+\end{split}
+\end{equation} 
+where $Q = {p_{01}} + {p_{10}}$. Suppose the EH state in the $x$-th slot is known, then the probability of the ON state $p(x)=0$ when the EH state is OFF, otherwise $p(x)=1$ with the ON state. Thus, the Eq. \eqref{eq:P_ON_1} can be expressed as,
+\begin{equation}
+p(x+\tau) =\left\{ { \begin{array}{l}
+{{{{{p_{01}}} \over Q} - {{{p_{01}}{{\left( {1 - Q} \right)}^{\left\lceil\frac{\tau}{k}\right\rceil} }} \over Q},{\rm{  }}p\left( {x } \right) = 0}}\\
+{{{{{p_{01}}} \over Q} + {{{p_{10}}{{\left( {1 - Q} \right)}^{\left\lceil\frac{\tau}{k}\right\rceil} }} \over Q},{\rm{  }}p\left( {x } \right) = 1}}
+\end{array}}\right.
+\end{equation}
 
-
-
+Thus, the hub can use the above equation to predict the EH state in each slot of the following superframe, while the last EH state in the allocated slot of the last superframe can be obtained through the feedback from the node.
 
 \subsection{Sensor State Evaluation}
+Considering the heterogeneous EH states, the residual energy from energy harvesters is different in different nodes. 
+For the energy-sufficient nodes, the residual energy in these nodes is enough to transmit the arriving data in the following superframe. Thus these energy-sufficient nodes are insensitive to the location of allocated slots in the following superframe, while the number of allocated slots becomes important with considering both the arriving data packets and the blocked packets in the data queue. As for the energy-constrained nodes, we need to dynamically adjust the locations of allocated slots to harvest more energy to improve the short-term QoS performance. Therefore, the nodes can be classified into two categories based on the residual energy: the energy-sufficient nodes and the energy-constrained nodes.
+
+
+\begin{equation} \label{eq:energy_con}
+ {E_{res,i}} \ge \left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right] \cdot {{{S_i} \cdot T} \over R}
+\end{equation}
+where $E_{res,i}$ denotes the residual energy in node $i$. When the above condition \eqref{eq:energy_con} is satisfied for sensor $i$, the node $i$ is divided into the GOOD node set ${\Phi _{GOOD}}$. Otherwise, the node $i$ belongs to the BAD node set ${\Phi _{BAD}}$.
+
+When allocating the time slots for each node, the nodes in ${\Phi _{BAD}}$, which is sensitive to the locations of allocated slots, should be firstly allocated for the time slots. Then the rest of the nodes are allocated for these nodes in ${\Phi _{GOOD}}$ with considering the blocked packets in the data queue.
+
+\subsection{Slot Allocation Scheme for Energy-Constraint Nodes}
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.5\textwidth]{slot_allocation}
+\caption{Discrete Two-state Markov Chain of the EH process}
+\label{fig:slot_allocation}
+\end{figure}
+
+
+
+
 
 \subsection{Slot Allocation Scheme for Energy-Sufficient Nodes}
 
-\subsection{Slot Allocation Scheme for Energy-Constraint Nodes}
+
+
+
 
 \section{Simulation results} \label{sec:simulation}
 

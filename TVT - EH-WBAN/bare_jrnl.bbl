@@ -220,4 +220,10 @@ A.~Goldsmith, {\em Wireless communications}.
 S.~Boyd and L.~Vandenberghe, {\em Convex optimization}.
 \newblock Cambridge university press, 2004.
 
+\bibitem{tselishchev2011reducing}
+Y.~Tselishchev, L.~Libman, and A.~Boulis, ``Reducing transmission losses in
+  body area networks using variable tdma scheduling,'' in {\em World of
+  Wireless, Mobile and Multimedia Networks (WoWMoM), 2011 IEEE International
+  Symposium on a}, pp.~1--10, IEEE, 2011.
+
 \end{thebibliography}
