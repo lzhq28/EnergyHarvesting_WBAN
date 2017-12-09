@@ -216,4 +216,8 @@ R.~D’Errico and L.~Ouvry, ``A statistical model for on-body dynamic
 A.~Goldsmith, {\em Wireless communications}.
 \newblock Cambridge university press, 2005.
 
+\bibitem{boyd2004convex}
+S.~Boyd and L.~Vandenberghe, {\em Convex optimization}.
+\newblock Cambridge university press, 2004.
+
 \end{thebibliography}

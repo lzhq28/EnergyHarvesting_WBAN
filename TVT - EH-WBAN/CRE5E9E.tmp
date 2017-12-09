@@ -323,7 +323,18 @@ Suppose that the hub (such as PDA and mobile phone) has sufficient resources to 
 Due to the different positions and functions of different sensor nodes, the adopted energy harvesters may collect energy from different energy sources. 
 For instance, the sensor node on the foot can utilize the piezoelectric transducer to harvest energy from the body motion \cite{geisler2017human}, and the sensor node for capturing the electrocardiograph (ECG) signal may use a thermoelectric generator to harvest from the body temperature \cite{thielen2017human}. Therefore, the EH states of different nodes are heterogeneous. In this paper, the harvested energy is stored in a rechargeable battery or a super-capacitor, then used to power the body sensor node \cite{akhtar2017energy}. 
 The EH process of each node can be model as a correlated discrete-time Markov chain with two state: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. And the coherence time of the EH process is set to the $k \cdot  t_{slot}$, where $t_{slot}$ is the time length of one time slot in superframe. 
-In the ON state, the energy acquisition rate follows an uniform distribution in range of $[EH_{min}, EH_{max}]$, which is based on intensity of body movement. In addition, the energy acquisition rate in the ON state are different for different sensor nodes. In the OFF state, the energy harvester does not collect any energy. The Markov chain of EH process is shown in Fig. \ref{fig:markov_model}. $p_{01}$ means the transition probability from OFF state to ON state, while $p_{10}$ represents the transition probability from ON state to OFF state. The probability of keeping ON state and OFF state are regarded as $p_{11}=1-p_{10}$ and $p_{00}=1-p_{01}$, respectively. And the steady probabilities of ON state and OFF state are expressed as follows, 
+In the ON state, the energy acquisition rate follows an uniform distribution in range of $[EH_{min}, EH_{max}]$, which is based on intensity of body movement. In addition, the energy acquisition rate in the ON state are different for different sensor nodes. In the OFF state, the energy harvester does not collect any energy. The Markov chain of EH process is shown in Fig. \ref{fig:markov_model}. $p_{01}$ means the transition probability from OFF state to ON state, while $p_{10}$ represents the transition probability from ON state to OFF state. The probability of keeping ON state and OFF state are regarded as $p_{11}=1-p_{10}$ and $p_{00}=1-p_{01}$, respectively. Thus, the transition matrix can be expressed as follows,
+
+\begin{equation}
+{\rm P} = \left[ {
+\begin{matrix}
+   {1 - {p_{01}}} & {{p_{01}}}  \cr 
+   {{p_{10}}} & {1 - {p_{10}}}  \cr 
+\end{matrix} 
+ } \right]
+\end{equation}
+
+Then, the steady probabilities of ON state and OFF state are expressed as follows, 
 \begin{equation}
 {\mu _{on}} = {{{p_{01}}} \over {{p_{01}} + {p_{10}}}}
 \end{equation}
@@ -457,38 +468,15 @@ Then, we define a new intermediate variable ${v_i} = {1 \over {\left[ {\left( {1
 \end{subequations}
 
 \subsection{Source Rate Configuration}
-For vital signals, the larger source rate means more useful information can be used for diagnosis, meanwhile the larger source rate will cost more energy to be transmitted. However, the limited energy and dynamic link quality will result in many packet losses with an exorbitant source rate, and the random packet losses will break the integrity of data. Therefore, the source rate usually has a most appropriate upper boundary $S_{up}$ of the source rate, which contains enough information for diagnosis.
-In addition, the source rate also have a acceptable lower boundary $S_{down}$. When the source rate is lower than the lower boundary $S_{down}$, the vital data will lose the diagnostic significance. Thus, the source rate will be re-configured as the following equation.
-\begin{equation}
-S_{i} = \max \left\{ \min (S_{i}, S_{up} ), S_{i,down} \right\}
-\end{equation}
+For vital signals, the larger source rate means more useful information can be used for diagnosis.However, larger source rate will cost more energy to be transmitted. In addition, in the dynamic link quality 
 
-When the achievable source rate obtained by the optimization problem \textbf{P2} is larger than the upper boundary $S_{up}$, the source rate will be set to the upper boundary $S_{up}$ for saving harvested energy. When the achievable source rate is smaller than the lower boundary $S_{down}$, the source rate will be set to the lower boundary $S_{down}$ for maintaining the diagnostic significance. Otherwise, the source rate will keep the achievable source rate. 
+
 
 \section{Short-term QoS Aware Slot Allocation Scheme} \label{sec:QASAS}
-In the above section, the long-term QoS performance is considered with the time-varying EH states from statistical analysis. However, the time-varying EH states and dynamic link quality may cause the fluctuations of the data queue. In this section, we explore the time slot allocation to further improve the short-term QoS performance. Firstly, we analyze the energy harvesting process in details. Then, the sensor state evaluation method is given. Finally, the different slot allocation schemes are adopted for nodes with different states.
 
 \subsection{Energy Harvesting Process Analysis}
 
-As we adopt the scheduled access mechanism in beacon mode with superframe boundaries, nodes only turn active in its dedicated slots to transmit the data packets while keep sleep for saving energy in other slots. 
-Considering the time-varying EH state and the fluctuation of the data queue, not only the number but also the location of slots should be carefully allocated for improving the short-term QoS performance. For instance, if the allocated slots for one node is at the end of the next superframe, more energy will be harvested for transmitting the blocked packets in the data queue.
-Unfortunately, the hub can only know the EH states of nodes in the allocated slots of last superframe. In this paper, we will predict the EH states for each sensor in the following superframe.
-
-The energy harvesting process is model as a two-state Markov chain as shown in Fig. \ref{fig:markov_model}. The transition matrix can be expressed as follows,
-\begin{equation}
-{\rm P} = \left[ {
-\begin{matrix}
-   {1 - {p_{01}}} & {{p_{01}}}  \cr 
-   {{p_{10}}} & {1 - {p_{10}}}  \cr 
-\end{matrix} 
- } \right]
-\end{equation}
-
-
-
-
-
-\subsection{Sensor State Evaluation}
+\subsection{Sensor state evaluation}
 
 \subsection{Slot Allocation Scheme for Energy-Sufficient Nodes}
 
