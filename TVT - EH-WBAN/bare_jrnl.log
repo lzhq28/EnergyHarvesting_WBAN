@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.12.25)  10 DEC 2017 07:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.12.25)  11 DEC 2017 02:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -661,13 +661,13 @@ LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 39
 LaTeX Font Warning: Command \small invalid in math mode on input line 403.
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 419.
+LaTeX Font Warning: Command \small invalid in math mode on input line 417.
 
 
-LaTeX Font Warning: Command \small invalid in math mode on input line 419.
+LaTeX Font Warning: Command \small invalid in math mode on input line 417.
 
 [4]
-Underfull \hbox (badness 2126) in paragraph at lines 443--444
+Underfull \hbox (badness 2126) in paragraph at lines 445--446
 []\OT1/ptm/m/n/10 Then, we de-fine a new in-ter-me-di-ate vari-able $[] \OT1/cm
 r/m/n/10 =
  []
@@ -681,7 +681,10 @@ LaTeX Font Warning: Command \small invalid in math mode on input line 456.
 [5]
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 48
-8.
+9.
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 521.
 
 Package epstopdf Info: Source file: <slot_allocation.eps>
 (epstopdf)                    date: 2017-12-10 04:13:17
@@ -691,28 +694,57 @@ Package epstopdf Info: Source file: <slot_allocation.eps>
 (epstopdf)                    size: 38295 bytes
 (epstopdf)             Command: <repstopdf --outfile=slot_allocation-eps-conver
 ted-to.pdf slot_allocation.eps>
-(epstopdf)             \includegraphics on input line 526.
+(epstopdf)             \includegraphics on input line 534.
 Package epstopdf Info: Output file is already uptodate.
 <slot_allocation-eps-converted-to.pdf, id=47, 501.875pt x 169.63374pt>
 File: slot_allocation-eps-converted-to.pdf Graphic file (type pdf)
 
 <use slot_allocation-eps-converted-to.pdf>
 Package pdftex.def Info: slot_allocation-eps-converted-to.pdf used on input lin
-e 526.
+e 534.
 (pdftex.def)             Requested size: 258.0pt x 87.20833pt.
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 526--527
+Overfull \hbox (6.0pt too wide) in paragraph at lines 534--535
  [][] 
  []
 
-(./bare_jrnl.bbl [6 <./slot_allocation-eps-converted-to.pdf>]
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 548.
+
+[6 <./slot_allocation-eps-converted-to.pdf>]
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 564.
+
+
+Package amsfonts Warning: Obsolete command \Bbb; \mathbb should be used instead
+ on input line 564.
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 564.
+
+
+LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 60
+7.
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 618.
+
+
+LaTeX Font Warning: Command \small invalid in math mode on input line 618.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
+(./bare_jrnl.bbl
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ” in font ptmr7t!
+ [8]
 Missing character: There is no â in font ptmr7t!
 Missing character: There is no € in font ptmr7t!
 Missing character: There is no ™ in font ptmr7t!
-) [7]
+)
 Package epstopdf Info: Source file: <ZhiqiangLiu.eps>
 (epstopdf)                    date: 2017-11-20 20:17:12
 (epstopdf)                    size: 13026 bytes
@@ -721,15 +753,15 @@ Package epstopdf Info: Source file: <ZhiqiangLiu.eps>
 (epstopdf)                    size: 16214 bytes
 (epstopdf)             Command: <repstopdf --outfile=ZhiqiangLiu-eps-converted-
 to.pdf ZhiqiangLiu.eps>
-(epstopdf)             \includegraphics on input line 704.
+(epstopdf)             \includegraphics on input line 788.
 Package epstopdf Info: Output file is already uptodate.
 
-<ZhiqiangLiu-eps-converted-to.pdf, id=93, 220.825pt x 314.17375pt>
+<ZhiqiangLiu-eps-converted-to.pdf, id=98, 220.825pt x 314.17375pt>
 File: ZhiqiangLiu-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ZhiqiangLiu-eps-converted-to.pdf>
-Package pdftex.def Info: ZhiqiangLiu-eps-converted-to.pdf used on input line 70
-4.
+Package pdftex.def Info: ZhiqiangLiu-eps-converted-to.pdf used on input line 78
+8.
 (pdftex.def)             Requested size: 63.4951pt x 90.33623pt.
 Package epstopdf Info: Source file: <ZhiqiangLiu.eps>
 (epstopdf)                    date: 2017-11-20 20:17:12
@@ -739,12 +771,12 @@ Package epstopdf Info: Source file: <ZhiqiangLiu.eps>
 (epstopdf)                    size: 16214 bytes
 (epstopdf)             Command: <repstopdf --outfile=ZhiqiangLiu-eps-converted-
 to.pdf ZhiqiangLiu.eps>
-(epstopdf)             \includegraphics on input line 704.
+(epstopdf)             \includegraphics on input line 788.
 Package epstopdf Info: Output file is already uptodate.
 File: ZhiqiangLiu-eps-converted-to.pdf Graphic file (type pdf)
  <use ZhiqiangLiu-eps-converted-to.pdf>
-Package pdftex.def Info: ZhiqiangLiu-eps-converted-to.pdf used on input line 70
-4.
+Package pdftex.def Info: ZhiqiangLiu-eps-converted-to.pdf used on input line 78
+8.
 (pdftex.def)             Requested size: 63.4951pt x 90.33623pt.
 Package epstopdf Info: Source file: <BinLiu.eps>
 (epstopdf)                    date: 2017-11-20 20:17:49
@@ -754,14 +786,14 @@ Package epstopdf Info: Source file: <BinLiu.eps>
 (epstopdf)                    size: 61091 bytes
 (epstopdf)             Command: <repstopdf --outfile=BinLiu-eps-converted-to.pd
 f BinLiu.eps>
-(epstopdf)             \includegraphics on input line 708.
+(epstopdf)             \includegraphics on input line 792.
 Package epstopdf Info: Output file is already uptodate.
 
-<BinLiu-eps-converted-to.pdf, id=96, 372.39125pt x 495.8525pt>
+<BinLiu-eps-converted-to.pdf, id=101, 372.39125pt x 495.8525pt>
 File: BinLiu-eps-converted-to.pdf Graphic file (type pdf)
 
 <use BinLiu-eps-converted-to.pdf>
-Package pdftex.def Info: BinLiu-eps-converted-to.pdf used on input line 708.
+Package pdftex.def Info: BinLiu-eps-converted-to.pdf used on input line 792.
 (pdftex.def)             Requested size: 67.84009pt x 90.33154pt.
 Package epstopdf Info: Source file: <BinLiu.eps>
 (epstopdf)                    date: 2017-11-20 20:17:49
@@ -771,11 +803,11 @@ Package epstopdf Info: Source file: <BinLiu.eps>
 (epstopdf)                    size: 61091 bytes
 (epstopdf)             Command: <repstopdf --outfile=BinLiu-eps-converted-to.pd
 f BinLiu.eps>
-(epstopdf)             \includegraphics on input line 708.
+(epstopdf)             \includegraphics on input line 792.
 Package epstopdf Info: Output file is already uptodate.
 File: BinLiu-eps-converted-to.pdf Graphic file (type pdf)
  <use BinLiu-eps-converted-to.pdf>
-Package pdftex.def Info: BinLiu-eps-converted-to.pdf used on input line 708.
+Package pdftex.def Info: BinLiu-eps-converted-to.pdf used on input line 792.
 (pdftex.def)             Requested size: 67.84009pt x 90.33154pt.
 Package epstopdf Info: Source file: <ChangwenChen.eps>
 (epstopdf)                    date: 2017-11-20 20:17:55
@@ -785,15 +817,15 @@ Package epstopdf Info: Source file: <ChangwenChen.eps>
 (epstopdf)                    size: 28152 bytes
 (epstopdf)             Command: <repstopdf --outfile=ChangwenChen-eps-converted
 -to.pdf ChangwenChen.eps>
-(epstopdf)             \includegraphics on input line 712.
+(epstopdf)             \includegraphics on input line 796.
 Package epstopdf Info: Output file is already uptodate.
 
-<ChangwenChen-eps-converted-to.pdf, id=99, 220.825pt x 332.24126pt>
+<ChangwenChen-eps-converted-to.pdf, id=104, 220.825pt x 332.24126pt>
 File: ChangwenChen-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ChangwenChen-eps-converted-to.pdf>
 Package pdftex.def Info: ChangwenChen-eps-converted-to.pdf used on input line 7
-12.
+96.
 (pdftex.def)             Requested size: 60.04135pt x 90.33496pt.
 Package epstopdf Info: Source file: <ChangwenChen.eps>
 (epstopdf)                    date: 2017-11-20 20:17:55
@@ -803,18 +835,16 @@ Package epstopdf Info: Source file: <ChangwenChen.eps>
 (epstopdf)                    size: 28152 bytes
 (epstopdf)             Command: <repstopdf --outfile=ChangwenChen-eps-converted
 -to.pdf ChangwenChen.eps>
-(epstopdf)             \includegraphics on input line 712.
+(epstopdf)             \includegraphics on input line 796.
 Package epstopdf Info: Output file is already uptodate.
 File: ChangwenChen-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ChangwenChen-eps-converted-to.pdf>
 Package pdftex.def Info: ChangwenChen-eps-converted-to.pdf used on input line 7
-12.
+96.
 (pdftex.def)             Requested size: 60.04135pt x 90.33496pt.
- [8
-
- <./ZhiqiangLiu-eps-converted-to.pdf> <./BinLiu-eps-converted-to.pdf> <./Changw
-enChen-eps-converted-to.pdf>]
+ [9 <./ZhiqiangLiu-eps-converted-to.pdf> <./BinLiu-eps-converted-to.pdf> <./Cha
+ngwenChen-eps-converted-to.pdf>]
 (./bare_jrnl.aux)
 
 LaTeX Font Warning: Size substitutions with differences
@@ -825,13 +855,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 6950 strings out of 493089
- 105018 string characters out of 6138424
- 205755 words of memory out of 5000000
- 10267 multiletter control sequences out of 15000+600000
+ 6966 strings out of 493089
+ 105241 string characters out of 6138424
+ 205896 words of memory out of 5000000
+ 10283 multiletter control sequences out of 15000+600000
  55977 words of font info for 130 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 38i,24n,40p,1791b,326s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,23n,40p,1791b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2015/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2015/texmf-dist/fo
 nts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2015/texmf-dist/fonts/t
@@ -851,14 +881,16 @@ xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/201
 st/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2015/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmsy7.pfb><c:/texlive/2015/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmsy8.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmsy9.pfb><c:/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/
-texlive/2015/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2015/texm
-f-dist/fonts/type1/urw/times/utmr8a.pfb><c:/texlive/2015/texmf-dist/fonts/type1
-/urw/times/utmri8a.pfb>
-Output written on bare_jrnl.pdf (8 pages, 484755 bytes).
+/cm/cmsy9.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/m
+sam10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
+0.pfb><c:/texlive/2015/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/
+2015/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2015/texmf-dist/f
+onts/type1/urw/times/utmr8a.pfb><c:/texlive/2015/texmf-dist/fonts/type1/urw/tim
+es/utmri8a.pfb>
+Output written on bare_jrnl.pdf (9 pages, 521915 bytes).
 PDF statistics:
- 197 PDF objects out of 1000 (max. 8388607)
- 124 compressed objects within 2 object streams
+ 208 PDF objects out of 1000 (max. 8388607)
+ 132 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  62 words of extra memory for PDF output out of 10000 (max. 10000000)
 

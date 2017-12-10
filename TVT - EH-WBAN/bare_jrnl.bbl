@@ -226,4 +226,9 @@ Y.~Tselishchev, L.~Libman, and A.~Boulis, ``Reducing transmission losses in
   Wireless, Mobile and Multimedia Networks (WoWMoM), 2011 IEEE International
   Symposium on a}, pp.~1--10, IEEE, 2011.
 
+\bibitem{lofberg2004yalmip}
+J.~Lofberg, ``Yalmip: A toolbox for modeling and optimization in matlab,'' in
+  {\em Computer Aided Control Systems Design, 2004 IEEE International Symposium
+  on}, pp.~284--289, IEEE, 2004.
+
 \end{thebibliography}

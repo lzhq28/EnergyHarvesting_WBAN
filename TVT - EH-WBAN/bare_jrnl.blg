@@ -3,44 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: bare_jrnl.aux
 The style file: ieeetr.bst
 Database file #1: energy_harvesting.bib
-You've used 42 entries,
+You've used 43 entries,
             1876 wiz_defined-function locations,
-            716 strings with 12167 characters,
-and the built_in function-call counts, 13471 in all, are:
-= -- 1383
-> -- 535
+            721 strings with 12338 characters,
+and the built_in function-call counts, 13803 in all, are:
+= -- 1419
+> -- 539
 < -- 0
-+ -- 193
-- -- 151
-* -- 1001
-:= -- 1866
-add.period$ -- 44
-call.type$ -- 42
-change.case$ -- 40
++ -- 195
+- -- 152
+* -- 1020
+:= -- 1905
+add.period$ -- 45
+call.type$ -- 43
+change.case$ -- 41
 chr.to.int$ -- 0
-cite$ -- 42
-duplicate$ -- 679
-empty$ -- 1191
-format.name$ -- 151
-if$ -- 3288
+cite$ -- 43
+duplicate$ -- 700
+empty$ -- 1228
+format.name$ -- 152
+if$ -- 3373
 int.to.chr$ -- 0
-int.to.str$ -- 42
-missing$ -- 44
-newline$ -- 131
-num.names$ -- 42
-pop$ -- 93
+int.to.str$ -- 43
+missing$ -- 45
+newline$ -- 134
+num.names$ -- 43
+pop$ -- 99
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 511
+skip$ -- 526
 stack$ -- 0
-substring$ -- 1050
-swap$ -- 324
+substring$ -- 1082
+swap$ -- 333
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
 warning$ -- 0
-while$ -- 140
-width$ -- 44
-write$ -- 443
+while$ -- 144
+width$ -- 45
+write$ -- 453

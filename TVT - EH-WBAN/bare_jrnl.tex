@@ -408,17 +408,19 @@ where $PLR_{th}$ is the preset threshold of the packets loss rate.
 In this paper, we investigates the allocation of the source rate and the transmission power under the constraints of the QoS performances by constructing the following join power and source rate optimization problem:
 \begin{subequations}\label{P1:PRCS} \small
 \begin{align}
-    \textbf{P1:}& \qquad\mathop {\max }\limits_{\small{{P_{tx,i},{S_i}}}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}} } , \label{P1:obj} \\
+    \textbf{P1:}& \qquad\mathop {\max }\limits_{\small{({P_{tx,i},{S_i}})}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}} } , \label{P1:obj} \\
     s.t.\quad &{\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}}  \cdot T \le R \cdot T}, \label{P1:con1} \\
 		& {\rm{0}} \le {{{S_i}} \over {1 - PL{R_{i,th}}}},\label{P1:con2}\\
-    & {{{S_i}} \over {1 - PL{R_{i,th}}}} \le {{{{\mu _{on}} \cdot R \cdot {{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} \mathord{\left/
- {\vphantom {{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} {\rm{2}}}} \right.
- \kern-\nulldelimiterspace} {\rm{2}}}} \over {\left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right]}}},\label{P1:con3}\\
+    & {{{S_i}} \over {1 - PL{R_{i,th}}}} \le {{{{\mu _{on}} \cdot R \cdot \overline{EH_{i}} } \over {\left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right]}}},\label{P1:con3}\\
     & {\overline {PL{R_i}}  \le PL{R_{i,th}}},\label{P1:con4}\\
     & {{P_{tx,\min }} \le {P_{tx,i}} \le {P_{tx,\max }}}, \label{P1:con5}
 \end{align}
 \end{subequations}
-where $PLR_{i,th}$ is the threshold of the packet loss rate for node $i$. $\overline {PL{R_i}}$ represents the average packet loss rate with the allocation transmission power $P_{i}$. $P_{tx,min}$ and $P_{tx,max}$ are the minimum value and the maximum value of the transmission power for the transmitter, and we assume all the nodes have the same type transmitter for the sake of simplicity.
+where $PLR_{i,th}$ is the threshold of the packet loss rate for node $i$.
+$\overline{EH_{i}} ={{{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} \mathord{\left/
+ {\vphantom {{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} {\rm{2}}}} \right.
+ \kern-\nulldelimiterspace} {\rm{2}}}}$ is the mean of the energy harvesting rate for node $i$.
+ $\overline {PL{R_i}}$ represents the average packet loss rate with the allocation transmission power $P_{i}$. $P_{tx,min}$ and $P_{tx,max}$ are the minimum value and the maximum value of the transmission power for the transmitter, and we assume all the nodes have the same type transmitter for the sake of simplicity.
 
 With respect to \textbf{P1}, the objective function (\ref{P1:obj}) is to maximize the total of source rates under the QoS constraints. With the larger source rate, more useful information can be used for diagnosis.
 The constraint (\ref{P1:con1}) means the total of source rates cannot be larger than the throughput with the transmission rate, otherwise a part of vital data signals will be discarded due to the limitation of the throughput. constraints (\ref{P1:con2}) and (\ref{P1:con3}) represent the equivalent source rate with considering PLR should be lower than the long-term achievable throughput with the harvested energy. Equation (\ref{P1:con4}) denotes the PLR constraint, and equation (\ref{P1:con5}) means the constraint of the transmission power. 
@@ -444,12 +446,10 @@ Then, we define a new intermediate variable ${v_i} = {1 \over { {\left( {1 + \al
 
 \begin{subequations}\label{P2:PRCS} \small
 \begin{align}
-    \textbf{P2:}& \qquad\mathop {\max }\limits_{\small{{P_{tx,i},{v_i}}}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}} } , \label{P2:obj} \\
+    \textbf{P2:}& \qquad\mathop {\max }\limits_{\small{({P_{tx,i},{v_i}})}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}} } , \label{P2:obj} \\
     s.t.\quad &{\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}}  \cdot T \le R \cdot T}, \label{P2:con1} \\
 		& {\rm{0}} \le {{{S_i}} \over {1 - PL{R_{i,th}}}},\label{P2:con2}\\
-    & {{{{S_i} \cdot v_i^{ - 1}} \over {1 - PL{R_{i,th}}}} \le {\mu _{on}} \cdot R \cdot {{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} \mathord{\left/
- {\vphantom {{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} {\rm{2}}}} \right.
- \kern-\nulldelimiterspace} {\rm{2}}}},\label{P2:con3}\\
+    & {{{{S_i} \cdot v_i^{ - 1}} \over {1 - PL{R_{i,th}}}} \le {\mu _{on}} \cdot R \cdot \overline{EH_{i}} },\label{P2:con3}\\
     & {{v_i} \le {1 \over {{P_{ct,i}} + \left( {1 + \alpha } \right) \cdot {\theta _{th}} \cdot R}}},\label{P2:con4}\\
     & {1 \over {\left( {1 + \alpha } \right) \cdot {P_{tx,\max }} + {P_{ct,i}}}}  \le {v_i} , \label{P2:con5} \\
 		& {v_i} \le {1 \over {\left( {1 + \alpha } \right) \cdot {P_{tx,\min }} + {P_{ct,i}}}}, \label{P2:con5}
@@ -484,7 +484,8 @@ The energy harvesting process is model as a two-state Markov chain as shown in F
  } \right]
 \end{equation}
 
-We define the probability of EH state to be in the ON state in a $x$-th slot is denoted by $p(x)$, then after $\tau$ slots, the EH state has been transferred ${\left\lceil\frac{\tau}{k}\right\rceil}$ times. Thus, the probability of the ON state after $\tau$ slots can be calculated as follows \cite{tselishchev2011reducing},
+We define the probability of EH state to be in the ON state in a $x$-th slot is denoted by $p(x)$, then after $\tau$ slots, the EH state has been transferred ${\left\lceil\frac{\tau}{k}\right\rceil}$ times. ${\lceil \cdot \rceil}$ is the ceiling function.
+Thus, the probability of the ON state after $\tau$ slots can be calculated as follows \cite{tselishchev2011reducing},
 \begin{equation} \footnotesize \label{eq:P_ON_1}
 \begin{split}
 p(x+\tau) &= \left[\begin{matrix}
@@ -499,10 +500,10 @@ p(x+\tau) &= \left[\begin{matrix}
 \end{split}
 \end{equation} 
 where $Q = {p_{01}} + {p_{10}}$. Suppose the EH state in the $x$-th slot is known, then the probability of the ON state $p(x)=0$ when the EH state is OFF, otherwise $p(x)=1$ with the ON state. Thus, the Eq. \eqref{eq:P_ON_1} can be expressed as,
-\begin{equation}
+\begin{equation} \label{eq:P_ON_2}
 p(x+\tau) =\left\{ { \begin{array}{l}
-{{{{{p_{01}}} \over Q} - {{{p_{01}}{{\left( {1 - Q} \right)}^{\left\lceil\frac{\tau}{k}\right\rceil} }} \over Q},{\rm{  }}p\left( {x } \right) = 0}}\\
-{{{{{p_{01}}} \over Q} + {{{p_{10}}{{\left( {1 - Q} \right)}^{\left\lceil\frac{\tau}{k}\right\rceil} }} \over Q},{\rm{  }}p\left( {x } \right) = 1}}
+{{{{{p_{01}}} \over Q} - {{{p_{01}}\cdot{{\left( {1 - Q} \right)}^{\left\lceil\frac{\tau}{k}\right\rceil} }} \over Q},{\rm{  }}p\left( {x } \right) = 0}}\\
+{{{{{p_{01}}} \over Q} + {{{p_{10}}\cdot{{\left( {1 - Q} \right)}^{\left\lceil\frac{\tau}{k}\right\rceil} }} \over Q},{\rm{  }}p\left( {x } \right) = 1}}
 \end{array}}\right.
 \end{equation}
 
@@ -511,32 +512,113 @@ Thus, the hub can use the above equation to predict the EH state in each slot of
 \subsection{Sensor State Evaluation}
 Considering the heterogeneous EH states, the residual energy from energy harvesters is different in different nodes. 
 For the energy-sufficient nodes, the residual energy in these nodes is enough to transmit the arriving data in the following superframe. Thus these energy-sufficient nodes are insensitive to the location of allocated slots in the following superframe, while the number of allocated slots becomes important with considering both the arriving data packets and the blocked packets in the data queue. As for the energy-constrained nodes, we need to dynamically adjust the locations of allocated slots to harvest more energy to improve the short-term QoS performance. Therefore, the nodes can be classified into two categories based on the residual energy: the energy-sufficient nodes and the energy-constrained nodes.
-
-
 \begin{equation} \label{eq:energy_con}
- {E_{res,i}} \ge \left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right] \cdot {{{S_i} \cdot T} \over R}
+ \textbf{Con1:} \quad {E_{res,i}} \ge \left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right] \cdot {{{S_i} \cdot T} \over R}
 \end{equation}
 where $E_{res,i}$ denotes the residual energy in node $i$. When the above condition \eqref{eq:energy_con} is satisfied for sensor $i$, the node $i$ is divided into the GOOD node set ${\Phi _{GOOD}}$. Otherwise, the node $i$ belongs to the BAD node set ${\Phi _{BAD}}$.
 
 When allocating the time slots for each node, the nodes in ${\Phi _{BAD}}$, which is sensitive to the locations of allocated slots, should be firstly allocated for the time slots. Then the rest of the nodes are allocated for these nodes in ${\Phi _{GOOD}}$ with considering the blocked packets in the data queue.
+\begin{equation} \small
+Node_{i} \in \left\{ { \begin{array}{l}
+\begin{aligned}
+{\Phi _{GOOD}} &, \text{  If \textbf{Con1} is satisfied.} \\
+{\Phi _{BAD}} &, \text{ Otherwise}
+\end{aligned}
+\end{array}}\right. , \forall i \in \mathcal{C}_{node}
+\end{equation}
 
-\subsection{Slot Allocation Scheme for Energy-Constraint Nodes}
+
+\subsection{Slot Allocation Scheme for Energy-Constrained Nodes}
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.5\textwidth]{slot_allocation}
-\caption{Discrete Two-state Markov Chain of the EH process}
+\caption{Details of slot allocations for each sensor.}
 \label{fig:slot_allocation}
 \end{figure}
 
+For the energy-constrained nodes in the BAD set ${\Phi _{BAD}}$, the residual energy is limited to transmit the arriving data in the next framework. Thus, it should harvest more energy before its dedicated slot in the following framework. Generally, the node with the allocated slot at the end of the superframe will have more time to collect energy.
+Due to the time-varying and heterogeneous EH states for nodes, there may be several nodes in the BAD set ${\Phi _{BAD}}$, thus we should dynamic allocate the slots for each nodes with considering both the number and the locations.
 
+Firstly, we evaluate how long each sensor will take to harvest enough energy to transmit the arriving data. The probability of the ON state in the last allocated slot can be obtained by the hub through the feedback from the node $i$, which is regard as $p_{i}(0)$. In addition, the probability of the ON state for the following slots can be predicted as the equation \eqref{eq:P_ON_2}. Thus, the total harvesting energy after $m$ slots on average from the last allocated slot is calculated as follows,
+\begin{equation}  
+F_{i,EH}(m) = {\sum\limits_{l = 1}^m {\left( {{p_i}\left( {r{e_i} + l} \right) \cdot \overline {E{H_i}}  \cdot {t_{slot}}} \right)} }
+\end{equation}
+where $re_{i}$ is the number of slots from the last allocated slot to the current beacon as shown in Fig. \ref{fig:slot_allocation}. Obviously, the function $F_{i,EH}(m)$ is a monotone function of time. 
+Therefore, we can obtain the needed number of slots after the current beacon, called the expected waiting time $\eta_{i}$ for node $i$, to harvest enough energy to transmit the arriving data as the following equation,
+\begin{equation} \small
+\eta_{i} = \mathop {\arg }\limits_m \left\{ { F_{i,EH}(m)   = \left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right] \cdot {{{S_i} \cdot T} \over R}} \right\}
+\end{equation}
 
+For different nodes in ${\Phi _{BAD}}$, the node with the larger expected waiting time $\eta$ means that it needs more time to harvest energy before the next transmissions, thus
+it should be allocated the slots after the nodes with the smaller expected waiting time $\eta$.
+So the expected waiting time $\eta$ can be used to sort the nodes for allocating slots.
 
+After ordering the nodes, the slot allocation consists of two aspects: the number of slots and the locations of slots. As shown in Fig.~\ref{fig:slot_allocation}, the specific allocated slots for sensor $i$ can be determined by two parameters: $g_{i}$ and $n_{i}$. $g_{i}$ represents the number of slots between the end of allocated slots for previous node and the begin of allocated slots for node $i$, while $n_{i}$ denotes the number of allocated slots for node $i$. 
+Finally, the slot allocation problem can be state as: to maximize the difference between the location and the expected waiting time of all nodes for achieving more energy for these energy-constrained nodes by optimizing the number and the locations of slots for each sensor. Mathematically, the problem can be formulated as follows,
+\begin{subequations} \label{P3:slot_allocation}
+\begin{align}
+    \textbf{P3:}& \quad \mathop {\max }\limits_{\small{({g_{i},{n_i}})}} \;  {G_{sum}}\left(\eta_{i},{g_{i},{n_i}} \right), \label{P3:obj} \\
+    s.t.\quad & {\sum\limits_{i \in {\Phi _{BAD}}} {\left( {{g_i} + {n_i}} \right) } \le M} , \label{P3:con1} \\
+		& R \cdot {n_i} \cdot {t_{slot}} \ge D_{i},\label{P3:con2}\\
+    & {{g_i},{n_i} \in {\Bbb N}}, i \in {\Phi _{BAD}}, \label{P3:con3}
+\end{align}
+\end{subequations}
+where ${G_{sum}}$ is the sum distance between the location and the expected waiting time of all nodes as the objective function, which can be expressed as follows,
+\begin{equation}\label{math:sum_gain}
+\begin{array}{l}
+    {G_{sum}}\left(\eta_{i},{g_{i},{n_i}} \right) = \\
+    \quad {\sum\limits_{i \in {\Phi _{BAD}}} {\left( {\sum\limits_{\left\{ {j \in {\Phi _{BAD}}|{\eta _j} < {\eta _i}} \right\}} {\left( {{g_j} + {n_j}} \right) + {g_i} - {\eta _i}} } \right)} }.
+\end{array}
+\end{equation}
+
+In the constraint (\ref{P3:con1}), the number of allocated slots should be less than the total number $M$ of slots in a superframe. As for the constraint (\ref{P3:con2}), the number of allocated slots for each sensor should be able to transmit the arriving data with considering the packet loss rate, where the equivalent arriving data $D_{i}$ for node $i$ can be expressed as follows,
+\begin{equation}
+D_{i}={{{S_i} \cdot \left( {r{e_i} + \sum\limits_{\left\{ {j \in {\Phi _{BAD}}|{\eta _j} \le {\eta _i}} \right\}} {\left( {{g_j} + {n_j}} \right)} } \right) \cdot {t_{slot}}} \over {\left( {1 - PL{R_{i,th}}} \right)}}
+\end{equation}
+
+The slot allocation problem \textbf{P3} is an Integer Linear Programming (ILP), which can be solved efficiently \cite{boyd2004convex}. After allocating slots for the energy-constrained nodes, the remaining slots are then assigned to the energy-sufficient nodes in the GOOD set ${\Phi _{GOOD}}$.
 
 \subsection{Slot Allocation Scheme for Energy-Sufficient Nodes}
 
+Compared with the energy-constrained nodes, the energy-sufficient nodes have enough energy to transmit the arriving data, and they are insensitive to the locations of allocated slots. 
+Considering the time-varying EH states, some data packets may be blocked in the data queue with the dynamic link quality. If the blocked data packets cannot be transmitted to the hub, they will lead to the increasing delay of not only the blocked packets but also the arriving packets \cite{liu2017buffer}. Therefore, the blocked data packets in the data queue need to be transmitted for improving the short-term QoS performance, when there are sufficient residual energy in the energy buffer. 
 
+Considering both the blocked data ${D_{block}}$ in the data queue and the arriving data in the following superframe, the total data ${D_{buf}}$ can be expressed as follows,
+\begin{equation}
+{D_{buf,i}} = {D_{block,i}} + {S_i} \cdot T
+\end{equation}
 
+The remaining number of slots ${N_{rest}}$ after the slot allocation for energy-constrained nodes can be calculated as follows,
+\begin{equation}
+{{N_{rest}} = M - \sum\limits_{i \in {\Phi _{BAD}}} {{n_i}}}
+\end{equation}
 
+Thus, the total number of the allocated slots for the energy-sufficient nodes should be not larger than the remaining number of slots ${N_{rest}}$, given as follows,
+\begin{equation}
+\sum\limits_{i \in {\Phi _{GOOD}}}^{} {{n_i} \leqslant {N_{rest}}}
+\end{equation}
+
+For different energy-sufficient nodes, they expect to be allocated enough slots for transmitting both the blocked data and the arriving data. However, there should be enough energy for supporting the transmission in the energy buffer, as satisfying the following constraints,
+\begin{equation}
+{{E_{res,i}} + \overline {E{H_i}}  \cdot T \geqslant \left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right] \cdot {n_i} \cdot {t_{slot}}}
+\end{equation}
+
+To evaluate the satisfaction of both the blocked data and the arriving data with given number of slots, a utility function $U(m,D_{buf})$ is defined as follows,  
+\begin{equation} \label{eq:utility}  \footnotesize
+U(m,D_{buf}) = \frac{{\left( {{(R\cdot m \cdot t_{slot})^2} - 2 \cdot (R\cdot m \cdot t_{slot}) \cdot D_{buf}  } \right)}}{{D_{buf}^2}}
+\end{equation}
+When the number of allocated slots is less than $\frac{D_{buf}}{R \cdot t_{slot}}$, more allocated slots can achieve a higher utility to transmit more data in the queue buffer. When the number of the allocated slots reaches the value $\frac{D_{buf}}{R \cdot t_{slot}}$, the node obtain the highest utility. If still increasing the number of allocated slots, it will cause the waste of the channel resources, thus the utility will decrease correspondingly.
+Finally, the slot allocation problem for the energy-sufficient nodes can be formulated to maximize the total utility of all nodes in GOOD set, subject to the total slot constraint and the energy constraint. Mathematically, the slot optimization problem can be written as follows,
+\begin{subequations} \label{P4:slot_allocation} \small
+\begin{align}
+    \textbf{P4:}& \quad \mathop {\max }\limits_{\small{({{n_i}})}} \;  \sum\limits_{i \in {\Phi _{GOOD}}} {U\left( {{n_i} ,{D_{buf,i}}} \right)} , \label{P4:obj} \\
+    s.t.\quad & {\sum\limits_{i \in {\Phi _{GOOD}}}^{} {{n_i} \leqslant {N_{rest}}}} , \label{P4:con1} \\
+		& {{E_{res,i}} + \overline {E{H_i}}  \cdot T \geqslant \left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right] \cdot {n_i} \cdot {t_{slot}}},\label{P4:con2}\\
+    & {{n_i} \in {\Bbb N}}, i \in {\Phi _{GOOD}}, \label{P4:con3}
+\end{align}
+\end{subequations}
+
+With respect to \textbf{P4}, the problem is a classical Quadratic Problem (QP), which can also be solve efficiently with using many custom solvers \cite{lofberg2004yalmip}.
 
 \section{Simulation results} \label{sec:simulation}
 
