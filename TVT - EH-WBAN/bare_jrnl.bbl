@@ -122,6 +122,18 @@ K.~Tutuncuoglu and A.~Yener, ``Optimum transmission policies for battery
   limited energy harvesting nodes,'' {\em IEEE Transactions on Wireless
   Communications}, vol.~11, no.~3, pp.~1180--1189, 2012.
 
+\bibitem{wei2015power}
+S.~Wei, W.~Guan, and K.~R. Liu, ``Power scheduling for energy harvesting
+  wireless communications with battery capacity constraint,'' {\em IEEE
+  Transactions on Wireless Communications}, vol.~14, no.~8, pp.~4640--4653,
+  2015.
+
+\bibitem{huang2014optimal}
+C.~Huang, R.~Zhang, and S.~Cui, ``Optimal power allocation for outage
+  probability minimization in fading channels with energy harvesting
+  constraints,'' {\em IEEE Transactions on Wireless Communications}, vol.~13,
+  no.~2, pp.~1074--1087, 2014.
+
 \bibitem{alhawari2016power}
 M.~Alhawari, T.~Tekeste, B.~Mohammad, H.~Saleh, and M.~Ismail, ``Power
   management unit for multi-source energy harvesting in wearable electronics,''
@@ -144,12 +156,6 @@ B.~Liu, S.~Yu, and C.~W. Chenz, ``Optimal resource allocation in energy
   harvesting-powered body sensor networks,'' in {\em Future Information and
   Communication Technologies for Ubiquitous HealthCare (Ubi-HealthTech), 2015
   2nd International Symposium on}, pp.~1--5, IEEE, 2015.
-
-\bibitem{wei2015power}
-S.~Wei, W.~Guan, and K.~R. Liu, ``Power scheduling for energy harvesting
-  wireless communications with battery capacity constraint,'' {\em IEEE
-  Transactions on Wireless Communications}, vol.~14, no.~8, pp.~4640--4653,
-  2015.
 
 \bibitem{ozel2011transmission}
 O.~Ozel, K.~Tutuncuoglu, J.~Yang, S.~Ulukus, and A.~Yener, ``Transmission with

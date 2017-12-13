@@ -15,8 +15,8 @@ function  plotAllocateResults( pos_seq, AllocatePowerRate, sta_AllocateSlots)
     Allocate_power = []; %统计各个节点的分配传输功率
     Allocate_src_rate = []; %统计分配给各个节点的数据速率
     for ind_node =1:num_nodes 
-        allocate_slot_begin = []
-        allocate_slot_end = []
+        allocate_slot_begin = [];
+        allocate_slot_end = [];
         tmp_power = [];
         tmp_src_rate = [];
         for ind_frame = 1: num_frame       

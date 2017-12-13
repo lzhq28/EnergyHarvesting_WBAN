@@ -1,18 +1,6 @@
-%%%%% 主函数：算法的函数入口 %%%%%%
-%% 清零数据并配置并行
-    clc
-    clear all
-    matlab_ver='2015';% '2012'or'2015'
-    if  strcmp(matlab_ver,'2012')
-        if(matlabpool('size')==0) %没有打开并行
-            matlabpool local; %按照local配置的进行启动多个matlab worker
-        end
-    else
-        if(isempty(gcp('nocreate'))==1) %没有打开并行
-            parpool local; %按照local配置的进行启动多个matlab worker
-        end
-    end
-    deltaPL_ind_max = 10;
+%% 对比实验的入口
+
+ deltaPL_ind_max = 10;
     deltaPL_step = 2; %单位dBm
     parfor deltaPL_ind =1:deltaPL_ind_max  
         %% 初始化系统参数
@@ -108,7 +96,7 @@
                 EH_end_ind = ind_frame*par.MAC.N_Slot;
                 cur_EH_collect = EH_collect_seq(ind_node, EH_begin_ind:EH_end_ind);
                %% 统计资源分配的结果
-                cur_Allocate.power =  repmat(AllocatePowerRate{cur_pos}{ind_node}.power,1,par.MAC.N_Slot)
+                cur_Allocate.power = repmat( AllocatePowerRate{cur_pos}{ind_node}.power,1,par.MAC.N_Slot);
                 cur_Allocate.src_rate = AllocatePowerRate{cur_pos}{ind_node}.src_rate;
                 cur_Allocate.slot = AllocateSlots(ind_node,:);
               %% 更新参数
@@ -126,11 +114,3 @@
         save_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);   
         parsave(save_path_name, deltaPL, Queue, AllocatePowerRate, sta_AllocateSlots, shadow_seq, pos_seq, EH_status_seq, EH_collect_seq, EH_P_tran);
     end
-
-    %% 性能统计
-     show_deltaPL_ind =10;
-     par = initialParameters(0); %初始化系统参数  
-     analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind,par.EnergyHarvest.t_cor_EH)
-    
-
-   

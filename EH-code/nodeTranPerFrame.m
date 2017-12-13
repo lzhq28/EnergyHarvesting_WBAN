@@ -117,19 +117,19 @@ function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPe
         end_offset = cur_offset-1;
         residue_energy = residue_energy + sum_EH_collect; %更新剩余能量
         % 判断剩余能量传输数据是否足够传输一个数据包
-        if residue_energy < Allocate.power * tran_time_packet
+        if residue_energy < Allocate.power(1,cur_ind_slot) * tran_time_packet
             continue; % 如果没有能量将会停止此次传输，继续采集能量，等待下次发送数据
         end
         %判断数据包是否传输成功,并保存传输信息
         if cur_PLR(1,cur_ind_slot)<=rand_PLR(ind_tran) % 数据包传输成功
             tran_packet_state = 1; %传输状态为1，表示传输成功
-            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power,Node.tranRate, tran_packet_state]; %保存传输情况
+            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power(1,cur_ind_slot),Node.tranRate, tran_packet_state]; %保存传输情况
             ind_begin_buffer = ind_begin_buffer+1;
         else %数据包传输失败
             tran_packet_state = 2; %传输状态为2，表示链路丢包 
-            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power,Node.tranRate, tran_packet_state]; %保存传输情况
+            tmp_tran_packets = [ tmp_tran_packets; arrivalQueue(ind_begin_buffer,1:3),cur_ind_frame,cur_ind_slot*MAC.T_Slot,tran_time_packet,Allocate.power(1,cur_ind_slot),Node.tranRate, tran_packet_state]; %保存传输情况
         end
-        residue_energy = residue_energy - Allocate.power * tran_time_packet; % 更新剩余能量
+        residue_energy = residue_energy - Allocate.power(1,cur_ind_slot) * tran_time_packet; % 更新剩余能量
     end
     sum_EH_collect = sum(cur_EH_collect(1,(end_offset+1):(end_slot_ind + MAC.N_Slot - last_end_slot_ind))); %这段时间内采集到的能量
     residue_energy = residue_energy + sum_EH_collect; %更新剩余能量
