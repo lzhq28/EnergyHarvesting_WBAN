@@ -10,7 +10,7 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind
     for deltaPL_ind =1:deltaPL_ind_max
         deltaPL =  (deltaPL_ind-1)*deltaPL_step;
         path_names = configurePaths(t_cor_EH); %各种路径名字
-        load_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);
+        load_path_name = strcat([path_names.myRA_prefix,num2str(deltaPL),'.mat']);
         load_data{1,deltaPL_ind}=load(load_path_name);
     end
     % 分析性能
@@ -24,7 +24,7 @@ function  analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind
         deltaPL =  (deltaPL_ind-1)*deltaPL_step;
         par = initialParameters(deltaPL); %初始化系统参数
         cur_Queue = load_data{1,deltaPL_ind}.Queue;
-        cur_QoS = calQosPerformance( cur_Queue, par.MAC);
+        cur_QoS = calQosPerformance( cur_Queue, par.MAC,par.Nodes.packet_length);
         for ind_node = 1:size(cur_QoS,2)
             sta_PLR_pathloss(ind_node,deltaPL_ind) = cur_QoS(ind_node).PLR_pathloss;
             sta_PLR_overflow(ind_node,deltaPL_ind) = cur_QoS(ind_node).PLR_overflow;

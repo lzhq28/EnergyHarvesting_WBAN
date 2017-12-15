@@ -14,7 +14,10 @@
     end
     deltaPL_ind_max = 10;
     deltaPL_step = 2; %单位dBm
-    parfor deltaPL_ind =1:deltaPL_ind_max  
+    alg_names = {'myRA','offline','online','fixed'}; 
+    alg_myRA_details ={'without_rate',''};
+    cal_alg_id = 4; % 配置下面要运行的算法的id号
+    parfor deltaPL_ind =deltaPL_ind_max:deltaPL_ind_max  
         %% 初始化系统参数
         % deltaPL_ind = deltaPL_ind_max;
         time_1 =clock;
@@ -24,7 +27,7 @@
         rand_state = 1; %随机种子,建议从1开始的整数
         slot_or_frame_state =0; %阴影衰落是每个时隙不同，还是每个超帧不同，值为0表示每个时隙不同，值为1表示每个超帧不同
         pos_hold_time = 40*100; %每个姿势保持的时间，单位ms
-        N_Frame = 200; %实验的总超帧数
+        N_Frame = 1000; %实验的总超帧数
         ini_pos = 1; %初始化身体姿势为静止状态
         re_cal_miu_state = 0; %是否重新计算miu值，值为0表示不重新计算，而是从文件中读取，否则重新计算。
         precision = 0.0001; %在计算miu时的PLR与PLR_th之间的差值精度
@@ -34,9 +37,38 @@
         [ EH_status_seq, EH_collect_seq, EH_P_tran] = energyHarvestStatistic( pos_seq, par.EnergyHarvest, par.MAC, rand_state); 
         % 计算PLR的等效门限：平均信噪比门限miu_th
         [ miu_th ] = calEquPLRThreshold( par.Nodes, par.Channel, par.Constraints, precision, re_cal_miu_state,par.EnergyHarvest.t_cor_EH);
-        % 优化分配不同身体姿势下的传输功率和数据速率
-        [ AllocatePowerRate, opti_power_problems] = allocateTranPower( miu_th, par);
-
+        %% 针对不同的算法采用不同的分配方式
+        % 对传输功率、数据速率和时隙进行分配
+        
+        if cal_alg_id == 1
+            % 优化分配不同身体姿势下的传输功率和数据速率
+            disp(strcat('Info:excute the',{' '},alg_names(cal_alg_id),' method'));
+            [ AllocatePowerRate, opti_power_problems] = allocateTranPower( miu_th, par); 
+        elseif cal_alg_id == 2 % 对offline进行资源分配
+            disp(strcat('Info:excute the',{' '},alg_names(cal_alg_id),' method'));
+            [offline_power] =compareOffline(shadow_seq, pos_seq, EH_status_seq, EH_collect_seq, par);  
+            conf_srcRates = par.Nodes.Nor_SrcRates;
+            [AllocateRate] = allocateRateFixed(conf_srcRates,par.Nodes.Num);
+            [AllocateSlots] = allocateSlotsFixed(conf_srcRates,par);
+            [ AllocatePowerRate, opti_power_problems] = allocateTranPower( miu_th, par); 
+        elseif cal_alg_id ==3 % online资源分配方法
+            disp(strcat('Info:excute the',{' '},alg_names(cal_alg_id),' method'));
+            conf_powers = [0.05,0.05,0.05,0.05,0.2];%repmat(0.05,par.Nodes.Num,1);
+            conf_srcRates = par.Nodes.Nor_SrcRates;
+            [AllocatePower] = allocatePowerFixed(conf_powers,par.Nodes.Num);
+            [AllocateRate] = allocateRateFixed(conf_srcRates,par.Nodes.Num);
+            [AllocateSlots] = allocateSlotsFixed(conf_srcRates,par);
+            [ AllocatePowerRate, opti_power_problems] = allocateTranPower( miu_th, par); 
+        elseif cal_alg_id ==4 % fixed固定传输功率和传输时隙的方法
+            disp(strcat('Info:excute the',{' '},alg_names(cal_alg_id),' method'));
+            conf_powers = [0.05,0.05,0.05,0.05,0.2];%repmat(0.05,par.Nodes.Num,1);
+            conf_srcRates = par.Nodes.Nor_SrcRates;
+            [AllocatePower] = allocatePowerFixed(conf_powers,par.Nodes.Num);
+            [AllocateRate] = allocateRateFixed(conf_srcRates,par.Nodes.Num);
+            [AllocateSlots] = allocateSlotsFixed(conf_srcRates,par);
+            [ AllocatePowerRate, opti_power_problems] = allocateTranPower( miu_th, par); 
+        end
+        
         %% 性能分析
         % 初始化三种不同的队列
         Queue = {};
@@ -55,13 +87,14 @@
             Nodes(ind_node).num_packet_buffer = par.Nodes.num_packet_buffer(ind_node); %缓存所能存储的数据包数量
             Nodes(ind_node).Nor_SrcRate = par.Nodes.Nor_SrcRates(ind_node);
             Nodes(ind_node).tranRate = par.Nodes.tranRate(ind_node); % 固定传输速率
+            Nodes(ind_node).battery_capacity = par.EnergyHarvest.battery_capacity; % 电池容量
         end
 
         %% 循环统计分析
         EH_last_status = []; % 各个节点在各个超帧内分配时隙结束位置的能量残疾状态
         sta_last_EH_status = [];
         sta_re_num_slots = [];
-        sta_AllocateSlots ={}; %统计时隙分配的结果
+        sta_AllocateSlots ={}; %统计每个超帧分配的时隙
         sta_opti_slots_problems = []; %统计时隙优化分配中的问题
         sta_GOODSET ={};
         sta_BADSET = {};
@@ -97,8 +130,10 @@
             sta_last_EH_status = [sta_last_EH_status;EH_last_status];
             sta_re_num_slots = [sta_re_num_slots ; re_num_slots];
             % 优化资源分配
-            [ AllocateSlots, opti_problem, sta_GOODSET{ind_frame}, sta_BADSET{ind_frame} ] = allocateSlots(cur_pos,AllocatePowerRate{1,cur_pos}, residue_energy, re_num_packets, re_num_slots, EH_last_status, EH_P_tran, par);
-            sta_opti_slots_problems(ind_frame,1:2) = opti_problem;
+            if cal_alg_id == 1 %本文方法的时隙分配方法
+                [ AllocateSlots, opti_problem, sta_GOODSET{ind_frame}, sta_BADSET{ind_frame} ] = allocateSlots(cur_pos,AllocatePowerRate{1,cur_pos}, residue_energy, re_num_packets, re_num_slots, EH_last_status, EH_P_tran, par);                
+                sta_opti_slots_problems(ind_frame,1:2) = opti_problem;
+            end
             sta_AllocateSlots{1,ind_frame} = AllocateSlots;
             cur_Allocate = {}; %初始化当前超帧的资源分配结果
             %% 遍历各个节点的数据包传输
@@ -108,14 +143,32 @@
                 EH_end_ind = ind_frame*par.MAC.N_Slot;
                 cur_EH_collect = EH_collect_seq(ind_node, EH_begin_ind:EH_end_ind);
                %% 统计资源分配的结果
-                cur_Allocate.power =  repmat(AllocatePowerRate{cur_pos}{ind_node}.power,1,par.MAC.N_Slot)
-                cur_Allocate.src_rate = AllocatePowerRate{cur_pos}{ind_node}.src_rate;
-                cur_Allocate.slot = AllocateSlots(ind_node,:);
+                if cal_alg_id ==1  %本文提出的方法
+                    cur_Allocate.src_rate = AllocatePowerRate{cur_pos}{ind_node}.src_rate;
+                    cur_Allocate.slot = AllocateSlots(ind_node,:);
+                    cur_Allocate.power = repmat(AllocatePowerRate{cur_pos}{ind_node}.power,1,par.MAC.N_Slot);
+                elseif cal_alg_id == 2 % online 方法
+                    cur_Allocate.src_rate = AllocateRate(ind_node);
+                    cur_Allocate.slot = AllocateSlots(ind_node,:);
+                    cur_Allocate.power = offline_power(ind_node,((ind_frame-1)*par.MAC.N_Slot+1):(ind_frame*par.MAC.N_Slot));%配置offline方法配置的功率
+                elseif cal_alg_id == 3 % offline方法
+                    cur_Allocate.src_rate = AllocateRate(ind_node);
+                    cur_Allocate.slot = AllocateSlots(ind_node,:);
+                    cur_Allocate.power =  repmat( AllocatePower(ind_node),1,par.MAC.N_Slot);
+                elseif cal_alg_id ==4 % fixed固定传输功率和传输时隙的方法
+                    cur_Allocate.src_rate = AllocateRate(ind_node);                     
+                    cur_Allocate.slot = AllocateSlots(ind_node,:);
+                    cur_Allocate.power = repmat( AllocatePower(ind_node),1,par.MAC.N_Slot);
+                end
               %% 更新参数
                 % 随机种子，所有节点在不同超帧的随机种子都不同
                 rand_seed = rand_state*par.Nodes.Num*N_Frame+(ind_node-1)*N_Frame+(ind_frame-1);
                 % 各个节点的数据包传输
-                [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame(ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind(ind_node), cur_Allocate, Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
+                if cal_alg_id == 3 %对online方法单独处理
+                    [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame_online(ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind(ind_node), cur_Allocate, Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
+                else
+                    [ Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, last_end_slot_ind(ind_node)] = nodeTranPerFrame(ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind(ind_node), cur_Allocate, Nodes(ind_node), par.MAC, par.Channel,par.Constraints, Queue(ind_node).tranQueue, Queue(ind_node).arrivalQueue, Queue(ind_node).bufferQueue, rand_seed);
+                end
             end
         end
         time_2 =clock;
@@ -123,14 +176,78 @@
         disp(['deltaPL:',num2str(deltaPL),'程序运行时间：',num2str(time_cost),'s'])
         % 保存仿真结果
         path_names = configurePaths(par.EnergyHarvest.t_cor_EH); %各种路径名字
-        save_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);   
+        if cal_alg_id == 1 %本文提出的方法
+            save_path_name = strcat([path_names.myRA_prefix,num2str(deltaPL),'.mat']);   
+        elseif cal_alg_id == 2 % offline方法
+            save_path_name = strcat([path_names.offline_prefix,num2str(deltaPL),'.mat']);
+        elseif cal_alg_id ==3 % online方法
+            save_path_name = strcat([path_names.online_prefix,num2str(deltaPL),'.mat']);
+        elseif cal_alg_id == 4
+            save_path_name = strcat([path_names.fixed_prefix,num2str(deltaPL),'.mat']);
+        end 
         parsave(save_path_name, deltaPL, Queue, AllocatePowerRate, sta_AllocateSlots, shadow_seq, pos_seq, EH_status_seq, EH_collect_seq, EH_P_tran);
     end
-
+    
     %% 性能统计
      show_deltaPL_ind =10;
      par = initialParameters(0); %初始化系统参数  
      analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind,par.EnergyHarvest.t_cor_EH)
     
-
+    %% 性能对比，对比本文提出的方法和对比方法
+    show_deltaPL_ind =10;
+    load_data = {}; %加载的数据
+    deltaPL =  (show_deltaPL_ind-1)*deltaPL_step;
+    t_cor_EH = par.EnergyHarvest.t_cor_EH;
+    path_names = configurePaths(t_cor_EH); %各种路径名字
+     
+    for alg_id =1:size(alg_names,2)
+        if alg_id == 1 %本文提出的方法
+            load_path_name = strcat([path_names.myRA_prefix,num2str(deltaPL),'.mat']);   
+        elseif alg_id == 2 % offline方法
+            load_path_name = strcat([path_names.offline_prefix,num2str(deltaPL),'.mat']);
+        elseif alg_id ==3 % online方法
+            load_path_name = strcat([path_names.online_prefix,num2str(deltaPL),'.mat']);
+        elseif alg_id == 4 % 固定的方法
+             load_path_name = strcat([path_names.fixed_prefix,num2str(deltaPL),'.mat']);
+        end 
+        load_data = load(load_path_name);
+        cur_QoS = calQosPerformance( load_data.Queue, par.MAC,par.Nodes.packet_length);
+        for ind_node =1:par.Nodes.Num
+            compareResults.energy_per_bit(alg_id,ind_node) = cur_QoS(ind_node).energy_per_bit;
+            compareResults.PLR_pathloss(alg_id,ind_node) = cur_QoS(ind_node).PLR_pathloss;
+            compareResults.PLR_overflow(alg_id,ind_node) = cur_QoS(ind_node).PLR_overflow;
+            compareResults.PLR_overdelay(alg_id,ind_node) = cur_QoS(ind_node).PLR_overdelay;
+            compareResults.PLR_ave(alg_id,ind_node) = cur_QoS(ind_node).PLR_ave;
+            compareResults.Delay_ave(alg_id,ind_node) = cur_QoS(ind_node).Delay_ave;
+            compareResults.Energy_cost(alg_id,ind_node) = cur_QoS(ind_node).Energy_cost;
+            compareResults.total_data(alg_id,ind_node) = cur_QoS(ind_node).total_data;
+        end
+    end
+    figure
+    subplot(221)
+    bar(compareResults.energy_per_bit')
+    xlabel('Node index')
+    ylabel('energy efficiency (uJ/bit)')
+    title('Energy efficiency')
+    legend('proposed algorithm','optimal offline ','online','fixed')
+    subplot(222)
+    bar(compareResults.PLR_ave'*100)
+    xlabel('Node index')
+    ylabel('Average PLR (%)')
+    title('Average PLR')
+    legend('proposed algorithm','optimal offline ','online','fixed')
+    subplot(223)
+    bar(compareResults.Delay_ave')
+    xlabel('Node index')
+    ylabel('Average Delay (ms)')
+    title('Average Delay')
+    legend('proposed algorithm','optimal offline ','online','fixed')
+    subplot(224)
+    bar(compareResults.total_data')
+    xlabel('Node index')
+    ylabel('Average Throughput (bit/s)')
+    title('Average Delay')
+    legend('proposed algorithm','optimal offline ','online','fixed')
+    
+    
    

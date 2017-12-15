@@ -1,8 +1,9 @@
-function [ QoS ] = calQosPerformance( Queue, MAC)
+function [ QoS ] = calQosPerformance( Queue, MAC, packet_length)
 %calQosPerformance 计算服务质量性能
 %输入
 %   Queue 各个节点性能保存的各种队列信息：缓存队列bufferQueue、数据包到达队列arrivalQueue，数据包传输队列tranQueue
 %   MAC 相关信息，主要是用到超帧的长度
+%   packet_length 各个节点的数据包长度, bit为单位
 %输出
 %   QoS 各个节点的性能表现，包括丢包率PLR，时延Delay
 
@@ -22,7 +23,7 @@ function [ QoS ] = calQosPerformance( Queue, MAC)
         % 计算平均时延
         QoS(ind_node).Delay_ave = mean((Queue(ind_node).tranQueue(:,4) - Queue(ind_node).tranQueue(:,2)).* MAC.T_Frame +  Queue(ind_node).tranQueue(:,5) -  Queue(ind_node).tranQueue(:,3));
         QoS(ind_node).Energy_cost = energy_cost;
+        QoS(ind_node).total_data = size(ind_suc,1)*packet_length(ind_node);
+        QoS(ind_node).energy_per_bit =  QoS(ind_node).Energy_cost/ QoS(ind_node).total_data;
     end
-    
 end
-

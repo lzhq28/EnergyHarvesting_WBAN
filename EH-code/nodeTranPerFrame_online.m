@@ -1,4 +1,4 @@
-function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPerFrame(cur_ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind, Allocate, Node, MAC, Channel, Constraints, tranQueue, arrivalQueue, bufferQueue, rand_seed)
+function [ tranQueue, arrivalQueue, bufferQueue, last_end_slot_ind] = nodeTranPerFrame_online(cur_ind_frame, cur_shadow, cur_EH_collect, last_end_slot_ind, Allocate, Node, MAC, Channel, Constraints, tranQueue, arrivalQueue, bufferQueue, rand_seed)
 %nodeTranPerFrame 每个节点在所分配的资源的条件下的数据传输情况
 %输入：
 %   cur_ind_frame 当前超帧的索引号

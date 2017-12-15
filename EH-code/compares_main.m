@@ -1,6 +1,17 @@
 %% 对比实验的入口
-
- deltaPL_ind_max = 10;
+    clc
+    clear all
+    matlab_ver='2015';% '2012'or'2015'
+    if  strcmp(matlab_ver,'2012')
+        if(matlabpool('size')==0) %没有打开并行
+            matlabpool local; %按照local配置的进行启动多个matlab worker
+        end
+    else
+        if(isempty(gcp('nocreate'))==1) %没有打开并行
+            parpool local; %按照local配置的进行启动多个matlab worker
+        end
+    end
+    deltaPL_ind_max = 10;
     deltaPL_step = 2; %单位dBm
     parfor deltaPL_ind =1:deltaPL_ind_max  
         %% 初始化系统参数
@@ -24,6 +35,8 @@
         [ miu_th ] = calEquPLRThreshold( par.Nodes, par.Channel, par.Constraints, precision, re_cal_miu_state,par.EnergyHarvest.t_cor_EH);
         % 优化分配不同身体姿势下的传输功率和数据速率
         [ AllocatePowerRate, opti_power_problems] = allocateTranPower( miu_th, par);
+        % offline方法获得最优功率
+        [offline_power] =compareOffline(shadow_seq, pos_seq, EH_status_seq, EH_collect_seq, par);
 
         %% 性能分析
         % 初始化三种不同的队列
@@ -43,6 +56,7 @@
             Nodes(ind_node).num_packet_buffer = par.Nodes.num_packet_buffer(ind_node); %缓存所能存储的数据包数量
             Nodes(ind_node).Nor_SrcRate = par.Nodes.Nor_SrcRates(ind_node);
             Nodes(ind_node).tranRate = par.Nodes.tranRate(ind_node); % 固定传输速率
+            Nodes(ind_node).battery_capacity = par.EnergyHarvest.battery_capacity; % 电池容量
         end
 
         %% 循环统计分析
@@ -96,7 +110,7 @@
                 EH_end_ind = ind_frame*par.MAC.N_Slot;
                 cur_EH_collect = EH_collect_seq(ind_node, EH_begin_ind:EH_end_ind);
                %% 统计资源分配的结果
-                cur_Allocate.power = repmat( AllocatePowerRate{cur_pos}{ind_node}.power,1,par.MAC.N_Slot);
+                cur_Allocate.power = offline_power(ind_node,((ind_frame-1)*par.MAC.N_Slot+1):(ind_frame*par.MAC.N_Slot));%repmat( AllocatePowerRate{cur_pos}{ind_node}.power,1,par.MAC.N_Slot);
                 cur_Allocate.src_rate = AllocatePowerRate{cur_pos}{ind_node}.src_rate;
                 cur_Allocate.slot = AllocateSlots(ind_node,:);
               %% 更新参数
@@ -109,8 +123,35 @@
         time_2 =clock;
         time_cost = etime(time_2,time_1)
         disp(['deltaPL:',num2str(deltaPL),'程序运行时间：',num2str(time_cost),'s'])
-        % 保存仿真结果
+        % 保存offline仿真结果
         path_names = configurePaths(par.EnergyHarvest.t_cor_EH); %各种路径名字
-        save_path_name = strcat([path_names.save_prefix,num2str(deltaPL),'.mat']);   
+        save_path_name = strcat([path_names.offline_prefix,num2str(deltaPL),'.mat']);   
         parsave(save_path_name, deltaPL, Queue, AllocatePowerRate, sta_AllocateSlots, shadow_seq, pos_seq, EH_status_seq, EH_collect_seq, EH_P_tran);
     end
+    
+    
+    %% 性能统计
+     show_deltaPL_ind =10;
+     par = initialParameters(0); %初始化系统参数  
+     analysisQoSPerformance(deltaPL_step, deltaPL_ind_max, show_deltaPL_ind,par.EnergyHarvest.t_cor_EH)
+    %% 性能对比，对比本文提出的方法和对比方法
+    load_data = {}; %加载的数据
+    deltaPL =  (show_deltaPL_ind-1)*deltaPL_step;
+    t_cor_EH = par.EnergyHarvest.t_cor_EH;
+    path_names = configurePaths(t_cor_EH); %各种路径名字
+    myRA_path_name = strcat([path_names.myRA_prefix,num2str(deltaPL),'.mat']);
+    myRA_data =load(myRA_path_name);
+    myRA_QoS = calQosPerformance( myRA_data.Queue, par.MAC,par.Nodes.packet_length);
+    offline_path_name = strcat([path_names.offline_prefix,num2str(deltaPL),'.mat']);
+    offline_data =load(offline_path_name);
+    offline_QoS = calQosPerformance( offline_data.Queue, par.MAC,par.Nodes.packet_length);
+    for ind_node =1:par.Nodes.Num
+        compare_energy_per_bit(1,ind_node) = myRA_QoS(ind_node).energy_per_bit;
+        compare_energy_per_bit(2,ind_node)=offline_QoS(ind_node).energy_per_bit;
+    end
+    bar(compare_energy_per_bit')
+ 
+    
+    
+    
+    

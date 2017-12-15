@@ -85,6 +85,7 @@ function parameters = initialParameters(deltaPL)
                                 [0.45,0.35;0.55,0.65],[0.53,0.45;0.47,0.55],[0.47,0.50;0.53,0.5],[0.65,0.58;0.35,0.42],[0.78,0.82;0.22,0.18]}; %初始化状态转移矩阵
     EnergyHarvest.t_cor_EH = 40; % 单个能量采集状态所维持的时间，一般设置为T_Slot的整数倍,单位ms
     EnergyHarvest.k_cor = ceil(EnergyHarvest.t_cor_EH/MAC.T_Slot); %相关时隙数，及同一个能量采集状态所维持的时隙数
+    EnergyHarvest.battery_capacity = 100*1e6; %电池容量，单位为uJ 
     parameters.EnergyHarvest = EnergyHarvest;
 
     
