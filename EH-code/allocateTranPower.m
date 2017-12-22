@@ -19,6 +19,8 @@ function [ AllocatePowerRate, opti_problems ] = allocateTranPower( miu_th, param
         EH_P_on = zeros(1,num_nodes); %各个节点在当前身体姿势下的能量采集状态为On的概率密度
         EH_pos_min = parameters.EnergyHarvest.EH_pos_min(cur_pos,:); %各个节点能量采集速率
         EH_pos_max = parameters.EnergyHarvest.EH_pos_max(cur_pos,:);
+        ratio = 1;
+        EH_pos_mean = (1-ratio)*EH_pos_min + ratio*EH_pos_max;
         for ind_node= 1:num_nodes
             EH_P_on(1,ind_node) =  parameters.EnergyHarvest.EH_P_state{cur_pos,ind_node}(1);
         end
@@ -29,7 +31,7 @@ function [ AllocatePowerRate, opti_problems ] = allocateTranPower( miu_th, param
         PLR_th = parameters.Constraints.Nor_PLR_th;
         Cons = [];
         for ind_node = 1:num_nodes      
-           Cons = [Cons, EH_P_on(1,ind_node)*((EH_pos_min(1,ind_node)+EH_pos_max(1,ind_node))/2)*tran_rate>=src_rate_sdp(1,ind_node)/(v_sdp(1,ind_node)*(1-PLR_th))]; 
+           Cons = [Cons, EH_P_on(1,ind_node)*(EH_pos_mean(1,ind_node))*tran_rate>=src_rate_sdp(1,ind_node)/(v_sdp(1,ind_node)*(1-PLR_th))]; 
            Cons = [Cons, src_rate_sdp(1,ind_node)>=0];
            Cons = [Cons, v_sdp(ind_node)<=1./((1+parameters.PHY.E_a)*P_miu_th(ind_node)+parameters.PHY.E_Pct)];
            Cons = [Cons, 1/((1+parameters.PHY.E_a)*parameters.PHY.P_min+parameters.PHY.E_Pct) >=v_sdp(ind_node)>=1/((1+parameters.PHY.E_a)*parameters.PHY.P_max+parameters.PHY.E_Pct)];

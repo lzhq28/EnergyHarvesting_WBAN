@@ -1,8 +1,10 @@
 %%%%%%%%%%%%%%%%%% 初始化参数 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function parameters = initialParameters(deltaPL)
+function parameters = initialParameters(deltaPL, EH_ratio, t_cor_EH)
 % 
 %输入
 %   deltaPL 改变信道衰落中阴影衰落的均值，用来模拟环境的变化
+%   EH_ratio 控制能量采集的速率，用来观察不同能量采集速率条件下的性能情况,取值范围[0,1]
+%   t_cor_EH 能量采集相干时间
 %输出
 %   parameters 系统参数
    %% PHY
@@ -48,7 +50,7 @@ function parameters = initialParameters(deltaPL)
                     [4.9483, 7.2704, 4.2025,3.0444,	2.5985],
                     [5.7060	7.5404	3.8987	3.5210	1.9647]]; % 注意：这个应该需要进行调整，因为不同姿势下的信道参数相差不大
     Nodes.Nor_SrcRates = [40,68,34,50,35]; % 各个节点的正常包的数据速率，单位kbps
-    Nodes.min_SrcRates = [10,20,8,10,8]; %各个节点的最小数据速率，小于该数据速率表示数据无效
+    Nodes.min_SrcRates = [20,30,16,25,16]; %各个节点的最小数据速率，小于该数据速率表示数据无效
     Nodes.Emer_SrcRates = [10,10,10,10,10]; % 各个节点的紧急包的的数据速率,单位kbps
     Nodes.tranRate = repmat(parameters.PHY.RateSet(3), 1, Nodes.Num); % 配置的节点传输速率
     Nodes.packet_length = repmat(500,1,Nodes.Num);
@@ -71,19 +73,21 @@ function parameters = initialParameters(deltaPL)
     parameters.Constraints = Constraints;
     
     %% Energy Harvesting
-    EnergyHarvest.EH_pos_min = [[0.001, 0.010, 0.05, 0.01, 0.04],
-                                [0.128, 0.240, 0.15, 0.200, 0.4],
-                                [0.724, 0.95, 0.8, 0.9, 0.13]]; % 不同姿势下的能量采集功率的最小值，单位mw，刚好mw*ms=uJ
-    EnergyHarvest.EH_pos_max = [[0.0048, 0.05,0.095, 0.02, 0.05],
-                                [0.186, 0.31, 0.21, 0.28, 0.48],
-                                [0.915, 1.20, 0.88, 1.15, 1.56]]; % 不同姿势下的能量采集功率的最大值，单位mw，刚好mw*ms=uJ
+    EnergyHarvest.EH_pos_min = [[0.01, 0.02, 0.015, 0.03, 0.02],
+                                [0.04, 0.06, 0.035, 0.055, 0.08],
+                                [0.06, 0.09, 0.040, 0.07, 0.09]]; % 不同姿势下的能量采集功率的最小值，单位mw，刚好mw*ms=uJ
+    EnergyHarvest.EH_pos_min =  EnergyHarvest.EH_pos_min * EH_ratio;              
+    EnergyHarvest.EH_pos_max = [[0.015, 0.025,0.02, 0.04, 0.03],
+                                [0.05, 0.07, 0.05, 0.06, 0.10],
+                                [0.07, 0.11, 0.06, 0.08, 0.11]]; % 不同姿势下的能量采集功率的最大值，单位mw，刚好mw*ms=uJ
+    EnergyHarvest.EH_pos_max =  EnergyHarvest.EH_pos_max * EH_ratio;                     
     EnergyHarvest.EH_P_state = {[0.9,0.1],[0.8,0.2],[0.9,0.1],[0.8,0.2],[0.7,0.3],
                                 [0.3,0.7],[0.4,0.6],[0.3,0.7],[0.4,0.6],[0.6,0.4],
                                 [0.4,0.6],[0.5,0.5], [0.45,0.55],[0.6,0.4],[0.8,0.2]}; % 不同姿势下能量采集状态为ON的概率
     EnergyHarvest.EH_P_ini = {[0.8,0.7;0.2,0.3],[0.78,0.82;0.22,0.18],[0.8,0.7;0.2,0.3],[0.78,0.82;0.22,0.18],[0.74,0.68;0.26,0.32],
                                 [0.4,0.35;0.6,0.65],[0.42,0.38;0.58,0.62],[0.4,0.35;0.6,0.65], [0.42,0.38;0.58,0.62], [0.65,0.58;0.35,0.42],
                                 [0.45,0.35;0.55,0.65],[0.53,0.45;0.47,0.55],[0.47,0.50;0.53,0.5],[0.65,0.58;0.35,0.42],[0.78,0.82;0.22,0.18]}; %初始化状态转移矩阵
-    EnergyHarvest.t_cor_EH = 40; % 单个能量采集状态所维持的时间，一般设置为T_Slot的整数倍,单位ms
+    EnergyHarvest.t_cor_EH = t_cor_EH; % 单个能量采集状态所维持的时间，一般设置为T_Slot的整数倍,单位ms
     EnergyHarvest.k_cor = ceil(EnergyHarvest.t_cor_EH/MAC.T_Slot); %相关时隙数，及同一个能量采集状态所维持的时隙数
     EnergyHarvest.battery_capacity = 100*1e6; %电池容量，单位为uJ 
     parameters.EnergyHarvest = EnergyHarvest;

@@ -165,7 +165,7 @@ O.~Ozel, K.~Tutuncuoglu, J.~Yang, S.~Ulukus, and A.~Yener, ``Transmission with
 
 \bibitem{ieee2012WBAN}
 I.~S. Association {\em et~al.}, ``Ieee standard for local and metropolitan area
-  networks—part 15.6: Wireless body area networks,'' {\em IEEE Standard for
+  networks — part 15.6: Wireless body area networks,'' {\em IEEE Standard for
   Information Technology, IEEE}, vol.~802, no.~6, pp.~1--271, 2012.
 
 \bibitem{liu2017buffer}
@@ -236,5 +236,15 @@ Y.~Tselishchev, L.~Libman, and A.~Boulis, ``Reducing transmission losses in
 J.~Lofberg, ``Yalmip: A toolbox for modeling and optimization in matlab,'' in
   {\em Computer Aided Control Systems Design, 2004 IEEE International Symposium
   on}, pp.~284--289, IEEE, 2004.
+
+\bibitem{yazdandoost2009channel}
+K.~Yazdandoost and K.~Sayrafian, ``Channel model for body area network (ban),
+  ieee p802. 15-08-0780-09-0006,'' {\em IEEE 802.15 Working Group Document},
+  2009.
+
+\bibitem{guo2016two}
+Q.~Guo, B.~Liu, and C.~W. Chen, ``A two-layer and multi-strategy framework for
+  human activity recognition using smartphone,'' in {\em Communications (ICC),
+  2016 IEEE International Conference on}, pp.~1--6, IEEE, 2016.
 
 \end{thebibliography}
