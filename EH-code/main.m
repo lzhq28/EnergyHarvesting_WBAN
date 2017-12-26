@@ -369,7 +369,7 @@
     %% 分析本文方法的细节表现
     % 观察本文方法中两阶段分别对性能的影响
     x_range_ind = deltaPL_ind_min:deltaPL_ind_max;
-    x_range = 0.5:0.1:1;
+    x_range = (0.5:0.1:1)*100;
     figure(1)
     bar(x_range,reshape(cp_PLR_ave(1, :,end, :)*100,3,6)')
     legend('PRS-RA with PRCS and QASAS','PRS-RA with PRCS','PRS-RA with QASAS')   
@@ -486,12 +486,7 @@
      
     
     
-    
-    
-
-    
-   
-    % 观察采用时隙奉陪前后队列中数据包变化情况
+    % 观察采用时隙分配前后队列中数据包变化情况
     show_t_cor_EH = 40;
     show_deltaPL = 18;
     show_EH_ratio = 1;

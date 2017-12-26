@@ -233,9 +233,9 @@ Finally, numerical simulation results demonstrate that the proposed joint the Po
 
 
 \section{Introduction}
-With the rapid development of sensor and wireless communication technologies, wireless body area network (WBAN) can replace complex and wired healthcare applications to continuously monitor the body's vital signals and provide real-time feedback to the user and doctors without causing any discomfort and interrupting their daily lifestyle \cite{salayma2017wireless,movassaghi2014wireless,dagdeviren2017energy}. 
-WBAN typically consists of several low-power, miniaturized and lightweight on-body or implanted sensor nodes to monitor physiological parameters, and then these collected physiological data are further transmitted to remote medical servers by one energy-efficient hub (Mobile phone or PDA) for various medical and healthcare applications \cite{zhang2017medium}. 
-Generally, most of these applications are related to the chronic diseases, which need to continuously monitor the body's vital signals without interrupting user's daily lifestyle. In addition, for carrying out an effective diagnosis, the Quality of Service (QoS) should be guaranteed in terms of packet loss, delay and so on \cite{razzaque2017qos}. 
+With the rapid development of sensor and wireless communication technologies, wireless body area network (WBAN) can replace complex and wired healthcare requirement to continuously monitor the body's vital signals and provide real-time feedback to the user and doctors without causing any discomfort and interrupting their daily lifestyle \cite{salayma2017wireless,movassaghi2014wireless,dagdeviren2017energy}. 
+WBAN typically consists of several lower-power, miniaturized and lightweight on-body or implanted sensor nodes to monitor physiological parameters, which are collected and further transmitted to remote medical servers by one energy-efficient hub (Mobile phone or PDA) for various medical and healthcare applications \cite{zhang2017medium}. 
+Generally, most of these applications are life critical and require a long lifetime without interrupting user's daily lifestyle, while still have a strict guarantee of Quality of Service (QoS) in terms of packet loss, delay and so on \cite{razzaque2017qos}.
 
 However, the limited battery capacity, constrained by the size and weight of sensors nodes, cannot support the long term operation without interruption.  Besides, replacing battery or taking off sensors to charge power is not always practical especially for some implanted sensors, which also causes the interruption of the health monitoring system \cite{ibarra2016qos,luo2017resource}. Although the classical energy saving technologies make efforts to explore different energy efficient schemes in aspects of MAC protocol design, power control schemes and cross-layer resource scheduling strategies to prolong the system lifetime \cite{zhang2017medium,zang2016accelerometer,liu2017transmission}, the ultimate goal 'uninterrupted work' cannot be ensured. 
 Fortunately, Energy Harvesting (EH) technology, which can collect energy from various sources around human body, has recently been considered as a promising solution to overcome the bottleneck of energy limited WBANs \cite{hao2017energy}. For instance, EH-powered sensors can scavenge energy from a variety of limitless ambient sources (e.g., light, heat, electromagnetic radiation) or the body itself (e.g., locomotion, breathing, heartbeat, lactate), and then convert it to usable electric energy for providing continuous power \cite{akhtar2017energy}. Thus, EH-powered WBANs have the potential ability to achieve infinite lifetime and perpetual operation, which is called Energy Neutral Operation (ENO) \cite{kansal2007power}.
@@ -403,7 +403,7 @@ where $P({\gamma}|{\mu _{{\gamma _{dB}}}},{\sigma _{{\gamma _{dB}}}})$ represent
 \begin{equation}  \small
 \overline{PLR} < PLR_{th}
 \end{equation}
-where $PLR_{th}$ is the preset threshold of the packet loss rate.
+where $PLR_{th}$ is the preset threshold of the packets loss rate.
 
 In this paper, we investigates the allocation of the source rate and the transmission power under the constraints of the QoS performances by constructing the following join power and source rate optimization problem:
 \begin{subequations}\label{P1:PRCS} \small
@@ -474,7 +474,7 @@ As we adopt the scheduled access mechanism in beacon mode with superframe bounda
 Considering the time-varying EH state and the fluctuation of the data queue, not only the number but also the location of slots should be carefully allocated for improving the short-term QoS performance. For instance, if the allocated slots for one node is at the end of the next superframe, more energy will be harvested for transmitting the blocked packets in the data queue.
 Unfortunately, the hub can only know the EH states of nodes in the allocated slots of last superframe. In this paper, we will predict the EH states for each sensor in the following superframe.
 
-The energy harvesting process is modeled as a two-state Markov chain as shown in Fig. \ref{fig:markov_model}. The transition matrix can be expressed as follows,
+The energy harvesting process is model as a two-state Markov chain as shown in Fig. \ref{fig:markov_model}. The transition matrix can be expressed as follows,
 \begin{equation}
 {\rm \textbf{P}} = \left[ {
 \begin{matrix}
@@ -584,7 +584,6 @@ Compared with the energy-constrained nodes, the energy-sufficient nodes have eno
 Considering the time-varying EH states, some data packets may be blocked in the data queue with the dynamic link quality. If the blocked data packets cannot be transmitted to the hub, they will lead to the increasing delay of not only the blocked packets but also the arriving packets \cite{liu2017buffer}. Therefore, the blocked data packets in the data queue need to be transmitted for improving the short-term QoS performance, when there are sufficient residual energy in the energy buffer. 
 
 Considering both the blocked data ${D_{block}}$ in the data queue and the arriving data in the following superframe, the total data ${D_{buf}}$ can be expressed as follows,
-
 \begin{equation}
 {D_{buf,i}} = {D_{block,i}} + {S_i} \cdot T
 \end{equation}
@@ -595,7 +594,6 @@ The remaining number of slots ${N_{rest}}$ after the slot allocation for energy-
 \end{equation}
 
 Thus, the total number of the allocated slots for the energy-sufficient nodes should be not larger than the remaining number of slots ${N_{rest}}$, given as follows,
-
 \begin{equation}
 \sum\limits_{i \in {\Phi _{GOOD}}}^{} {{n_i} \leqslant {N_{rest}}}
 \end{equation}
@@ -606,13 +604,11 @@ For different energy-sufficient nodes, they expect to be allocated enough slots 
 \end{equation}
 
 To evaluate the satisfaction of both the blocked data and the arriving data with given number of slots, a utility function $U(m,D_{buf})$ is defined as follows,  
-
 \begin{equation} \label{eq:utility}  \footnotesize
 U(m,D_{buf}) = \frac{{\left( {{(R\cdot m \cdot t_{slot})^2} - 2 \cdot (R\cdot m \cdot t_{slot}) \cdot D_{buf}  } \right)}}{{D_{buf}^2}}
 \end{equation}
 When the number of allocated slots is less than $\frac{D_{buf}}{R \cdot t_{slot}}$, more allocated slots can achieve a higher utility to transmit more data in the queue buffer. When the number of the allocated slots reaches the value $\frac{D_{buf}}{R \cdot t_{slot}}$, the node obtain the highest utility. If still increasing the number of allocated slots, it will cause the waste of the channel resources, thus the utility will decrease correspondingly.
 Finally, the slot allocation problem for the energy-sufficient nodes can be formulated to maximize the total utility of all nodes in GOOD set, subject to the total slot constraint and the energy constraint. Mathematically, the slot optimization problem can be written as follows,
-
 \begin{subequations} \label{P4:slot_allocation} \small
 \begin{align}
     \textbf{P4:}& \quad \mathop {\max }\limits_{\small{({{n_i}})}} \;  \sum\limits_{i \in {\Phi _{GOOD}}} {U\left( {{n_i} ,{D_{buf,i}}} \right)} , \label{P4:obj} \\
@@ -669,45 +665,6 @@ Above all, the WBAN simulation settings should be illustrated in details. We con
 \end{center}
 \label{tab:parEH}
 \end{table*}
-
-
-\begin{table}[h]
-\footnotesize
-\centering
-\caption{EH-powered WBAN simulation parameters}
- \begin{tabular}{|m{0.12\columnwidth}<{\centering}| m{0.4\columnwidth}<{\centering}| m{0.23\columnwidth}<{\centering}|}
-  \hline
-  \textbf{{Parameter}} & {\textbf{Description}} & {\textbf{Value}}  \\
-  \hline
-   $B$ & bandwidth & 1MHz \\
-  \hline
-   $P_{N}$ & noise power & -94dBm \\
-  \hline
-   $\alpha$ & power amplifier inefficiency & 2.4 \\
-  \hline
-   $E_{ct}$ & circuitry energy consumption & 50uW \\
-  \hline
-   $t_{slot}$ &  time length of one time slot  & 0.5ms \\
-	  \hline
-   $R$ &  transmission rate  & 485.6kbps \\
-	   \hline
-   $P_{tx,min}$ &  minimum value of the transmission power  & -30dBm \\
-	   \hline
-   $P_{tx,max}$ &  maximum value of the transmission power  & 0dBm \\
-   \hline
-   $PLR_{th}$ &  preset threshold of the packet loss rate  & 5\% \\
-   \hline
-   $Delay_{th}$ &  preset threshold of the packet delay  & 500ms \\
-   \hline
-   $D_{buf}$ &  packet buffer size  & 100kb \\
-  \hline
-  %\bottomrule
- \end{tabular}
-\label{tab:otherPar}
-\end{table}
-
-
-
 
 
 \subsection{The Effectiveness of Long-term Power-Rate Control Scheme}
@@ -859,7 +816,7 @@ The nodes can collect more energy with a higher EH efficiency ratio, thus the av
  
 
 \section{Conclusion} \label{sec:conclusion}
-In this paper, we optimize the resource allocations to improve both the long-term QoS and the short-term QoS performance in the EH-powered WBAN system, while the time-varying and heterogeneous EH states are fully taken into consideration. Firstly, we design a joint Power-Rate control scheme (PRCS) in terms of the transmission power and the source rate to ensure the long-term QoS performance based on both the EH states and the dynamic link quality. Secondly, we evaluate the node state in real time based on the packet buffer state and the energy buffer state, and then a QoS aware slot allocation scheme is adopted to dynamically allocate the slots based on the node states for timely transmitting the blocked packets in the buffer. The simulation results demonstrate that the joint Power-Rate control scheme (QASAS) can effectively improve the QoS performances in terms of PLR, delay and throughput. In addition, the short-term QoS aware slot allocation scheme can timely allocate slots to transmit the blocked packets, thus the QoS performance is further improved with adopting both PRCS and QASAS.
+In this paper, we optimize the resource allocations to improve both the long-term QoS and the short-term QoS performance in the EH-powered WBAN system, while the time-varying and heterogeneous EH states are fully taken into consideration. Firstly, we design a joint Power-Rate control scheme in terms of the transmission power and the source rate to ensure the long-term QoS performance based on both the EH states and the dynamic link quality. Secondly, we evaluate the node state in real time based on the packet buffer state and the energy buffer state, and then a QoS aware slot allocation scheme is adopted to dynamically allocate the slots based on the node states for timely transmitting the blocked packets in the buffer. 
 
 
 
