@@ -316,7 +316,7 @@ Suppose that the hub (such as PDA and mobile phone) has sufficient resources to 
 
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.4\textwidth]{markov_model}
+\includegraphics[width=0.3\textwidth]{markov_model}
 \caption{Discrete Two-state Markov Chain of the EH process}
 \label{fig:markov_model}
 \end{figure}
@@ -458,7 +458,7 @@ Then, we define a new intermediate variable ${v_i} = {1 \over { {\left( {1 + \al
 
 \subsection{Source Rate Configuration}
 For vital signals, the larger source rate means more useful information can be used for diagnosis, meanwhile the larger source rate will cost more energy to be transmitted. However, the limited energy and dynamic link quality will result in many packet losses with an exorbitant source rate, and the random packet losses will break the integrity of data. Therefore, the source rate usually has a most appropriate upper boundary $S_{up}$ of the source rate, which contains enough information for diagnosis.
-In addition, the source rate also have a acceptable lower boundary $S_{down}$. When the source rate is lower than the lower boundary $S_{down}$, the vital data will lose the diagnostic significance. Thus, the source rate will be re-configured as the following equation.
+In addition, the source rate also have a acceptable low boundary $S_{low}$. When the source rate is lower than the low boundary $S_{low}$, the vital data will lose the diagnostic significance. Thus, the source rate will be re-configured as the following equation.
 \begin{equation}
 S_{i} = \max \left\{ \min (S_{i}, S_{up} ), S_{i,low} \right\}
 \end{equation}
@@ -629,12 +629,6 @@ Due to the lack of the IEEE 802.15.6-based hardware, we develop an event-driven 
 Above all, the WBAN simulation settings should be illustrated in details. We consider a classical WBAN system, which contains one hub and five $N=5$ wireless body nodes. The deployed positions and link parameters of all nodes are given in Table \ref{tab:posNode}, referring to the actual link experiment results in \cite{d2010statistical} \cite{reusens2009characterization}. The changes of postures are modeled as a Markov chain, and we only consider three most common postures, i.e., still, walk and run with 0.5, 0.3 and 0.2 steady-state probabilities, correspondingly. Besides, we assume the hub can identify the changes of postures with high accuracy in real-time \cite{guo2016two}. The extension to more body postures is straightforward. The standard derivation $\sigma_{s}$ of the shadowing changes with the postures, while the mean of the shadowing can be used to indicate the quality of the environment \cite{d2010statistical}. In this paper, we assume the hub has sufficient energy supply, while the body nodes are powered by a piezoelectric energy harvester according to the intensity of body movements. Considering the different intensity of body parts, the energy harvesting rates of different body nodes are heterogeneous, which also change with the postures, as well as the steady state probabilities of the EH states \cite{ibarra2016qos}, as shown in Table \ref{tab:parEH}. Other parameters are selected according to the IEEE 802.15.6 specifications \cite{ieee2012WBAN}. 
 
 
-
-
-
-
-
-
 \begin{table} \scriptsize
 \setlength{\abovecaptionskip}{-2pt}
 \setlength{\belowcaptionskip}{0pt}
@@ -643,7 +637,7 @@ Above all, the WBAN simulation settings should be illustrated in details. We con
 \begin{tabular}{|c|c|c|c|c|c|c|c|c|} \hline
 \multicolumn{1}{|c}{} & \multicolumn{3}{c|}{}&\multicolumn{3}{c|}{${\sigma _{{S}}}{(dB)}$}& \multicolumn{2}{c|}{\textbf{Data Rate}}\\ \hline
  \textbf{Index} & \textbf{${d}$} & \textbf{${n}$}&\textbf{${PL_{d_{0}}}$}&\textbf{Still}  & \textbf{Walk}  & \textbf{Run}    & ${S_{up}}$ &${S_{low}}$ \\ \hline \hline
-1   & 69 &3.11&35.2&6.1   &	5.4	&  6.1   &  40 & 20\\  \hline
+1   & 69 &3.11&35.2&6.1   &	5.4	&  5.7   &  40 & 20\\  \hline
 2   & 36 &3.23&41.2& 4.8	&    7.4	&    7.8   & 68& 30\\  \hline
 3   & 48 &3.35&32.2& 5.1	&     4.9&    4.5    & 34 & 16  \\  \hline
 4   & 34 &3.45&32.5& 2.6	&    4.4	&    4.0    & 50 & 25\\  \hline
@@ -672,155 +666,149 @@ Above all, the WBAN simulation settings should be illustrated in details. We con
 \label{tab:parEH}
 \end{table*}
 
-\subsection{Simulation Results of Power-Rate-Slot Control Schemes}
-For evaluating the effectiveness of the long-term power-rate control scheme and the short-term slot allocation scheme, we compare them with three comparison schemes: the offline scheme \cite{huang2014optimal}, the online scheme \cite{ibarra2016qos} and the fixed scheme in terms of the average PLR, packet delay, throughput and energy per bit. 
 
-As shown in Figure \ref{fig:com_PLR}, the offline scheme has the lowest PLR performance due to the priori knowledge of the channel state.
+\subsection{The Effectiveness of Long-term Power-Rate Control Scheme}
+
+Firstly, we analyze the allocated results of the long-term power-rate control scheme (PRCS) for different postures. As shown in Table \ref{tab:posNode}, the parameters of the path loss are different to different nodes as well as the source rate, meanwhile the statistical characterizations of the shadowing fluctuate for different postures.
+Thus, the resource allocation schemes should be able to deal with the dynamic link quality. 
+The allocated transmission power and configured source rates for different nodes by the proposed PRCS in different postures are given in Figure \ref{fig:PRCS}. 
+In the PRCS, we optimize the transmission power for each nodes based on the link quality to support the long-term QoS performance. Thus, the allocated transmission powers for each nodes are dynamically adjusted when the link quality changes due to the postures in Figure \ref{fig:PRCS_power}. For instance, the node 3 and the node 4 are close to the hub, and their link qualities are much better than the other nodes. Hence, the transmission powers for them are assigned a lower value to save precious energy under the condition of satisfying the long-term QoS requirements. 
+
+In addition, the source rates for different nodes are configured based on the heterogeneous requirements and the energy harvesting rates.  As shown in Figure \ref{fig:PRCS_rate}, the source rates of the node 1 and the node 2 are configured as the low boundary $S_{low}$ in all postures. This is because the highest energy harvesting rates of them are still not enough for supporting the optimal source rate $S_{up}$ with the higher transmission power in Figure \ref{fig:PRCS_power}. As for node 5, the energy harvesting rates in different postures are different for the piezoelectric energy harvester in Table \ref{tab:parEH}. Thus, the source rates are configured, correspondingly. 
+
+\begin{figure}[!htb]
+\centering
+    \subfigure[Allocated transmission power by PRCS]{
+        \label{fig:PRCS_power}
+        \includegraphics[width=0.22\textwidth]{PRCS_power.eps}
+    }
+    \hspace{0.1cm}
+    \subfigure[Configured source rate by PRCS ]{
+        \label{fig:PRCS_rate}
+        \includegraphics[width=0.22\textwidth]{PRCS_rate.eps}
+    }
+\caption{Allocated results for different nodes in different postures by the proposed PRCS.}
+\label{fig:PRCS}
+\end{figure}
+
+
+
+\subsection{The Effectiveness of Short-term QoS Aware Slot Allocation Scheme}
+Secondly, we evaluate the effectiveness of the short-term QoS aware slot allocation scheme (QASAS). Considering the dynamic link qualities, the packet losses will occur with uncertainty. Besides, the arriving energy in a superframe is also random, thus the number of the blocked packets cannot be predicted. If the blocked packets cannot be transmitted to the hub, not only the blocked packets but also the arriving packets will have a high packet delay, and even it will cause the packet losses due to the packet delay over the preset threshold or the packet buffer overflow.
+
+Compared with the long-term PRCS, the short-term QASAS can give a timely response to the changes of the packet buffer state and the energy buffer state. When there are many blocked packets in the packet buffer and residual energy in the energy buffer, more slots will be allocated for transmitting the blocked packets based on the level of the residual energy. As shown in Figure \ref{fig:cp_packets_without_slot}, the number of packets keeps at a high level without using the QASAS. Fortunately, the QASAS can timely transmit the blocked packets based on the packet buffer state and the energy buffer state, hence, the number of the packet buffer can stay a low level as shown in Figure \ref{fig:cp_packets_with_slot}.
+
+%Thus, the short-term QoS performance can be improved if the blocked packets can be .
+
+
+\begin{figure}[!htb]
+\centering
+    \subfigure[Without using QoS Aware Slot Allocation Scheme]{
+        \label{fig:cp_packets_without_slot}
+        \includegraphics[width=0.22\textwidth]{cp_packets_without_slot.eps}
+    }
+    \hspace{-0.1cm}
+    \subfigure[With using QoS Aware Slot Allocation Scheme ]{
+        \label{fig:cp_packets_with_slot}
+        \includegraphics[width=0.22\textwidth]{cp_packets_with_slot.eps}
+    }
+\caption{Number of packets in the buffer of node 4 changes before and after adopting the QoS Aware Slot Allocation Scheme (QASAS).}
+\label{fig:cp_Packets}
+\end{figure}
+
+
+\subsection{The Influence of Different Mean of Shadowing on Performance}
+%\subsection{Simulation Results of Power-Rate-Slot Control Schemes}
+For evaluating the effectiveness of the long-term power-rate control scheme and the short-term slot allocation scheme, we compare them with three comparison schemes: the offline scheme \cite{huang2014optimal}, the online scheme \cite{ibarra2016qos} and the fixed scheme in terms of the average PLR, packet delay, throughput and energy per bit. For simulating the impact of the changes in the environment on the QoS performance, the mean of the shadowing can be adjusted to change the statistical characterization of the wireless channel. The higher mean of the shadowing represents the worse link quality of the wireless channel. In this paper, we assume all nodes have the same mean of the shadowing for the sake of simplification, and study the influence of the mean of the shadowing on the QoS performance. 
+
+As shown in Figure \ref{fig:cp_PLR} and Figure \ref{fig:cp_delay}, the proposed PRS-RA scheme obtains the lowest PLR performance and the lowest packet delay which satisfying the QoS requirements, even comparing with the offline scheme. This is because the proposed PRS-RA scheme considers both the long-term QoS performance and the short-term QoS performance though the adaption of the source rate, the transmission power and the slots. 
+However, due to the priori knowledge of the channel state and EH states, the offline scheme can optimally allocated the transmission power to maximize the throughput as shown in Figure \ref{fig:cp_Throughput}. In addition, the transmission power is adjusted in real-time based on the real-time path loss of the channel, thus the energy efficiency is the highest as shown in Figure \ref{fig:cp_energyPerBit}. 
+Meanwhile, both the proposed PRS-RA scheme and online scheme assume that only the statistical information of channel state and the EH states are priori known by the hub. However, the proposed PRS-RA scheme has a higher energy efficiency performance than the online scheme, which is very close to the offline scheme. This is because the optimal transmission power is firstly allocated to support the long-term QoS performance, and then the effective slot allocation can further guarantee there is enough power to transmit the data packets in the allocated slots, which can avoid the waste of energy due to the packet losses. 
+
+As for the throughput in Figure \ref{fig:cp_Throughput}, the throughput of the proposed PRS-RA scheme decreases with the mean of the shadowing, while the energy cost per bit increases with the mean of the shadowing in Figure \ref{fig:cp_energyPerBit}. When the link quality becomes worse with a higher mean of the shadowing, the long-term power-rate control scheme (PRCS) dynamically adjust the transmission rate and the source rate based on the link quality. Generally, the transmission power will be increased to guarantee the QoS performance and the source rate will be decreased to ensure the integrity of data with a lower PLR. In addition, the short-term QoS aware slot allocation scheme (QASAS) dynamically analyzes the state of each nodes, and then optimizes the appropriate slots to copy with the blocked packets in the buffer. Hence, the bandwidth utilization of the proposed PRA-SA reaches to 94\%, which is higher than the online scheme, thus, more channel resource can be utilized by other WBANs.
 
 
 \begin{figure*}[!htb]
 \centering
     \subfigure[Average PLR]{
-        \label{fig:com_PLR}
-        \includegraphics[width=0.22\textwidth]{com_PLR.eps}
+        \label{fig:cp_PLR}
+        \includegraphics[width=0.3\textwidth]{cp_PLR.eps}
     }
-    \hspace{-0.2cm}
+    \hspace{-0.6cm}
     \subfigure[Packet delay]{
-        \label{fig:motivation-energy}
-        \includegraphics[width=0.22\textwidth]{com_Delay.eps}
+        \label{fig:cp_delay}
+        \includegraphics[width=0.3\textwidth]{cp_Delay.eps}
     }
-		\hspace{-0.2cm}
-    \subfigure[Throughput]{
-        \label{fig:com_Throughput}
-        \includegraphics[width=0.22\textwidth]{com_Throughput.eps}
-    }
-		\hspace{-0.2cm}
+		\hspace{-0.6cm}
     \subfigure[Energy cost per bit]{
-        \label{fig:com_energyPerBit}
-        \includegraphics[width=0.22\textwidth]{com_energyPerBit.eps}
+        \label{fig:cp_energyPerBit}
+        \includegraphics[width=0.3\textwidth]{cp_energyPerBit.eps}
+    }
+		\hspace{-0.6cm}
+    \subfigure[Throughput]{
+        \label{fig:cp_Throughput}
+        \includegraphics[width=0.3\textwidth]{cp_Throughput.eps}
+    }
+		\hspace{-0.6cm}
+    \subfigure[Bandwidth utilization]{
+        \label{fig:cp_bandwidth}
+        \includegraphics[width=0.3\textwidth]{cp_bandwidth.eps}
     }
 \caption{The QoS performance of different algorithms.}
-\label{fig:com_QoS}
+\label{fig:cp_QoS}
 \end{figure*}
 
+
+
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=0.35\textwidth]{per_EH_efficiency.eps}
-\caption{Number of packets change over time in node 1.}
-\label{fig:EHchanges}
+    \subfigure[Average PLR performance]{
+        \label{fig:EHefficiency_PLR}
+        \includegraphics[width=0.22\textwidth]{EHefficiency_PLR.eps}
+    }
+    \hspace{-0.1cm}
+    \subfigure[Packet delay performance ]{
+        \label{fig:EHefficiency_Delay}
+        \includegraphics[width=0.22\textwidth]{EHefficiency_Delay.eps}
+    }
+		\hspace{-0.1cm}
+    \subfigure[Throughput performance]{
+        \label{fig:EHefficiency_Throughput}
+        \includegraphics[width=0.22\textwidth]{EHefficiency_Throughput.eps}
+    }
+		\hspace{-0.1cm}
+    \subfigure[Bandwidth utilization performance]{
+        \label{fig:EHefficiency_bandwidth}
+        \includegraphics[width=0.22\textwidth]{EHefficiency_bandwidth.eps}
+    }
+\caption{QoS performances versus the EH efficiency ratio.}
+\label{fig:cp_EHefficiency}
 \end{figure}
+
+
+
+
+
+%\begin{figure}[!htb]
+%\centering
+%\includegraphics[width=0.24\textwidth]{EHefficiency_PLR.eps}
+%\caption{Number of packets change over time in node 1.}
+%\label{fig:EHefficency_PLR}
+%\end{figure}
+
+
+
 
 \subsection{The Influence of Different EH Efficiencies on Performance}
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.35\textwidth]{per_EH_efficiency.eps}
-\caption{The average QoS performance versus different EH efficiencies.}
-\label{fig:EHchanges}
-\end{figure}
+%\begin{figure}[!htb]
+%\centering
+%\includegraphics[width=0.45\textwidth]{per_EH_efficiency.eps}
+%\caption{The average QoS performance versus different EH efficiencies.}
+%\label{fig:EHchanges}
+%\end{figure}
+To evaluate the effectiveness of the long-term power-rate control scheme (PRCS) and the short-term QoS aware slot allocation scheme (QASAS), we compare three different schemes: 1) the proposed PRS-RA with both PRCS and QASAS, 2) the proposed PRS-RA only with PRCS, 3) the proposed PRS-RA only with QASAS. And we gradually change EH efficiency ratio for all nodes to scale the range of the energy harvesting rate $[EH_{min},EH_{max}]$. The smaller EH efficiency ratio means energy harvester can collect less energy when the energy harvester stays the ON state. The QoS performances versus the EH efficiency ratio are given in Figure \ref{fig:cp_EHefficiency}.
 
-
-\subsection{The Influence of Different Mean of Shadowing on Performance}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.35\textwidth]{per_EH_efficiency.eps}
-\caption{The average QoS performance versus different mean of shadowing.}
-\label{fig:ShadowChanges}
-\end{figure}
-
-\subsection{The Influence of Coherence Time of EH process on Performance}
-
-\begin{figure}[!htb]
-\centering
-\includegraphics[width=0.35\textwidth]{per_EH_efficiency.eps}
-\caption{The average QoS performance versus different mean of shadowing.}
-\label{fig:coherenceTime}
-\end{figure}
-
-
-%%%
-%%%
-%%%\section{Related works}
-%%%
-%%%\subsection{Related works}
-%%%Some related researches
-%%%
-%%%
-%%%\subsection{Motivation}
-%%%
-%%%
-%%%\subsection{Contributions}
-%%%In this study, we investigate the resource allocation schemes in terms of the spectrum resource matching and the power allocation under a single EH-DCCN. In the EH-DCCN, D2D pairs powered by EH module are allowed to reuse the CUs' uplink spectrum resource to transmit their local data. Thus, the key contributions of this paper can be expressed as three aspects:
-%%%\begin{itemize}
-    %%%\item Firstly, this work is the first to .
-    %%%\item Subsequently, two algorithms .
-    %%%\item As a consequence, we provide .
-%%%\end{itemize}
-%%%
-%%%
-%%%\section{Network Model and Problem Statement} \label{sec:network_model}
-%%%In this section, 
-%%%
-%%%\subsection{Scenario, node and transmission model}
-%%%
-%%%\subsection{Energy model}
-%%%In this scenario, each EH-DP uses the harvested energy to transmit their local data. For the $d_j$-th EH-DP, $E_{d_j}^t$ units of energy can be harvested in the $t$-th time slot where $E_{d_j}^t \ge 0$. $\left\{ {E_{{d_j}}^1,E_{{d_j}}^2, \ldots ,E_{{d_j}}^t, \ldots ,E_{{d_j}}^T} \right\}$ is the time sequence of harvested energy in $T$ time slots. 
-%%%\subsection{Mathematic model}
-%%%optimization problem
-%%%
-%%%\subsection{Problem analysis}
-%%%
-%%%
-%%%\section{Algorithms design} \label{sec:algorithms_design}
-%%%In this section, two algorithms are explained at first, and the computational complexity of the two algorithms is elaborated in the later.
-%%%\subsection{Outer approximation algorithm}
- %%%
-%%%
-%%%\subsection{Energy-aware space matching algorithm}
-%%%
-%%%\newtheorem{corollary}{\rm {\textbf{Corollary}}}
-%%%\renewcommand\thecorollary{\arabic{corollary}}
-%%%\begin{corollary}
-%%%
-%%%\end{corollary}
-%%%\emph{Proof}: The proof of this corollary is provided in Appendix A.
-%%%
-%%%
-%%%
-%%%With the convexity of \emph{log-exp-sum}, the problem (\ref{math:ESM_concave_lower_model}) can be easily proved to be a concave maximization problem about relevant power parameters of CU and EH-DPs. The pseudo code of ESM can be detailedly expressed by Algorithm \ref{alg:ESM}.
-%%%
-%%%\begin{algorithm}[h]  %算法开始
-%%%\caption{ESM }        %算法的标题
-%%%\label{alg:ESM}        %给算法一个标签，这样方便在文中对算法的引用
-%%%\SetAlgoLined
-%%%\SetAlgoNlRelativeSize{-1}
-%%%\SetNlSkip{0.1em}
-    %%%%\textbf{Initialization:} $n = 0$,$\lambda_n = 0$,$\varepsilon = 10^{-2}$;\\
-    %%%\For{ $d_j$ = 1 to $N_D$  }
-    %%%{
-        %%%%\For{$d_j$ \in to sector} %\text{EH-DP}%
-        %%%\For{ $c_i$ = 1 to $N_C$}
-        %%%{
-            %%%\uIf{$c_i$ and $d_j$ \text{satisfy the two matching rules}}
-            %%%{
-                %%%$ {{{\mathop x\limits^ \wedge  }_{{c_i},{d_j}}}}  = 1$;\\
-                %%%return;
-            %%%}
-            %%%\Else
-            %%%{
-                %%%$ {{{\mathop x\limits^ \wedge  }_{{c_i},{d_j}}}}  = 0$;
-            %%%}
-        %%%}
-    %%%}
-    %%%\For{ $c_i$ = 1 to $N_C$}
-        %%%{
-            %%%$\left\{ {\mathop {p_{{c_i}}}\limits^ \wedge},{\mathop {P_D}\limits^ \wedge} \right\} \leftarrow \arg \text{Problem}(\ref{math:ESM_concave_lower_model})$
-        %%%}
-%%%\textbf{Update:} $R_{sum}^{ESM}$ by (\ref{math:sum_rate}):
-%%%\scalebox{0.95}{${R_{sum}^{ESM} = {R_{sum}}\left( {\mathop X\limits^ \wedge  ,\exp \left( {\mathop {P_C^{}}\limits^ \wedge  } \right),\exp \left( {\mathop {P_D^{}}\limits^ \wedge  } \right)} \right)}$}.
-%%%\end{algorithm}
-%%%
- %%%
+The nodes can collect more energy with a higher EH efficiency ratio, thus the average PLRs of all three schemes decrease with the EH efficiency ratio as shown in Figure \ref{fig:EHefficiency_PLR}. And the PRS-RA with both PRCS and QASAS outperform the other schemes, and it can achieve almost 0\% PLR performance. In addition, the PRS-RA with only PRCS has a lower PLR than the PRS-RA with only QASAS, this is because the optimization allocation of the transmission power and the source rate can support the long-term QoS performance, while the PRS-RA with only QASAS can adjust the number of slots for each nodes, which cannot deal with the packet losses due to the dynamic links with a fixed transmission power. However, when the short-term QASAS combines with the long-term PRCS, not only the PLR but also the packet delay can achieve the best performance. Though the PRS-RA with only QASAS can have a highest throughput in Figure \ref{fig:EHefficiency_Throughput} and a highest bandwidth utilization in Figure \ref{fig:EHefficiency_bandwidth}, the highest PLR in Figure \ref{fig:EHefficiency_PLR} will cost a lot of energy cost, which cannot be acceptable especially for the EH-powered WBAN system.
 
 
 \renewcommand\arraystretch{1.2}
@@ -828,7 +816,7 @@ As shown in Figure \ref{fig:com_PLR}, the offline scheme has the lowest PLR perf
  
 
 \section{Conclusion} \label{sec:conclusion}
-In this paper, 
+In this paper, .
 
 
 

@@ -17,16 +17,15 @@
     deltaPL_step = 2; %单位dBm
     alg_names = {'myRA','offline','online','fixed'}; 
     alg_myRA_details ={'with-rate-slot','only-with-rate','only-with-slot'};
-    cal_alg_id = 4; % 配置下面要运行的算法的id号
-    %cal_myRA_id = 1; %配置本文方法的细节，是否采用数据速率调节策略，是否采用slot配置方法
+    cal_alg_id = 1; % 配置下面要运行的算法的id号
+    cal_myRA_id = 1; %配置本文方法的细节，是否采用数据速率调节策略，是否采用slot配置方法
     %parfor deltaPL_ind =deltaPL_ind_max:deltaPL_ind_max 
     %parfor cal_myRA_id =1:3
     %parfor EH_ratio = 0.1:0.2:2
-    t_cor_EH_set =[40,80,150,300];
-    t_cor_EH = t_cor_EH_set(1); %能量采集相干时间，单位ms
+    t_cor_EH_set =[40,80,150,300,500,1000];
+    t_cor_EH = t_cor_EH_set(6); %能量采集相干时间，单位ms
     parfor EH_ratio_ind = 5:1:10
         EH_ratio = EH_ratio_ind * 0.1;
-        cal_myRA_id = 1;
         %for cal_myRA_id = 1:3
             for deltaPL_ind = deltaPL_ind_min :deltaPL_ind_max
                 %% 初始化系统参数
@@ -149,8 +148,8 @@
                     if (cal_alg_id == 1)&&(cal_myRA_id ~= 2) %本文方法的时隙分配方法
                         [ AllocateSlots, opti_problem, sta_GOODSET{ind_frame}, sta_BADSET{ind_frame} ] = allocateSlots(cur_pos,AllocatePowerRate{1,cur_pos}, residue_energy, re_num_packets, re_num_slots, EH_last_status, EH_P_tran, par);                
                         sta_opti_slots_problems(ind_frame,1:2) = opti_problem;
-                    elseif (cal_alg_id == 2)
-                        [ AllocateSlots, opti_problem, sta_GOODSET{ind_frame}, sta_BADSET{ind_frame} ] = allocateSlots(cur_pos,AllocatePowerRate{1,cur_pos}, residue_energy, re_num_packets, re_num_slots, EH_last_status, EH_P_tran, par);
+%                     elseif (cal_alg_id == 2)
+%                         [ AllocateSlots, opti_problem, sta_GOODSET{ind_frame}, sta_BADSET{ind_frame} ] = allocateSlots(cur_pos,AllocatePowerRate{1,cur_pos}, residue_energy, re_num_packets, re_num_slots, EH_last_status, EH_P_tran, par);
                     end
                     sta_AllocateSlots{1,ind_frame} = AllocateSlots;
                     cur_Allocate = {}; %初始化当前超帧的资源分配结果
@@ -214,8 +213,9 @@
     show_deltaPL = 18;
     show_cal_alg_id = 1;
     show_cal_myRA_id =1;
-    show_EH_ratio = 0.5;
+    show_EH_ratio = 1;
     analysisQoSPerformance(show_t_cor_EH, show_deltaPL, show_cal_alg_id, show_cal_myRA_id, show_EH_ratio);
+    
     %% 分析不同算法的性能好坏
     show_t_cor_EH = 40;
     show_cal_myRA_id = 1;
@@ -256,43 +256,301 @@
             end
         end
     end
+    
+    %% 对比不同方法的性能表现
     size_4D=size(cp_PLR_ave)
     color_set = linspecer(4);
-    marker_set ={'-s','-d','-*','-p','-h'};
     show_EH_ratio_ind = 6;
     x_range_ind = deltaPL_ind_min:deltaPL_ind_max;
     x_range = (x_range_ind -1)*deltaPL_step;
-    figure
-    for show_cal_alg_id = 1:3
-        hold on
-        plot(x_range, reshape(cp_PLR_ave(show_cal_alg_id, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'-s', 'linewidth',2,'color',color_set(show_cal_alg_id,:))
-        grid on
-        xlabel('Mean \mu_{s} of shadowing (dBm)')
-        ylabel('Average PLR (%)')
-        legend('PRS-RA','Offline','Online')
+    line_width =8;
+    marker_size =20;
+    %PLR性能
+    figure(1)
+    hold on
+    plot(x_range, reshape(cp_PLR_ave(1, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'-s', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(1,:))
+    hold on
+    plot(x_range, reshape(cp_PLR_ave(2, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'-<', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(2,:))
+    hold on
+    plot(x_range, reshape(cp_PLR_ave(3, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'->', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(3,:))
+    grid on
+    box on
+    xlabel('Mean \mu_{s} of shadowing (dBm)')
+    ylabel('Average PLR (%)')
+    h=legend('PRS-RA','Offline','Online')
+    set(h,'FontSize',30)
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    %Delay性能
+    figure(2)
+    hold on
+    plot(x_range, reshape(cp_Delay(1, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'-s', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(1,:))
+    hold on
+    plot(x_range, reshape(cp_Delay(2, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'-<', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(2,:))
+    hold on
+    plot(x_range, reshape(cp_Delay(3, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'->', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(3,:))
+    grid on
+    box on
+    xlabel('Mean \mu_{s} of shadowing (dBm)')
+    ylabel('Packet Delay (ms)')
+    h=legend('PRS-RA','Offline','Online')
+    set(h,'FontSize',30)
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    %energy efficiency性能
+    figure(3)
+    hold on
+    plot(x_range, reshape(cp_energy_per_bit(1, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'-s', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(1,:))
+    hold on
+    plot(x_range, reshape(cp_energy_per_bit(2, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'-<', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(2,:))
+    hold on
+    plot(x_range, reshape(cp_energy_per_bit(3, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'->', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(3,:))
+    grid on
+    box on
+    xlabel('Mean \mu_{s} of shadowing (dBm)')
+    ylabel('Energy cost per bit (uJ/bit)')
+    h=legend('PRS-RA','Offline','Online')
+    set(h,'FontSize',30)
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    % throughput性能
+    figure(4)
+    hold on
+    plot(x_range, reshape(cp_throughput(1, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'-s', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(1,:))
+    hold on
+    plot(x_range, reshape(cp_throughput(2, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'-<', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(2,:))
+    hold on
+    plot(x_range, reshape(cp_throughput(3, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2)),'->', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(3,:))
+    grid on
+    box on
+    xlabel('Mean \mu_{s} of shadowing (dBm)')
+    ylabel('Throughput (bit/s)')
+    h=legend('PRS-RA','Offline','Online')
+    set(h,'FontSize',30)
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    % throughput性能
+    figure(5)
+    hold on
+    plot(x_range, reshape(cp_bandwidth_uti(1, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'-s', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(1,:))
+    hold on
+    plot(x_range, reshape(cp_bandwidth_uti(2, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'-<', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(2,:))
+    hold on
+    plot(x_range, reshape(cp_bandwidth_uti(3, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'->', 'Markersize',marker_size,'linewidth',line_width ,'color',color_set(3,:))
+    grid on
+    box on
+    xlabel('Mean \mu_{s} of shadowing (dBm)')
+    ylabel('Bandwidth utilization (%)')
+    h=legend('PRS-RA','Offline','Online')
+    set(h,'FontSize',30)
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+   
+    %% 分析本文方法的细节表现
+    % 观察本文方法中两阶段分别对性能的影响
+    x_range_ind = deltaPL_ind_min:deltaPL_ind_max;
+    x_range = 0.5:0.1:1;
+    figure(1)
+    bar(x_range,reshape(cp_PLR_ave(1, :,end, :)*100,3,6)')
+    legend('PRS-RA with PRCS and QASAS','PRS-RA with PRCS','PRS-RA with QASAS')   
+    xlabel('EH Efficiency ratio (%)')
+    ylabel('Average PLR (%)')
+    grid on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    figure(2)
+    bar(x_range, reshape(cp_Delay(1, :,end, :),3,6)')
+    legend('PRS-RA with PRCS and QASAS','PRS-RA with PRCS','PRS-RA with QASAS')   
+    xlabel('EH Efficiency ratio (%)')
+    ylabel('Packet Delay (ms)')
+    grid on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    figure(3)
+    bar(x_range, reshape(cp_throughput(1, :,end, :),3,6)')
+    legend('PRS-RA with PRCS and QASAS','PRS-RA with PRCS','PRS-RA with QASAS')   
+    xlabel('EH Efficiency ratio (%)')
+    ylabel('Throughput (bit/s)')
+    grid on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    figure(4)
+    bar(x_range, reshape(cp_bandwidth_uti(1, :,end, :)*100,3,6)')
+    legend('PRS-RA with PRCS and QASAS','PRS-RA with PRCS','PRS-RA with QASAS')   
+    xlabel('EH Efficiency ratio (%)')
+    ylabel('Bandwidth utilization (%)')
+    grid on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    
+    % 观察相关时间对性能的影响
+    show_deltaPL = 18;
+    show_EH_ratio = 0.5;
+    show_cal_alg_id = 1;
+    show_cal_myRA_id = 1;
+    for node_ind =1:5
+        for show_t_cor_EH_ind =1:size(t_cor_EH_set,2)
+            show_t_cor_EH = t_cor_EH_set(show_t_cor_EH_ind);
+            par = initialParameters(show_deltaPL, show_EH_ratio, show_t_cor_EH ); %初始化系统参数
+            [ load_path_name ] = conPathName(show_t_cor_EH, show_deltaPL, show_cal_alg_id, show_cal_myRA_id, show_EH_ratio);
+            cur_data = load(load_path_name);
+            cur_QoS = calQosPerformance( cur_data.Queue,cur_data.sta_AllocateSlots, par.MAC,par.Nodes.packet_length);
+            cor_PLR_ave(show_cal_alg_id,node_ind, show_t_cor_EH_ind) = cur_QoS.PLR_ave(node_ind);
+            cor_Delay(show_cal_alg_id, node_ind, show_t_cor_EH_ind) = cur_QoS.Delay_ave(node_ind);
+            cor_energy_per_bit(show_cal_alg_id, node_ind, show_t_cor_EH_ind) = cur_QoS.energy_per_bit(node_ind);
+            cor_bandwidth_uti(show_cal_alg_id, node_ind, show_t_cor_EH_ind) = cur_QoS.bandwidth_utilization(node_ind);
+            cor_throughput(show_cal_alg_id, node_ind,show_t_cor_EH_ind) = cur_QoS.throughput(node_ind);
+        end
     end
+    figure
+    bar(reshape(cor_throughput(1,:,:),5,size(t_cor_EH_set,2)))
+    
+    % 观察long-term PRCS性能表现
+    show_deltaPL = 12;
+    show_EH_ratio = 0.5;
+    show_cal_alg_id = 1;
+    show_cal_myRA_id = 1;
+    show_t_cor_EH = t_cor_EH_set(1);
+    par = initialParameters(show_deltaPL, show_EH_ratio, show_t_cor_EH ); %初始化系统参数
+    [ load_path_name ] = conPathName(show_t_cor_EH, show_deltaPL, show_cal_alg_id, show_cal_myRA_id, show_EH_ratio);
+    cur_data = load(load_path_name);
+    PRCS_allocate_rate =[];
+    PRCS_allocate_power =[];
+    for pos_ind =1:3
+        for node_ind = 1:5
+            PRCS_allocate_rate(pos_ind,node_ind) = cur_data.AllocatePowerRate{pos_ind}{1,node_ind}.src_rate;
+            PRCS_allocate_power(pos_ind,node_ind) = cur_data.AllocatePowerRate{pos_ind}{1,node_ind}.power;
+        end
+    end
+    figure
+    bar(PRCS_allocate_rate')
+    xlabel('Node index')
+    ylabel('Source rate (kbps)')
+    legend('Still','Walk','Run')
+    grid on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    
+    figure
+    bar(PRCS_allocate_power')
+    xlabel('Node index')
+    ylabel('Transmission power (mW)')
+    legend('Still','Walk','Run')
+    grid on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+     
+    
+    
+    
+    
 
     
-    figure
-    for show_cal_alg_id = 1:4
-        hold on
-        plot(x_range, reshape(cp_Delay(show_cal_alg_id, 1,x_range_ind, show_EH_ratio_ind),1,size(x_range_ind,2))*100,'-o', 'linewidth',4,'color',color_set(show_cal_alg_id,:))
-        grid on
-        xlabel('Mean \mu_{s} of shadowing (dBm)')
-        ylabel('Average Delay (ms)')
-        legend('PRS-RA','Offline','Online')
-    end
-    
    
-    plot()
-    hold on
-    plot()
+    % 观察采用时隙奉陪前后队列中数据包变化情况
+    show_t_cor_EH = 40;
+    show_deltaPL = 18;
+    show_EH_ratio = 1;
+    show_cal_alg_id = 1;
+    show_node_ind =4;
+    cp_Queue ={};
+    for show_cal_myRA_id =1:2
+        [ load_path_name ] = conPathName(show_t_cor_EH, show_deltaPL, show_cal_alg_id, show_cal_myRA_id, show_EH_ratio);   
+        cur_data = load(load_path_name);
+        cp_Queue{show_cal_myRA_id} = cur_data.Queue;            
+    end
+    num_sample = 30; %直方图的条数
+    num_frame = size(cp_Queue{1}(1).bufferQueue,1) -1;
+    if num_frame>num_sample
+        sample_step = round(num_frame/num_sample);
+    end
+    x_range = 1:sample_step:num_frame;
+    y1 = (cp_Queue{1}(show_node_ind).bufferQueue(x_range+1,3) - cp_Queue{1}(show_node_ind).bufferQueue(x_range+1,2)+1);
+    y2 = (cp_Queue{2}(show_node_ind).bufferQueue(x_range+1,3) - cp_Queue{2}(show_node_ind).bufferQueue(x_range+1,2)+1);
+    y_max = max(max(y1),max(y2))
+    figure(6)
+    b = bar(x_range,y1,1);
+    b.FaceColor = color_set(1,:);
+    xlim([1,num_frame])
+    ylim([0,y_max+5])
+    grid on
+    xlabel('Index of superframe')
+    ylabel('Number of packets in buffer') 
+    box on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
+    figure(7)
+    b = bar(x_range,y2,1);
+    b.FaceColor = color_set(1,:);
+    xlim([1,num_frame])
+    ylim([0,y_max+5])
+    grid on
+    xlabel('Index of superframe')
+    ylabel('Number of packets in buffer') 
+        box on
+    set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
+    set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
+    set(gca,'FontName','Times New Roman','FontSize',25)%设置坐标轴字体大小，字型、
+    set(gca,'XColor','k')
+    set(gca,'linewidth',3)
+    set(gca,'GridLineStyle', '--')
     
     
     
     
-    figure
-    bar3(reshape(cp_PLR_ave(:,1,end,:),size_4D(1),size_4D(4)))
+    
+    
+    
+    
+    
     
     
     %% 分析本文方法的性能
@@ -330,6 +588,10 @@
     x_range = deltaPL_ind_min:deltaPL_ind_max;    
     figure
     bar3(reshape(myRA_PLR_ave(:,end-1,3,:),size_4D(1),size_4D(4)))
+    
+    
+    
+    
     
     
     

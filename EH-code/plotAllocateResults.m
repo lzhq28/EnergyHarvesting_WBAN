@@ -9,7 +9,8 @@ function  plotAllocateResults( pos_seq, AllocatePowerRate, sta_AllocateSlots)
     if num_frame>100
         sample_step = round(num_frame/num_sample);
     end
-    x_range = 1:sample_step:num_frame;
+    %x_range = 1:sample_step:num_frame;
+    x_range = 1:1:100;
     %% 统计为各个节点的分配时隙的开始和结束位置
     Allocate_slot = {}; %统计为各个节点的分配时隙的开始和结束位置
     Allocate_power = []; %统计各个节点的分配传输功率
