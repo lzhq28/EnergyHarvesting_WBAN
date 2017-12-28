@@ -242,30 +242,37 @@ Fortunately, Energy Harvesting (EH) technology, which can collect energy from va
 Furthermore, sensors can also combine several types of EH sources for acquiring more energy to support more strict QoS requirements \cite{ibarra2016qos}.
 Therefore, researchers have paid more and more attentions on how to keep in ENO state with considering the QoS performance in EH-powered WBAN.
 
-Due to the limitation of the sensor size, the energy harvester cannot always satisfy the ENO requirement and the collected energy is scarce. In addition, sensors in different positions on the body may have different types of EH and the energy collection rates are heterogeneous. Meanwhile, harvesters with energy sources from the human body have time-varying states caused by the dynamic body movement status. Thus, the time-varying and heterogeneous EH states become a significant factor to design the effective resource allocation scheme for ENO state. 
-Therefore, it is highly meaningful to do some resource management researches on EH-powered WBAN with considering the QoS performance.
+In the literature, most of researchers investigated the statistical characteristics of the energy harvesting in the resource allocation schemes to support the long-term QoS performance \cite{ozel2011transmission}\cite{leng2017resource}\cite{ibarra2016qos}. However, sensors in different positions on the body may have different types of EH and the energy collection rates are heterogeneous. Meanwhile, harvesters with energy sources from the human body have time-varying states caused by the dynamic body movement status, and then the collected available energy is time-variant and different for each node to transmit data packets. Therefore, the time-varying EH states can be exploited to dynamically allocate the resource for improving the short-term QoS performance. This phenomenon will lead to a significant result: the time-varying and heterogeneous EH states become a significant factor to design the effective resource allocation scheme for improving both the long-term QoS performance and the short-term QoS performance. 
+%Therefore, it is highly meaningful to do some resource management researches on EH-powered WBAN with considering the QoS performance. 
+
+% 能量采集异构时变-》导致采集到的可用能量是时变的-》常用方法总是从EH统计特性来进行资源分配来保障long-term-》但是时变异构的能量采集特性导致各个节点在传输时所能采集到的能量有所不同-》因此如果能针对实时的能量采集结果以及数据包到达情况来进行资源的分配可以提高系统的short-term的性能表现。
+
 
 
 \subsection{Related works}
 
-Compared with EH-powered wireless sensor networks (WSNs), the human body contains more bio-energy sources  besides the ambient source for various kinds of energy harvesters in WBANs \cite{leng2017resource}. Generally, these bio-energy sources can be classified into biochemical and biomechnical energy sources. The biochemical energy sources convert electrochemical reactions to electricity for implanted body sensors, while the harvesters can scavenge energy from the voluntary and involuntary actions of the human body as biomechnical energy sources \cite{akhtar2017energy}. The scavenged energy can be converted to  electric potential by appropriated harvesters, and then stored into a rechargeable battery or a super-capacitor for powering up wireless body sensors \cite{wahbah2014characterization}. The energy harvesting efficiency can be improved to harvest more energy through the elaborate hardware circuit design \cite{xia20140}\cite{el201610}. Therefore, the available power density by harvesting energy from human body gradually reaches $\mu W$ range, which will be able to run low-low-power-consuming wireless devices, such as Bluetooth4.0 \cite{bluetooth2010}, MicaZ \cite{kramer2006energy}, MultiMode \cite{wong20131} and so on. However, the harvesting process of human body sensors is unstable and time-varying due to the dynamic body movement status \cite{hao2017energy}. In addition, the different positions of sensors or different types of energy harvesters have heterogeneous energy harvesting rates. Therefore, the resource allocation scheme for EH-powered WBAN should be able to cope with time-varying and heterogeneous EH states for better utilizing the scavenged energy.
+Compared with EH-powered wireless sensor networks (WSNs), the human body contains more bio-energy sources  besides the ambient source for various kinds of energy harvesters in WBANs \cite{leng2017resource}. Generally, these bio-energy sources can be classified into biochemical and biomechnical energy sources. The biochemical energy sources convert electrochemical reactions to electricity for implanted body sensors, while the harvesters can scavenge energy from the voluntary and involuntary actions of the human body as biomechnical energy sources \cite{akhtar2017energy}. The scavenged energy can be converted to  electric potential by appropriated harvesters, and then stored into a rechargeable battery or a super-capacitor for powering up wireless body sensors \cite{wahbah2014characterization}. The energy harvesting efficiency can be improved to harvest more energy through the elaborate hardware circuit design \cite{xia20140}\cite{el201610}. Therefore, the available power density by harvesting energy from human body gradually reaches $\mu W$ range, which is able to run low-power-consuming wireless devices, such as Bluetooth4.0 \cite{bluetooth2010}, MicaZ \cite{kramer2006energy}, MultiMode \cite{wong20131} and so on. However, the harvesting process of human body sensors is unstable and time-varying due to the dynamic body movement status \cite{hao2017energy}. Thus, the time-varying EH states should be taken full consideration into the resource allocation schemes.
 
-In the literature, some researches have been focused on the resource allocation schemes for EH-powered WBANs. Generally, these resource allocations schemes can be divided into two categories in terms of the priori knowledge of the channel state, data state and energy state for the transmitter, i. e. the offline schemes \cite{mosavat2017maximizing,varan2016delay,shan2015discrete,tutuncuoglu2012optimum,wei2015power,huang2014optimal} and the online schemes \cite{leng2017resource,ibarra2016qos,alhawari2016power,dionisi2016autonomous,shaviv2016universally,liu2015optimal,ozel2011transmission}. 
-For the offline schemes, it is assumed that the transmitter have perfect priori knowledge of the channel state, data state and the energy state when it allocates resources. 
+%In addition, the different positions of sensors or different types of energy harvesters have heterogeneous energy harvesting rates. Therefore, the resource allocation scheme for EH-powered WBAN should be able to cope with time-varying and heterogeneous EH states for better utilizing the scavenged energy.
+
+In the literature, some researches have focused on the resource allocation schemes for EH-powered WBANs. Generally, these resource allocation schemes can be divided into two categories in terms of the priori knowledge of the channel state, data state and energy state for the transmitter: the offline schemes \cite{mosavat2017maximizing,varan2016delay,shan2015discrete,tutuncuoglu2012optimum,wei2015power,huang2014optimal} and the online schemes \cite{leng2017resource,ibarra2016qos,alhawari2016power,dionisi2016autonomous,shaviv2016universally,liu2015optimal,ozel2011transmission}. 
+For the offline schemes, it is assumed that the transmitter has the perfect priori knowledge of the channel state, data state and the energy state when it allocates resources. 
 In \cite{tutuncuoglu2012optimum}, the short-term throughput and the transmission completion time were regarded as the objective function to obtain the optimum power allocation with a deadline constraint and finite energy storage capacity, while energy arrivals were assumed as a priori known. 
-Shan et al. \cite{shan2015discrete} proposed a general framework to transform the continuous-rate model into practical discrete transmission rates with keeping the optimality, and the per-application quality-of-service (QoS) could be guaranteed by the optimal rate scheduling algorithm for an EH enabled transmitter, assuming that the information regarding packets and harvesting is known in advance. 
-Varan et al., \cite{varan2016delay} considered the throughput maximization problem with finite energy and data storage constraints, and new notions of water pumps and overflow bins were added to the directional waterfilling for solving the energy scheduling problem.  
-In addition, the weighted sum of the outage probabilities was the objective function to minimize in the power control policy, while the harvested energy was known as a priori to the scheduler \cite{wei2015power,huang2014optimal}. However, due to the non-convex objective function, a near-optimal offline scheme was designed with only high signal-to-noise ratios.
+Shan et al., \cite{shan2015discrete} proposed a general framework to transform a continuous-rate model into practical discrete transmission rates with keeping the optimality, and the per-application quality-of-service (QoS) could be guaranteed by the optimal rate scheduling algorithm for an EH enabled transmitter, assuming that the information regarding packets and harvesting is known in advance. 
+Varan et al., \cite{varan2016delay} considered the throughput maximization problem with finite energy and data storage constraints, and new notions of water pumps and overflow bins were added to the directional water-filling for solving the energy scheduling problem.  
+In addition, the weighted sum of the outage probabilities was the objective function to be minimized in the power control policy, while the harvested energy was known as a priori to the scheduler, and a near-optimal offline scheme was designed with only high signal-to-noise ratios due to the non-convex objective function \cite{wei2015power,huang2014optimal}.
 The above offline resource allocation schemes commonly construct the convex optimization problems and analytical solutions to obtain the optimal resource allocation results with perfect non-causal and priori knowledge. Thus, offline schemes can only serve as a benchmark of the resource allocation schemes, or the EH states are predictable for some stable energy sources.   
 
 Compared with the offline schemes, only the causal information and statistical knowledge of energy states, data states and channel states can be utilized in the online schemes to manage the data packets and the collected energy. 
 % online 思路：由长用方法-》逐渐引入：多个节点+长期和短期QoS服务问题
 Ozel et al., \cite{ozel2011transmission} maximized the number of bits sent by a deadline given only the distributions of the energy arrivals and channel fade levels. 
 Leng and Yener \cite{leng2017resource} maximized the long-term expected throughput under the energy constraints, and the close-form expression of optimal transmission power was obtained by formulating the Largrangian and solving the KKT conditions.
-However, these long-term throughput cannot meet the specific application requirements for these heterogeneous body sensors in WBANs. In addition, the QoS requirements are not carefully taken into consideration in the optimization problems.
+However, the long-term throughput maximization problem only allocates the resources from the statistical characteristics of EH states. The time-varying EH states, which have a great effect on the transmissions of packets, are not mentioned. 
+%However, these long-term throughput cannot meet the specific application requirements for these heterogeneous body sensors in WBANs. 
+%In addition, the QoS requirements are not carefully taken into consideration in the optimization problems.
 Liu et al., \cite{liu2015optimal} modeled the transmission power and time allocation optimization problem as a Markov decision process (MDP) to provide a sustainable and high quality service for EH-powered WBAN. 
 However, MDP based resource allocation schemes have the high complexity for wireless devices with limited computational capabilities in WBANs, and they are highly dependent on the accuracy models of channel fading level, energy arrivals and data arrivals, which are hardly obtained in practice. 
-To achieve the best possible QoS, authors of \cite{ibarra2016qos} proposed a joint power-QoS control scheme for making optimal use of harvested energy to efficiently transmit the respective data packets of only one sensor in WBAN. However, the channel fading was not considered in the scheme, which could not deal with the dynamic link characteristics in WBANs. In addition, the time-varying and heterogeneous EH states of different body sensors were not considered.
+To achieve the best possible QoS performance, the authors of \cite{ibarra2016qos} proposed a joint power-QoS control scheme for making optimal use of harvested energy to efficiently transmit the respective data packets of only one sensor in WBAN. However, the channel fading was not considered in the scheme, which could not deal with the dynamic link characteristics in WBANs. In addition, the time-varying and heterogeneous EH states of different body sensors were not fully considered.
  
 
 %%\cite{leng2017resource} online and offline
@@ -292,11 +299,25 @@ To achieve the best possible QoS, authors of \cite{ibarra2016qos} proposed a joi
 
  
 \subsection{Contributions}
-In this paper, we develop an efficient resource allocation scheme for EH-powered WBANs to support both the long-term and short-term QoS requirements, when the energy harvesting states of different body sensors are heterogeneous and time-varying. The important contributions of this paper are expressed as three aspects:
+In this paper, we take the time-varying and heterogeneous EH states into consideration.
+% thus not only the long-term QoS requirements but also short-term QoS requirements are improved by the proposed efficient resource allocation scheme.
+% develop an efficient resource allocation scheme to support both the long-term and short-term QoS requirements.
+And then we develop an efficient resource allocation scheme for EH-powered WBANs to support both the long-term and short-term QoS requirements.
+The important contributions of this paper are expressed as three aspects:
  \begin{enumerate}
-	 \item As far as we know, this work is the first to joint the transmission power, source rate and time slots to effectively allocate the resources under dynamic link characteristics of heterogeneous body sensors with the time-varying EH states. Therefore, the harvested energy can be efficiently utilized to improving both the long-term and short-term QoS performances.
-	 \item We analyze the relationship between the source rate and the long-term QoS performance of a body sensor for satisfying the Energy Neutral Operation (ENO). Then, we optimize the transmission power and the source rates for different body sensors to improve the long-term QoS performance, which is based on the statistical knowledge of energy harvesting and channel fading. An optimal numerical solution is successfully obtained through the transformation of the non-convex problem.
-	\item The time-varying and heterogeneous EH states will cause the fluctuation of the data queues, which affect the short-term QoS performance. Thus, we carefully predict the states of each sensors based on the energy states and queue states, and then dynamically adjust the time slot allocation to better transmit data packets with harvesting energy for improving the short-term QoS performance.
+	 \item As far as we know, this work is the first to combine the transmission power, source rate and time slots to effectively allocate the resources under dynamic link characteristics of heterogeneous body sensors. The time-varying EH states are regarded as a important factor to reallocate the resources to cope with the variation of the harvesting available energy.
+Hence, the harvested energy can be efficiently utilized to improve both the long-term and short-term QoS performances.
+	 \item For supporting the long-term QoS performance of body sensors, we design a power-rate control scheme to optimize the transmission power and the source rates for different body sensors, subject to the long-term QoS requirements under the Energy Neutral Operation (ENO).
+The statistical knowledge of energy harvesting and channel fading are investigated to measure the QoS performance with the allocated resources. Then, an optimal numerical solution is successfully obtained through the transformation of the non-convex problem.
+%We analyze the relationship between the source rate and the long-term QoS performance of a body sensor for satisfying the Energy Neutral Operation (ENO). Then, we optimize the transmission power and the source rates for different body sensors to improve the long-term QoS performance, which is based on the statistical knowledge of energy harvesting and channel fading.
+ 
+	\item To further improve the short-term QoS performance and the resource utilization, the time-varying and heterogeneous EH states are carefully studied, which cause the fluctuation of the available energy and the data queues. Thus, the energy states and the queue states are evaluated and adopted to predict the states of each sensors. Finally, we propose a QoS aware slot allocation scheme to dynamically adjust the time slot allocation based on the states of each sensors for better transmitting data packets with the harvesting available energy.
+	
+	
+	
+	%the time-varying and heterogeneous EH states will cause the fluctuation of the available energy and the data queues, which affect the short-term QoS performance.
+	
+	%Thus, we carefully predict the states of each sensors based on the energy states and queue states, and then dynamically adjust the time slot allocation to better transmit data packets with harvesting energy for improving the short-term QoS performance and improving the resource utilization.
  \end{enumerate}
 
 The remainder of this paper is organized as follows. 
@@ -310,7 +331,7 @@ In this section, we give the details of node's architecture and WBAN topology in
 
 \subsection{Node's Architecture and WBAN Topology}
 We consider a classical WBAN which consists of one hub and $N$ EH-powered wireless sensor nodes. 
-Suppose that the hub (such as PDA and mobile phone) has sufficient resources to implement some resource allocation scheme with high computation complexity, and the wireless sensor nodes placed in different positions of the body have limited processing and storage resources with energy harvesters. The set of body sensor nodes is expressed as $\mathcal{C}_{node}=\left\{1,2,\cdots,N \right\}$. As recommended by IEEE 802.15.6 \cite{ieee2012WBAN}, the body sensor nodes collect the vital signals and communicate directly with the hub considering the constrained resources of sensor nodes in a star topology. In addition, a scheduled access mechanism in beacon mode with superframe boundaries is adopted to access the channel without collisions, idle listening and overhearing of sensor nodes for saving scarce energy. One superframe is formed by one beacon and $M$ slots, and the set of slots are expressed as $\mathcal{C}_{slot}=\left\{1,2,...,M\right\}$. In the beacon of superframe, the hub broadcast the beacon packets to configure the transmission rates, source rates and dedicate time slots for each nodes. And the nodes only turn active in its dedicate time slots to transmit data signals, and turn sleep in other slots for saving energy. In each node, the vital signals are collected and packetized in the data queue, which will be transmitted to the hub with the First-In-First-Out (FIFO) queue strategy and the retransmission strategy \cite{liu2017buffer}. Thus, the packet losses only occur in two situations: data queue overflow and the delay over the preset threshold. 
+Suppose that the hub (such as a PDA and a mobile phone) has sufficient resources to implement some resource allocation scheme with high computation complexity, and the wireless sensor nodes placed in different positions of the body have limited processing and storage resources with energy harvesters. The set of body sensor nodes is expressed as $\mathcal{C}_{node}=\left\{1,2,\cdots,N \right\}$. As recommended by IEEE 802.15.6 \cite{ieee2012WBAN}, the body sensor nodes collect the vital signals and communicate directly with the hub, and a star topology is adopted with considering the constrained resources of sensor nodes. In addition, a scheduled access mechanism in beacon mode with superframe boundaries is adopted to access the channel without collisions, idle listening and overhearing of sensor nodes for saving scarce energy. One superframe is formed by one beacon and $M$ slots, and the set of slots are expressed as $\mathcal{C}_{slot}=\left\{1,2,...,M\right\}$. In the beacon of superframe, the hub broadcast the beacon packets to configure the transmission rates, source rates and dedicate time slots for each node. And the node only turns active in its dedicate time slots to transmit data signals, and turn sleep in other slots for saving energy. In each node, the vital signals are collected and packetized in the data queue, which will be transmitted to the hub with the First-In-First-Out (FIFO) queue strategy and the retransmission strategy \cite{liu2017buffer}. Thus, the packet losses only occur in two situations: data queue overflow and the delay over the preset threshold. 
 
 \subsection{Energy Harvesting Model}
 
@@ -321,9 +342,9 @@ Suppose that the hub (such as PDA and mobile phone) has sufficient resources to 
 \label{fig:markov_model}
 \end{figure}
 Due to the different positions and functions of different sensor nodes, the adopted energy harvesters may collect energy from different energy sources. 
-For instance, the sensor node on the foot can utilize the piezoelectric transducer to harvest energy from the body motion \cite{geisler2017human}, and the sensor node for capturing the electrocardiograph (ECG) signal may use a thermoelectric generator to harvest from the body temperature \cite{thielen2017human}. Therefore, the EH states of different nodes are heterogeneous. In this paper, the harvested energy is stored in a rechargeable battery or a super-capacitor, then used to power the body sensor node \cite{akhtar2017energy}. 
-The EH process of each node can be model as a correlated discrete-time Markov chain with two state: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. And the coherence time of the EH process is set to the $t_{cor}=k \cdot  t_{slot}$, where $t_{slot}$ is the time length of one time slot in superframe. 
-In the ON state, the energy acquisition rate follows an uniform distribution in range of $[EH_{min}, EH_{max}]$, which is based on intensity of body movement. In addition, the energy acquisition rate in the ON state are different for different sensor nodes. In the OFF state, the energy harvester does not collect any energy. The Markov chain of EH process is shown in Fig. \ref{fig:markov_model}. $p_{01}$ means the transition probability from OFF state to ON state, while $p_{10}$ represents the transition probability from ON state to OFF state. The probability of keeping ON state and OFF state are regarded as $p_{11}=1-p_{10}$ and $p_{00}=1-p_{01}$, respectively. And the steady probabilities of ON state and OFF state are expressed as follows, 
+For instance, the sensor node on the foot can utilize the piezoelectric transducer to harvest energy from the body motion \cite{geisler2017human}, and the sensor node for capturing the electrocardiograph (ECG) signal may use a thermoelectric generator to harvest from the body temperature \cite{thielen2017human}. Therefore, the EH states of different nodes are heterogeneous. 
+In this paper, the harvested energy is stored in a rechargeable battery or a super-capacitor, then used to power the body sensor node \cite{akhtar2017energy}. 
+The EH process of each node can be model as a correlated discrete-time Markov chain with two state: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. In the ON state, it means the intensity of the motion is conductive to generate the energy by the energy harvester. In the OFF state, the energy harvester does not collect any energy due to the low motion intensity. In addition, the coherence time of the EH process is set to $t_{cor}=k \cdot  t_{slot}$, where $t_{slot}$ is the time length of one time slot in the superframe. We assume that the energy acquisition rate in the ON state follows an uniform distribution in range of $[EH_{min}, EH_{max}]$, which is based on intensity of body movement. In addition, the energy acquisition rate in the ON state are different for different sensor nodes. The Markov chain of EH process is shown in Fig. \ref{fig:markov_model}. $p_{01}$ means the transition probability from OFF state to ON state, while $p_{10}$ represents the transition probability from ON state to OFF state. The probability of keeping ON state and OFF state are regarded as $p_{11}=1-p_{10}$ and $p_{00}=1-p_{01}$, respectively. And the steady probabilities of ON state and OFF state are expressed as follows, 
 \begin{equation}
 {\mu _{on}} = {{{p_{01}}} \over {{p_{01}} + {p_{10}}}}
 \end{equation}
@@ -342,7 +363,7 @@ E_{rec} = {E_{ct}}
 \end{equation}
 where $\alpha$ means the power amplifier inefficiency factor, $E_{tx}=P_{tx}t$ and $E_{ct}=P_{ct}t$. $P_{tx}$ represents the transmission power of the transmitter, and $P_{ct}$ is the circuitry power, which is a constant depending on the specific transmitter \cite{lin2009asymmetric}. 
 
-To improve the QoS requirements，the transmission power should be dynamically adjusted to cope with the time-varying link quality. Thus, the path loss model of wireless links become a important factor for the energy consumption. In this paper, the path loss model $PL\left( d \right)$ for both Light-Of-Sight (LOS) and None-Light-Of-Sight (NLOS) scenarios follows the log normal distribution as recommended by IEEE 802.15.6 \cite{ieee2012WBAN}.
+To improve the QoS requirements, the transmission power should be dynamically adjusted to cope with the time-varying link quality. Thus, the path loss model of wireless links become a important factor for the energy consumption. In this paper, the path loss model $PL\left( d \right)$ for both Light-Of-Sight (LOS) and None-Light-Of-Sight (NLOS) scenarios follows the log normal distribution as recommended by IEEE 802.15.6 \cite{ieee2012WBAN}.
 \begin{equation}\label{eq:PL}
 \small{
 PL\left( d \right) ={PL_{d_0}} + 10n{\log _{10}}\left( {\frac{d}{{{d_0}}}} \right) + {X_\sigma }
@@ -351,87 +372,97 @@ PL\left( d \right) ={PL_{d_0}} + 10n{\log _{10}}\left( {\frac{d}{{{d_0}}}} \righ
 where $PL_{d_0}$ is the path loss at the referent distance $d_0$, and $n$ represents the path-loss exponent. The shadowing $X_\sigma$ follows the normal distribution $\mathcal{N}\left( {\mu_{s},\sigma_{s}^2 } \right)$, and the statistic characteristics are related to the human postures and the environments \cite{reusens2009characterization}\cite{d2010statistical}. 
 
 \section{Long-term Power-Rate Control Scheme} \label{sec:PRCS}
-In this section, the analysis of the relationship between the source rate and the QoS performance is first given in details. Then, the join power and source rate optimal allocation are formulated as a optimization problem. Finally, the optimal numerical solution is given through the convex transformation.
-\subsection{Relationship between Source Rate and QoS performance}
-%% 应该需要解释一下为什么要调节数据源速率，尤其是降低采样速率：1）保持数据完整性；2）使用rate-distortion 压缩算法
-As we known, the higher the source rate is, the more energy it needs to be transmitted. When the harvested energy cannot support the current source rate, the packet loss rate of packets will occur. Conversely, the energy will accumulate with the . 
-Thus, the source rate should be dynamically adjusted to the statistic feature of EH process for satisfying the Energy Neutral Operation (ENO). 
-We have three cases on the relationship between the source rate and the QoS performance:
+In this section, the throughput maximization problem is designed to maximize total throughput with the time-varying EH states, subject to the long-term QoS constraints. Then, the optimal numerical solution is given to solve the optimization problem efficiency through the convex transformation. Finally, the source rate is configured based on the optimal throughput results, with considering the effective diagnosis and energy saving.
 
-\textbf{Case 1:} When the harvester with minimum energy acquisition rate $EH_{\min}$ in the ON state still can collect enough energy to transmit the packets in a long term, it means the perfect QoS performance can be obtained under the Energy Neutral Operation (NEO).
-\begin{equation}
-0 < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R} \le {\mu _{on}} \cdot {EH_{\min }} \cdot T \\
-\end{equation}
-\begin{equation}
-\Rightarrow {\rm{   }}0 < S \le {{{\mu _{on}} \cdot {EH_{\min }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}}
-\end{equation}
-where $R$ is the transmission rate, and $T$ is the time length of one superframe. If the above inequality can be satisfied, the collected energy is enough to transmit all packets in a long term. Thus, the QoS performance of packets can be guaranteed through the effective resource allocation scheme.
-
-\textbf{Case 2:} When the required energy harvesting rate for the source rate is in range of $[EH_{min}, EH_{max}]$ of the ON state, it means the packet losses may occur due to the time-varying EH states.
-\begin{equation} \footnotesize 
-{\mu _{on}} \cdot {EH_{\min }} \cdot T < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R} \le {\mu _{on}} \cdot {EH_{\max }} \cdot T
-\end{equation}
-\begin{equation} \footnotesize
-\Rightarrow {{{\mu _{on}} \cdot {EH_{\min }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}} < S \le {{{\mu _{on}} \cdot {EH_{\max}} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}}
-\end{equation}
-
-If the source rate satisfies the above inequality, there may be some packets blocked in the data queue. The blocked packets need to be dealt with carefully in the resource allocation scheme, otherwise the short-term QoS performance will become worse.
-
-\textbf{Case 3:} When the maximum energy acquisition rate $EH_{\max}$ cannot support the source rate, it means the packet losses are sure to appear due to the insufficient energy.
-\begin{equation} 
-{\mu _{on}} \cdot {EH_{\max }} \cdot T < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R}
-\end{equation}
-\begin{equation} 
-  \Rightarrow {\rm{   }}{{{\mu _{on}} \cdot {EH_{\max }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}} < S 
-\end{equation}
-
-If the source rate satisfies the above inequality, there must be some packets blocked in the data queue. 
-The resource allocation scheme needs to carefully schedule resources to improve the QoS performance.
-\subsection{Join Power and Source Rate Optimal Allocation Problem}
-With the statistic knowledge of the EH process, the achievable source rate in the dynamic link characteristics should be obtained to better configure the final source rate with little distortion for effective diagnostic, while the long-term QoS constraints are also fully taken into consideration. 
-In the resource allocation scheme, the packet loss rate (PLR) as the main QoS metrics is studied. The PLR can be expressed as the function of the bit Signal to Noise Ratio (bit SNR),
+ 
+%the analysis of the relationship between the source rate and the QoS performance is first given in details. Then, the join power and source rate optimal allocation are formulated as a optimization problem. Finally, the optimal numerical solution is given through the convex transformation.
+%%%%\subsection{Relationship between Source Rate and QoS performance}
+%%%%%% 应该需要解释一下为什么要调节数据源速率，尤其是降低采样速率：1）保持数据完整性；2）使用rate-distortion 压缩算法
+%%%%As we known, the higher the source rate is, the more energy it needs to be transmitted. When the harvested energy cannot support the current source rate, the packet loss rate of packets will occur. Conversely, the energy will accumulate with the . 
+%%%%Thus, the source rate should be dynamically adjusted to the statistic feature of EH process for satisfying the Energy Neutral Operation (ENO). 
+%%%%We have three cases on the relationship between the source rate and the QoS performance:
+%%%%
+%%%%\textbf{Case 1:} When the harvester with minimum energy acquisition rate $EH_{\min}$ in the ON state still can collect enough energy to transmit the packets in a long term, it means the perfect QoS performance can be obtained under the Energy Neutral Operation (NEO).
+%%%%\begin{equation}
+%%%%0 < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R} \le {\mu _{on}} \cdot {EH_{\min }} \cdot T \\
+%%%%\end{equation}
+%%%%\begin{equation}
+%%%%\Rightarrow {\rm{   }}0 < S \le {{{\mu _{on}} \cdot {EH_{\min }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}}
+%%%%\end{equation}
+%%%%where $R$ is the transmission rate, and $T$ is the time length of one superframe. If the above inequality can be satisfied, the collected energy is enough to transmit all packets in a long term. Thus, the QoS performance of packets can be guaranteed through the effective resource allocation scheme.
+%%%%
+%%%%\textbf{Case 2:} When the required energy harvesting rate for the source rate is in range of $[EH_{min}, EH_{max}]$ of the ON state, it means the packet losses may occur due to the time-varying EH states.
+%%%%\begin{equation} \footnotesize 
+%%%%{\mu _{on}} \cdot {EH_{\min }} \cdot T < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R} \le {\mu _{on}} \cdot {EH_{\max }} \cdot T
+%%%%\end{equation}
+%%%%\begin{equation} \footnotesize
+%%%%\Rightarrow {{{\mu _{on}} \cdot {EH_{\min }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}} < S \le {{{\mu _{on}} \cdot {EH_{\max}} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}}
+%%%%\end{equation}
+%%%%
+%%%%If the source rate satisfies the above inequality, there may be some packets blocked in the data queue. The blocked packets need to be dealt with carefully in the resource allocation scheme, otherwise the short-term QoS performance will become worse.
+%%%%
+%%%%\textbf{Case 3:} When the maximum energy acquisition rate $EH_{\max}$ cannot support the source rate, it means the packet losses are sure to appear due to the insufficient energy.
+%%%%\begin{equation} 
+%%%%{\mu _{on}} \cdot {EH_{\max }} \cdot T < \left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right] \cdot {{S \cdot T} \over R}
+%%%%\end{equation}
+%%%%\begin{equation} 
+  %%%%\Rightarrow {\rm{   }}{{{\mu _{on}} \cdot {EH_{\max }} \cdot R} \over {\left[ {\left( {1 + \alpha } \right){P_{tx}} + {P_{ct}}} \right]}} < S 
+%%%%\end{equation}
+%%%%
+%%%%If the source rate satisfies the above inequality, there must be some packets blocked in the data queue. 
+%%%%The resource allocation scheme needs to carefully schedule resources to improve the QoS performance.
+\subsection{Throughput Maximization Problem}
+The QoS requirements should be guaranteed for the effective diagnostic, when designing the resource allocation scheme. Considering the dynamic link characteristics, the exact link quality cannot be known as a priori in the online scheme. In this paper, the average PLR performance is regarded as the main long-term QoS constraint. With the statistic knowledge of the path loss model, the average PLR can be derived through the following equations.
+Firstly, the PLR can be expressed as the function of the bit Signal to Noise Ratio (bit SNR),
 \begin{equation}
 PLR({\gamma }) = 1 - {\left( {1 - {P_{b,B}}({\gamma })} \right)^L}
 \end{equation}
 where bit SNR can be calculated as ${\gamma } =  {10^{\frac{{{P_{tx,dB}} - PL\left( d \right) - {P_{N}}}}{{10}}}} \frac{B}{R}$. $L$ is the length of a packet in bits. $P_{tx,dB}$ is the transmission power in dB. $P_{N}$ is the power of noise. $B$ represents the system bandwidth. $P_{b,B}$ indicates the equivalent bit error rate based on the modulation and the channel coding \cite{goldsmith2005wireless}. 
 
-Considering the dynamic link quality, the average packet loss rate are calculated as a long-term QoS constraint.
+Then, the average PLR is the mean value over the range of bit SNR with its probability density function. It can be calculated as the following equation.
 \begin{equation} \footnotesize
 \overline{PLR}  = \int\limits_0^{ + \infty } {PLR({\gamma})} P({\gamma}|{\mu _{{\gamma _{dB}}}},{\sigma _{{\gamma _{dB}}}})d{\gamma }
 \end{equation}
-where $P({\gamma}|{\mu _{{\gamma _{dB}}}},{\sigma _{{\gamma _{dB}}}})$ represents the probability density function of bit SNR $\gamma$, and it follows a log-normal distribution as the shadowing $X_{\sigma}$. $\mu _{{\gamma _{dB}}}$ and ${\sigma _{{\gamma _{dB}}}}$ are the mean and the standard deviation of $\gamma$ in dB, respectively. Finally, the PLR constraint can be expressed as follows,
+where $P({\gamma}|{\mu _{{\gamma _{dB}}}},{\sigma _{{\gamma _{dB}}}})$ represents the probability density function of bit SNR $\gamma$, and it follows a log-normal distribution as the shadowing $X_{\sigma}$. $\mu _{{\gamma _{dB}}}$ and ${\sigma _{{\gamma _{dB}}}}$ are the mean and the standard deviation of $\gamma$ in dB, respectively. 
+
+Finally, the long-term QoS constraint can be depicted that the average PLR should be less than the preset threshold as follows,
 \begin{equation}  \small
 \overline{PLR} < PLR_{th}
 \end{equation}
 where $PLR_{th}$ is the preset threshold of the packet loss rate.
 
-In this paper, we investigates the allocation of the source rate and the transmission power under the constraints of the QoS performances by constructing the following join power and source rate optimization problem:
+As we all know, larger transmission power can obtain better QoS performance, however, the achievable throughput is lower due to the larger energy cost per bit. Thus, not only the long-term PLR performance but also the achievable throughput should be taken into consideration. Besides, the energy acquisition rate of the energy harvester decides how much energy can be collected to transmit data packets. 
+Considering the time-varying and heterogeneous EH states, the average collect energy is time-variation.
+Therefore, the achievable throughput is constrained by both the QoS performance and the EH states. 
+In this paper, we optimize the allocation of the transmission power to maximize the throughput, subject to the long-term PLR performance and the EH states. The throughput maximization problem can be constructed as follows,
+
 \begin{subequations}\label{P1:PRCS} \small
 \begin{align}
-    \textbf{P1:}& \qquad\mathop {\max }\limits_{\small{({P_{tx,i},{S_i}})}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}} } , \label{P1:obj} \\
-    s.t.\quad &{\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}}  \cdot T \le R \cdot T}, \label{P1:con1} \\
-		& {\rm{0}} \le {{{S_i}} \over {1 - PL{R_{i,th}}}},\label{P1:con2}\\
-    & {{{S_i}} \over {1 - PL{R_{i,th}}}} \le {{{{\mu _{on}} \cdot R \cdot \overline{EH_{i}} } \over {\left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right]}}},\label{P1:con3}\\
-    & {\overline {PL{R_i}}  \le PL{R_{i,th}}},\label{P1:con4}\\
-    & {{P_{tx,\min }} \le {P_{tx,i}} \le {P_{tx,\max }}}, \label{P1:con5}
+    \textbf{P1:}& \qquad\mathop {\max }\limits_{\small{({P_{tx,i},{\upsilon_i}})}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{\upsilon_i}} } , \label{P1:obj} \\
+    s.t.\quad %&{\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}}  \cdot T \le R \cdot T}, \label{P1:con1} \\
+		& {\rm{0}} \le {{{\upsilon_i}} \over {1 - PL{R_{i,th}}}},\label{P1:con1}\\
+    & {{{\upsilon_i}} \over {1 - PL{R_{i,th}}}} \le {{{{\mu _{on}} \cdot R \cdot \overline{EH_{i}} } \over {\left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right]}}},\label{P1:con2}\\
+    & {\overline {PL{R_i}}  \le PL{R_{i,th}}},\label{P1:con3}\\
+    & {{P_{tx,\min }} \le {P_{tx,i}} \le {P_{tx,\max }}}, \label{P1:con4}
 \end{align}
 \end{subequations}
-where $PLR_{i,th}$ is the threshold of the packet loss rate for node $i$.
+where ${\upsilon_i}$ represents the throughput for node $i$, and $PLR_{i,th}$ is the threshold of the packet loss rate for node $i$.
 $\overline{EH_{i}} ={{{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} \mathord{\left/
  {\vphantom {{\left( {E{H_{i,\max }} + E{H_{i,\min }}} \right)} {\rm{2}}}} \right.
  \kern-\nulldelimiterspace} {\rm{2}}}}$ is the mean of the energy harvesting rate for node $i$.
  $\overline {PL{R_i}}$ represents the average packet loss rate with the allocation transmission power $P_{i}$. $P_{tx,min}$ and $P_{tx,max}$ are the minimum value and the maximum value of the transmission power for the transmitter, and we assume all the nodes have the same type transmitter for the sake of simplicity.
 
-With respect to \textbf{P1}, the objective function (\ref{P1:obj}) is to maximize the total of source rates under the QoS constraints. With the larger source rate, more useful information can be used for diagnosis.
-The constraint (\ref{P1:con1}) means the total of source rates cannot be larger than the throughput with the transmission rate, otherwise a part of vital data signals will be discarded due to the limitation of the throughput. constraints (\ref{P1:con2}) and (\ref{P1:con3}) represent the equivalent source rate with considering PLR should be lower than the long-term achievable throughput with the harvested energy. Equation (\ref{P1:con4}) denotes the PLR constraint, and equation (\ref{P1:con5}) means the constraint of the transmission power. 
+With respect to \textbf{P1}, the objective function (\ref{P1:obj}) is to maximize the total throughput under the long-term QoS constraints. The constraint (\ref{P1:con1}) means the throughput should be not less than zero. In addition, 
+the average collected energy by the energy harvester can be evaluated by exploring the statistical characterization of the EH states, and then the equivalent throughput with considering PLR has a upper boundary which just cost the average collected energy as expressed in constraint (\ref{P1:con2}). In constraint (\ref{P1:con3}), the allocated transmission power should guarantee the long-term average PLR performance. Equation (\ref{P1:con4}) means the allocated transmission power should be in the range of $[P_{tx,min},P_{tx,max}]$.
 
 \subsection{Optimal Numerical Solution}
 
-The above optimization problem \textbf{P1} is a nonlinear and non-convex problem, and it is difficult to solve. Fortunately, we find that the optimization problem \textbf{P1} is quit similar to the form of the Geometric Program (GP), which can be solved efficiently and reliably \cite{boyd2004convex}. Thus, we try to transform the problem \textbf{P1} into the form of the Geometric Program (GP).
+The above optimization problem \textbf{P1} is a nonlinear and non-convex problem, and it is difficult to be solved. Fortunately, we find that the optimization problem \textbf{P1} is quit similar to the form of the Geometric Program (GP), which can be solved efficiently and reliably \cite{boyd2004convex}. Thus, we try to transform the problem \textbf{P1} into the form of the Geometric Program (GP).
 
-Obviously, the objective function (\ref{P1:obj}) is a posynomial function. And all constraints, expect (\ref{P1:con3}) and (\ref{P1:con4}), can be easily converted to the form of a posynomial less than or equal to one. Fortunately, both constraints (\ref{P1:con3}) and (\ref{P1:con4}) can be successfully transformed into the form of posynomial inequalities through the following methods.
+Obviously, the objective function (\ref{P1:obj}) is a posynomial function. And all constraints, expect (\ref{P1:con2}) and (\ref{P1:con3}), can be easily converted to the form of a posynomial less than or equal to one. Fortunately, both constraints (\ref{P1:con2}) and (\ref{P1:con3}) can be successfully transformed into the form of posynomial inequalities through the following methods.
 
-Firstly, the PLR constraint (\ref{P1:con4}) has not an analytical expression, but we have proved that the average PLR constraint is the monotone function of bit SNR in \cite{liu2017transmission}. Therefore, the PLR constraint can be equivalent to the following expression.
+Firstly, the PLR constraint (\ref{P1:con3}) has not an analytical expression, however we have proved that the average PLR constraint is the monotone function of bit SNR in \cite{liu2017transmission}. Therefore, the PLR constraint can be equivalent to the constraint of the mean of bit SNR as follows, 
+
 \begin{equation}
 {\mu _{{\gamma _{dB}}}} \ge \mu_{th}
 \end{equation}
@@ -442,37 +473,47 @@ P_{tx}{R^{{ - 1}}} & \ge {B^{ - 1}} {10^{\frac{{\mu _{th}+ {PL_{d_0}} + 10n{\log
 \end{split}
 \end{equation} 
 
-Then, we define a new intermediate variable ${v_i} = {1 \over { {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} }}$. The optimization problem \textbf{P1} is finally transformed to the form of the Geometric Program (GP), as shown in follows,
+Then, a new intermediate variable is defined as ${\xi_i} = {1 \over { {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} }}$ to transform the constraint (\ref{P1:con2}). The optimization problem \textbf{P1} is finally transformed to the form of the Geometric Program (GP), as shown in follows,
 
 \begin{subequations}\label{P2:PRCS} \small
 \begin{align}
-    \textbf{P2:}& \qquad\mathop {\max }\limits_{\small{({P_{tx,i},{v_i}})}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}} } , \label{P2:obj} \\
-    s.t.\quad &{\sum\limits_{i = 1}^{i \in {\cal N}} {{S_i}}  \cdot T \le R \cdot T}, \label{P2:con1} \\
-		& {\rm{0}} \le {{{S_i}} \over {1 - PL{R_{i,th}}}},\label{P2:con2}\\
-    & {{{{S_i} \cdot v_i^{ - 1}} \over {1 - PL{R_{i,th}}}} \le {\mu _{on}} \cdot R \cdot \overline{EH_{i}} },\label{P2:con3}\\
-    & {{v_i} \le {1 \over {{P_{ct,i}} + \left( {1 + \alpha } \right) \cdot {\theta _{th}} \cdot R}}},\label{P2:con4}\\
-    & {1 \over {\left( {1 + \alpha } \right) \cdot {P_{tx,\max }} + {P_{ct,i}}}}  \le {v_i} , \label{P2:con5} \\
-		& {v_i} \le {1 \over {\left( {1 + \alpha } \right) \cdot {P_{tx,\min }} + {P_{ct,i}}}}, \label{P2:con5}
+    \textbf{P2:}& \qquad\mathop {\max }\limits_{\small{({{\xi_i},{\upsilon_i}})}} \; {\sum\limits_{i = 1}^{i \in {\cal N}} {{\upsilon_i}} } , \label{P2:obj} \\
+    s.t.\quad %&{\sum\limits_{i = 1}^{i \in {\cal N}} {{\upsilon_i}}  \cdot T \le R \cdot T}, \label{P2:con1} \\
+		& {\rm{0}} \le {{{\upsilon_i}} \over {1 - PL{R_{i,th}}}},\label{P2:con1}\\
+    & {{{{\upsilon_i} \cdot \xi_i^{ - 1}} \over {1 - PL{R_{i,th}}}} \le {\mu _{on}} \cdot R \cdot \overline{EH_{i}} },\label{P2:con2}\\
+    & {{\xi_i} \le {1 \over {{P_{ct,i}} + \left( {1 + \alpha } \right) \cdot {\theta _{th}} \cdot R}}},\label{P2:con3}\\
+    & {1 \over {\left( {1 + \alpha } \right) \cdot {P_{tx,\max }} + {P_{ct,i}}}}  \le {\xi_i} , \label{P2:con4} \\
+		& {\xi_i} \le {1 \over {\left( {1 + \alpha } \right) \cdot {P_{tx,\min }} + {P_{ct,i}}}}, \label{P2:con5}
 \end{align}
 \end{subequations}
 
+Finally, the throughput maximization problem \textbf{P2} as a classical GP can be solved efficiently by many custom solvers. Then, the optimal transmission power $P_{tx,i}^{*}, i \in \mathcal{C}_{node} $ and the corresponding achievable throughput $\upsilon_i^{*}, i \in \mathcal{C}_{node} $ can be obtained.
+
 \subsection{Source Rate Configuration}
+Once, the optimal throughput for each node is obtained through solving the throughput maximization problem with the time-varying different EH states. Then, the source rates for each node can be configured according to the optimal achievable throughput. In addition, different applications have different requirements of the source rates for satisfying the effective diagnosis. 
 For vital signals, the larger source rate means more useful information can be used for diagnosis, meanwhile the larger source rate will cost more energy to be transmitted. However, the limited energy and dynamic link quality will result in many packet losses with an exorbitant source rate, and the random packet losses will break the integrity of data. Therefore, the source rate usually has a most appropriate upper boundary $S_{up}$ of the source rate, which contains enough information for diagnosis.
-In addition, the source rate also have a acceptable low boundary $S_{low}$. When the source rate is lower than the low boundary $S_{low}$, the vital data will lose the diagnostic significance. Thus, the source rate will be re-configured as the following equation.
+In addition, the source rate also have a acceptable low boundary $S_{low}$. When the source rate is lower than the low boundary $S_{low}$, the vital data will lose the diagnostic significance. 
+Therefore, the boundaries of the source rate as well as the optimal achievable throughput jointly determine the configuration value of the source rate as follows,
+
 \begin{equation}
-S_{i} = \max \left\{ \min (S_{i}, S_{up} ), S_{i,low} \right\}
+S_{i} = \max \left\{ \min (\upsilon_{i}^{*}, S_{up,i} ), S_{low,i} \right\}
 \end{equation}
 
-When the achievable source rate obtained by the optimization problem \textbf{P2} is larger than the upper boundary $S_{up}$, the source rate will be set to the upper boundary $S_{up}$ for saving harvested energy. When the achievable source rate is smaller than the lower boundary $S_{low}$, the source rate will be set to the lower boundary $S_{low}$ for maintaining the diagnostic significance. Otherwise, the source rate will keep the achievable source rate. 
+When the optimal achievable throughput $\upsilon^{*}$ is larger than the upper boundary $S_{up}$, it means the harvesting energy by the harvester is enough for supporting the source rate $S_{up}$, meanwhile the long-term PLR performance is also satisfied by solving the maximization problem \textbf{P2}. 
+Then, the source rate is set to the upper boundary $S_{up}$ for the best diagnosis. When the throughput $\upsilon^{*}$ is in the range of $[S_{low},S_{up}]$, the source rate is set to the optimal throughput $\upsilon^{*}$ to just meet the throughput requirements for keeping more details of the data signals. Otherwise, the source rate is configured as the low boundary $S_{low}$ to ensure the diagnostic significance. However, the throughput condition cannot be satisfied with current energy harvesting rate, and there will be packets blocked in the data queue. In the following section, we design the short-term QoS aware resource allocation scheme to solve the problem.
+
 
 \section{Short-term QoS Aware Slot Allocation Scheme} \label{sec:QASAS}
 In the above section, the long-term QoS performance is considered with the time-varying EH states from statistical analysis. However, the time-varying EH states and dynamic link quality may cause the fluctuations of the data queue. In this section, we explore the time slot allocation to further improve the short-term QoS performance. Firstly, we analyze the energy harvesting process in details. Then, the sensor state evaluation method is given. Finally, the different slot allocation schemes are adopted for nodes with different states.
 
 \subsection{Energy Harvesting Process Analysis}
-
+For better allocating slots for each node, the time-varying and heterogeneous EH states for each node should be carefully studied to adjust the allocation of slots.
 As we adopt the scheduled access mechanism in beacon mode with superframe boundaries, nodes only turn active in its dedicated slots to transmit the data packets while keep sleep for saving energy in other slots. 
-Considering the time-varying EH state and the fluctuation of the data queue, not only the number but also the location of slots should be carefully allocated for improving the short-term QoS performance. For instance, if the allocated slots for one node is at the end of the next superframe, more energy will be harvested for transmitting the blocked packets in the data queue.
-Unfortunately, the hub can only know the EH states of nodes in the allocated slots of last superframe. In this paper, we will predict the EH states for each sensor in the following superframe.
+Considering the time-varying EH state, the EH states of each node in a superframe are different, which determine how much energy the body nodes can collect for transmitting data packets.
+% In addition, the fluctuation of the data queuenot only the number but also the location of slots should be carefully allocated for improving the short-term QoS performance.
+For instance, if the EH state of one node has a high probability to keep the OFF state at the beginning of the following superframe, it means the slots at the end of the following superframe can be allocated to the node for collecting more energy with more harvesting time.
+In this paper, only the EH states of nodes in the allocated slots of last superframe can be known by the hub, thus the EH states of each sensor in the following superframe need to be predicted for better allocating slots.
+
 
 The energy harvesting process is modeled as a two-state Markov chain as shown in Fig. \ref{fig:markov_model}. The transition matrix can be expressed as follows,
 \begin{equation}
@@ -484,7 +525,7 @@ The energy harvesting process is modeled as a two-state Markov chain as shown in
  } \right]
 \end{equation}
 
-We define the probability of EH state to be in the ON state in a $x$-th slot is denoted by $p(x)$, then after $\tau$ slots, the EH state has been transferred ${\left\lceil\frac{\tau}{k}\right\rceil}$ times. ${\lceil \cdot \rceil}$ is the ceiling function.
+We define the probability of EH state to be the ON state in a $x$-th slot is denoted by $p(x)$, then after $\tau$ slots, the EH state has been transferred ${\left\lceil\frac{\tau}{k}\right\rceil}$ times. ${\lceil \cdot \rceil}$ is the ceiling function.
 Thus, the probability of the ON state after $\tau$ slots can be calculated as follows \cite{tselishchev2011reducing},
 \begin{equation} \footnotesize \label{eq:P_ON_1}
 \begin{split}
@@ -499,7 +540,7 @@ p(x+\tau) &= \left[\begin{matrix}
   &= {{{p_{01}}} \over Q}+ {{p\left( k \right) \cdot {p_{10}} - \left( {{\rm{1}} - p\left( k \right)} \right) \cdot {p_{01}}} \over Q} \cdot {\left( {1 - Q} \right)^{\left\lceil {{\tau  \over k}} \right\rceil }}
 \end{split}
 \end{equation} 
-where $Q = {p_{01}} + {p_{10}}$. Suppose the EH state in the $x$-th slot is known, then the probability of the ON state $p(x)=0$ when the EH state is OFF, otherwise $p(x)=1$ with the ON state. Thus, the Eq. \eqref{eq:P_ON_1} can be expressed as,
+where $Q = {p_{01}} + {p_{10}}$. Suppose the EH state in the $x$-th slot is known, then the probability of the ON state $p(x)$ is equal to 0 when the EH state is OFF. Otherwise $p(x)$ is set to 1 with the ON state. Thus, the Eq. \eqref{eq:P_ON_1} can be expressed as,
 \begin{equation} \label{eq:P_ON_2}
 p(x+\tau) =\left\{ { \begin{array}{l}
 {{{{{p_{01}}} \over Q} - {{{p_{01}}\cdot{{\left( {1 - Q} \right)}^{\left\lceil\frac{\tau}{k}\right\rceil} }} \over Q},{\rm{  }}p\left( {x } \right) = 0}}\\
@@ -507,7 +548,7 @@ p(x+\tau) =\left\{ { \begin{array}{l}
 \end{array}}\right.
 \end{equation}
 
-Thus, the hub can use the above equation to predict the EH state in each slot of the following superframe, while the last EH state in the allocated slot of the last superframe can be obtained through the feedback from the node.
+Thus, the EH states of each node in the following superframe can be predicted, while the last EH state in the allocated slot of the last superframe can be obtained through the feedback from the node.
 
 \subsection{Sensor State Evaluation}
 Considering the heterogeneous EH states, the residual energy from energy harvesters is different in different nodes. 
@@ -537,7 +578,7 @@ Node_{i} \in \left\{ { \begin{array}{l}
 \end{figure}
 
 For the energy-constrained nodes in the BAD set ${\Phi _{BAD}}$, the residual energy is limited to transmit the arriving data in the next framework. Thus, it should harvest more energy before its dedicated slot in the following framework. Generally, the node with the allocated slot at the end of the superframe will have more time to collect energy.
-Due to the time-varying and heterogeneous EH states for nodes, there may be several nodes in the BAD set ${\Phi _{BAD}}$, thus we should dynamic allocate the slots for each nodes with considering both the number and the locations.
+Due to the time-varying and heterogeneous EH states for nodes, there may be several nodes in the BAD set ${\Phi _{BAD}}$, thus we should dynamic allocate the slots for each node with considering both the number and the locations.
 
 Firstly, we evaluate how long each sensor will take to harvest enough energy to transmit the arriving data. The probability of the ON state in the last allocated slot can be obtained by the hub through the feedback from the node $i$, which is regard as $p_{i}(0)$. In addition, the probability of the ON state for the following slots can be predicted as the equation \eqref{eq:P_ON_2}. Thus, the total harvesting energy after $m$ slots on average from the last allocated slot is calculated as follows,
 \begin{equation}  
@@ -715,7 +756,7 @@ Above all, the WBAN simulation settings should be illustrated in details. We con
 Firstly, we analyze the allocated results of the long-term power-rate control scheme (PRCS) for different postures. As shown in Table \ref{tab:posNode}, the parameters of the path loss are different to different nodes as well as the source rate, meanwhile the statistical characterizations of the shadowing fluctuate for different postures.
 Thus, the resource allocation schemes should be able to deal with the dynamic link quality. 
 The allocated transmission power and configured source rates for different nodes by the proposed PRCS in different postures are given in Figure \ref{fig:PRCS}. 
-In the PRCS, we optimize the transmission power for each nodes based on the link quality to support the long-term QoS performance. Thus, the allocated transmission powers for each nodes are dynamically adjusted when the link quality changes due to the postures in Figure \ref{fig:PRCS_power}. For instance, the node 3 and the node 4 are close to the hub, and their link qualities are much better than the other nodes. Hence, the transmission powers for them are assigned a lower value to save precious energy under the condition of satisfying the long-term QoS requirements. 
+In the PRCS, we optimize the transmission power for each node based on the link quality to support the long-term QoS performance. Thus, the allocated transmission powers for each node are dynamically adjusted when the link quality changes due to the postures in Figure \ref{fig:PRCS_power}. For instance, the node 3 and the node 4 are close to the hub, and their link qualities are much better than the other nodes. Hence, the transmission powers for them are assigned a lower value to save precious energy under the condition of satisfying the long-term QoS requirements. 
 
 In addition, the source rates for different nodes are configured based on the heterogeneous requirements and the energy harvesting rates.  As shown in Figure \ref{fig:PRCS_rate}, the source rates of the node 1 and the node 2 are configured as the low boundary $S_{low}$ in all postures. This is because the highest energy harvesting rates of them are still not enough for supporting the optimal source rate $S_{up}$ with the higher transmission power in Figure \ref{fig:PRCS_power}. As for node 5, the energy harvesting rates in different postures are different for the piezoelectric energy harvester in Table \ref{tab:parEH}. Thus, the source rates are configured, correspondingly. 
 
@@ -768,7 +809,7 @@ As shown in Figure \ref{fig:cp_PLR} and Figure \ref{fig:cp_delay}, the proposed 
 However, due to the priori knowledge of the channel state and EH states, the offline scheme can optimally allocated the transmission power to maximize the throughput as shown in Figure \ref{fig:cp_Throughput}. In addition, the transmission power is adjusted in real-time based on the real-time path loss of the channel, thus the energy efficiency is the highest as shown in Figure \ref{fig:cp_energyPerBit}. 
 Meanwhile, both the proposed PRS-RA scheme and online scheme assume that only the statistical information of channel state and the EH states are priori known by the hub. However, the proposed PRS-RA scheme has a higher energy efficiency performance than the online scheme, which is very close to the offline scheme. This is because the optimal transmission power is firstly allocated to support the long-term QoS performance, and then the effective slot allocation can further guarantee there is enough power to transmit the data packets in the allocated slots, which can avoid the waste of energy due to the packet losses. 
 
-As for the throughput in Figure \ref{fig:cp_Throughput}, the throughput of the proposed PRS-RA scheme decreases with the mean of the shadowing, while the energy cost per bit increases with the mean of the shadowing in Figure \ref{fig:cp_energyPerBit}. When the link quality becomes worse with a higher mean of the shadowing, the long-term power-rate control scheme (PRCS) dynamically adjust the transmission rate and the source rate based on the link quality. Generally, the transmission power will be increased to guarantee the QoS performance and the source rate will be decreased to ensure the integrity of data with a lower PLR. In addition, the short-term QoS aware slot allocation scheme (QASAS) dynamically analyzes the state of each nodes, and then optimizes the appropriate slots to cope with the blocked packets in the buffer. Hence, the bandwidth utilization of the proposed PRA-SA reaches to 94\%, which is higher than the online scheme, thus, more channel resource can be utilized by other WBANs.
+As for the throughput in Figure \ref{fig:cp_Throughput}, the throughput of the proposed PRS-RA scheme decreases with the mean of the shadowing, while the energy cost per bit increases with the mean of the shadowing in Figure \ref{fig:cp_energyPerBit}. When the link quality becomes worse with a higher mean of the shadowing, the long-term power-rate control scheme (PRCS) dynamically adjust the transmission rate and the source rate based on the link quality. Generally, the transmission power will be increased to guarantee the QoS performance and the source rate will be decreased to ensure the integrity of data with a lower PLR. In addition, the short-term QoS aware slot allocation scheme (QASAS) dynamically analyzes the state of each node, and then optimizes the appropriate slots to cope with the blocked packets in the buffer. Hence, the bandwidth utilization of the proposed PRA-SA reaches to 94\%, which is higher than the online scheme, thus, more channel resource can be utilized by other WBANs.
 
 
 \begin{figure*}[!htb]
@@ -851,7 +892,7 @@ As for the throughput in Figure \ref{fig:cp_Throughput}, the throughput of the p
 %\end{figure}
 To evaluate the effectiveness of the long-term power-rate control scheme (PRCS) and the short-term QoS aware slot allocation scheme (QASAS), we compare three different schemes: 1) the proposed PRS-RA with both PRCS and QASAS, 2) the proposed PRS-RA only with PRCS, 3) the proposed PRS-RA only with QASAS. And we gradually change EH efficiency ratio for all nodes to scale the range of the energy harvesting rate $[EH_{min},EH_{max}]$. The smaller EH efficiency ratio means energy harvester can collect less energy when the energy harvester stays the ON state. The QoS performances versus the EH efficiency ratio are given in Figure \ref{fig:cp_EHefficiency}.
 
-The nodes can collect more energy with a higher EH efficiency ratio, thus the average PLRs of all three schemes decrease with the EH efficiency ratio as shown in Figure \ref{fig:EHefficiency_PLR}. And the PRS-RA with both PRCS and QASAS outperform the other schemes, and it can achieve almost 0\% PLR performance. In addition, the PRS-RA with only PRCS has a lower PLR than the PRS-RA with only QASAS, this is because the optimization allocation of the transmission power and the source rate can support the long-term QoS performance, while the PRS-RA with only QASAS can adjust the number of slots for each nodes, which cannot deal with the packet losses due to the dynamic links with a fixed transmission power. However, when the short-term QASAS combines with the long-term PRCS, not only the PLR but also the packet delay can achieve the best performance. Though the PRS-RA with only QASAS can have a highest throughput in Figure \ref{fig:EHefficiency_Throughput} and a highest bandwidth utilization in Figure \ref{fig:EHefficiency_bandwidth}, the highest PLR in Figure \ref{fig:EHefficiency_PLR} will cost a lot of energy cost, which cannot be acceptable especially for the EH-powered WBAN system.
+The nodes can collect more energy with a higher EH efficiency ratio, thus the average PLRs of all three schemes decrease with the EH efficiency ratio as shown in Figure \ref{fig:EHefficiency_PLR}. And the PRS-RA with both PRCS and QASAS outperform the other schemes, and it can achieve almost 0\% PLR performance. In addition, the PRS-RA with only PRCS has a lower PLR than the PRS-RA with only QASAS, this is because the optimization allocation of the transmission power and the source rate can support the long-term QoS performance, while the PRS-RA with only QASAS can adjust the number of slots for each node, which cannot deal with the packet losses due to the dynamic links with a fixed transmission power. However, when the short-term QASAS combines with the long-term PRCS, not only the PLR but also the packet delay can achieve the best performance. Though the PRS-RA with only QASAS can have a highest throughput in Figure \ref{fig:EHefficiency_Throughput} and a highest bandwidth utilization in Figure \ref{fig:EHefficiency_bandwidth}, the highest PLR in Figure \ref{fig:EHefficiency_PLR} will cost a lot of energy cost, which cannot be acceptable especially for the EH-powered WBAN system.
 
 
 \renewcommand\arraystretch{1.2}

@@ -63,6 +63,12 @@ A.~Kansal, J.~Hsu, S.~Zahedi, and M.~B. Srivastava, ``Power management in
   energy harvesting sensor networks,'' {\em ACM Transactions on Embedded
   Computing Systems (TECS)}, vol.~6, no.~4, p.~32, 2007.
 
+\bibitem{ozel2011transmission}
+O.~Ozel, K.~Tutuncuoglu, J.~Yang, S.~Ulukus, and A.~Yener, ``Transmission with
+  energy harvesting nodes in fading wireless channels: Optimal policies,'' {\em
+  IEEE Journal on Selected Areas in Communications}, vol.~29, no.~8,
+  pp.~1732--1743, 2011.
+
 \bibitem{leng2017resource}
 S.~Leng and A.~Yener, ``Resource allocation in body area networks for energy
   harvesting healthcare monitoring,'' in {\em Handbook of Large-Scale
@@ -156,12 +162,6 @@ B.~Liu, S.~Yu, and C.~W. Chenz, ``Optimal resource allocation in energy
   harvesting-powered body sensor networks,'' in {\em Future Information and
   Communication Technologies for Ubiquitous HealthCare (Ubi-HealthTech), 2015
   2nd International Symposium on}, pp.~1--5, IEEE, 2015.
-
-\bibitem{ozel2011transmission}
-O.~Ozel, K.~Tutuncuoglu, J.~Yang, S.~Ulukus, and A.~Yener, ``Transmission with
-  energy harvesting nodes in fading wireless channels: Optimal policies,'' {\em
-  IEEE Journal on Selected Areas in Communications}, vol.~29, no.~8,
-  pp.~1732--1743, 2011.
 
 \bibitem{ieee2012WBAN}
 I.~S. Association {\em et~al.}, ``Ieee standard for local and metropolitan area
