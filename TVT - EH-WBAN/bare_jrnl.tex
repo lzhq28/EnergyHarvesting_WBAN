@@ -461,7 +461,7 @@ The above optimization problem \textbf{P1} is a nonlinear and non-convex problem
 
 Obviously, the objective function (\ref{P1:obj}) is a posynomial function. And all constraints, expect (\ref{P1:con2}) and (\ref{P1:con3}), can be easily converted to the form of a posynomial less than or equal to one. Fortunately, both constraints (\ref{P1:con2}) and (\ref{P1:con3}) can be successfully transformed into the form of posynomial inequalities through the following methods.
 
-Firstly, the PLR constraint (\ref{P1:con3}) has not an analytical expression, however we have proved that the average PLR constraint is the monotone function of bit SNR in \cite{liu2017transmission}. Therefore, the PLR constraint can be equivalent to the constraint of the mean of bit SNR as follows, 
+Firstly, the PLR constraint (\ref{P1:con3}) has not an analytical expression, however we have proved that the average PLR constraint is the monotone function of bit SNR in \cite{liu2017transmission}. Hence, the PLR constraint can be equivalent to the constraint of the mean of bit SNR as follows, 
 
 \begin{equation}
 {\mu _{{\gamma _{dB}}}} \ge \mu_{th}
@@ -551,8 +551,13 @@ p(x+\tau) =\left\{ { \begin{array}{l}
 Thus, the EH states of each node in the following superframe can be predicted, while the last EH state in the allocated slot of the last superframe can be obtained through the feedback from the node.
 
 \subsection{Sensor State Evaluation}
-Considering the heterogeneous EH states, the residual energy from energy harvesters is different in different nodes. 
-For the energy-sufficient nodes, the residual energy in these nodes is enough to transmit the arriving data in the following superframe. Thus these energy-sufficient nodes are insensitive to the location of allocated slots in the following superframe, while the number of allocated slots becomes important with considering both the arriving data packets and the blocked packets in the data queue. As for the energy-constrained nodes, we need to dynamically adjust the locations of allocated slots to harvest more energy to improve the short-term QoS performance. Therefore, the nodes can be classified into two categories based on the residual energy: the energy-sufficient nodes and the energy-constrained nodes.
+Due to the heterogeneous EH states, the residual energy from energy harvesters is different in different nodes. Besides, the number of packets for each node in the data queue is also time-varying. 
+If the blocked packets are not timely transmitted to the hub, the QoS performance of both the blocked packets and the arriving packets will be degraded with adopting the First-In-First-Out (FIFO) queue strategy. 
+Hence, the slot allocation should be according to both the energy level in the energy buffer and the predicted EH states for further improving the short-term QoS performance. When the residual energy is sufficient to transmit the arriving packets in the following superframe, the number of slots for the blocked packets should be taken into consideration for timely transmission to decrease the short-term packet delay. 
+Otherwise, the residual energy is constrained, and then the number of allocated slots is only for the arriving packets to ensure the throughput of the queue model. Thus, before allocating slots, the sensor states for each node are evaluated.
+
+For the energy-sufficient nodes,  they are insensitive to the location of allocated slots in the following superframe, while the number of allocated slots becomes important with considering both the arriving data packets and the blocked packets in the data queue. As for the energy-constrained nodes, we need to dynamically adjust the locations of allocated slots to improve the short-term QoS performance based on their EH states. 
+Therefore, the nodes can be classified into two categories based on the residual energy: the energy-sufficient nodes and the energy-constrained nodes.
 \begin{equation} \label{eq:energy_con}
  \textbf{Con1:} \quad {E_{res,i}} \ge \left[ {\left( {1 + \alpha } \right){P_{tx,i}} + {P_{ct,i}}} \right] \cdot {{{S_i} \cdot T} \over R}
 \end{equation}
