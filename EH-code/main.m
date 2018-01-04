@@ -462,7 +462,7 @@
     bar(PRCS_allocate_rate')
     xlabel('Node index')
     ylabel('Source rate (kbps)')
-    legend('Still','Walk','Run')
+    legend('Still','Walking','Running')
     grid on
     set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
     set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
@@ -475,7 +475,7 @@
     bar(PRCS_allocate_power')
     xlabel('Node index')
     ylabel('Transmission power (mW)')
-    legend('Still','Walk','Run')
+    legend('Still','Walking','Running')
     grid on
     set(get(gca,'XLabel'),'FontSize',30,'FontName','Times New Roman')
     set(get(gca,'YLabel'),'FontSize',30,'FontName','Times New Roman');%设置Y坐标标题字体大小，字型
