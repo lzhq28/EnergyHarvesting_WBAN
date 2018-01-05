@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.12.25)  4 JAN 2018 15:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.12.25)  4 JAN 2018 15:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -673,22 +673,27 @@ LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 52
 LaTeX Font Warning: Command \small invalid in math mode on input line 568.
 
 Package epstopdf Info: Source file: <slot_allocation.eps>
-(epstopdf)                    date: 2017-12-10 04:13:17
-(epstopdf)                    size: 359933 bytes
+(epstopdf)                    date: 2018-01-04 15:40:14
+(epstopdf)                    size: 353925 bytes
 (epstopdf)             Output file: <slot_allocation-eps-converted-to.pdf>
-(epstopdf)                    date: 2017-12-10 04:14:20
-(epstopdf)                    size: 38295 bytes
+(epstopdf)                    date: 2018-01-04 15:37:39
+(epstopdf)                    size: 44197 bytes
 (epstopdf)             Command: <repstopdf --outfile=slot_allocation-eps-conver
 ted-to.pdf slot_allocation.eps>
 (epstopdf)             \includegraphics on input line 581.
-Package epstopdf Info: Output file is already uptodate.
-<slot_allocation-eps-converted-to.pdf, id=47, 501.875pt x 169.63374pt>
+runsystem(repstopdf --outfile=slot_allocation-eps-converted-to.pdf slot_allocat
+ion.eps)...executed safely (allowed).
+
+Package epstopdf Info: Result file: <slot_allocation-eps-converted-to.pdf>
+(epstopdf)                    date: 2018-01-04 15:40:21
+(epstopdf)                    size: 40138 bytes.
+<slot_allocation-eps-converted-to.pdf, id=47, 501.875pt x 172.645pt>
 File: slot_allocation-eps-converted-to.pdf Graphic file (type pdf)
 
 <use slot_allocation-eps-converted-to.pdf>
 Package pdftex.def Info: slot_allocation-eps-converted-to.pdf used on input lin
 e 581.
-(pdftex.def)             Requested size: 258.0pt x 87.20833pt.
+(pdftex.def)             Requested size: 258.0pt x 88.75641pt.
 
 Overfull \hbox (6.0pt too wide) in paragraph at lines 581--582
  [][] 
@@ -742,7 +747,7 @@ Package epstopdf Info: Source file: <PRCS_power.eps>
 o.pdf PRCS_power.eps>
 (epstopdf)             \includegraphics on input line 785.
 Package epstopdf Info: Output file is already uptodate.
-<PRCS_power-eps-converted-to.pdf, id=95, 753.81625pt x 595.22375pt>
+<PRCS_power-eps-converted-to.pdf, id=100, 753.81625pt x 595.22375pt>
 File: PRCS_power-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PRCS_power-eps-converted-to.pdf>
@@ -760,7 +765,7 @@ Package epstopdf Info: Source file: <PRCS_rate.eps>
 (epstopdf)             \includegraphics on input line 790.
 Package epstopdf Info: Output file is already uptodate.
 
-<PRCS_rate-eps-converted-to.pdf, id=96, 753.81625pt x 596.2275pt>
+<PRCS_rate-eps-converted-to.pdf, id=101, 753.81625pt x 596.2275pt>
 File: PRCS_rate-eps-converted-to.pdf Graphic file (type pdf)
 
 <use PRCS_rate-eps-converted-to.pdf>
@@ -780,7 +785,7 @@ s-converted-to.pdf cp_packets_without_slot.eps>
 (epstopdf)             \includegraphics on input line 812.
 Package epstopdf Info: Output file is already uptodate.
 
-<cp_packets_without_slot-eps-converted-to.pdf, id=100, 526.96875pt x 458.71375p
+<cp_packets_without_slot-eps-converted-to.pdf, id=105, 526.96875pt x 458.71375p
 t>
 File: cp_packets_without_slot-eps-converted-to.pdf Graphic file (type pdf)
  <use cp_packets_without_slot-eps-converted-to.pdf>
@@ -799,7 +804,7 @@ onverted-to.pdf cp_packets_with_slot.eps>
 (epstopdf)             \includegraphics on input line 817.
 Package epstopdf Info: Output file is already uptodate.
 
-<cp_packets_with_slot-eps-converted-to.pdf, id=101, 528.97626pt x 459.7175pt>
+<cp_packets_with_slot-eps-converted-to.pdf, id=106, 528.97626pt x 459.7175pt>
 File: cp_packets_with_slot-eps-converted-to.pdf Graphic file (type pdf)
 
 <use cp_packets_with_slot-eps-converted-to.pdf>
@@ -820,7 +825,7 @@ f cp_PLR.eps>
 (epstopdf)             \includegraphics on input line 844.
 Package epstopdf Info: Output file is already uptodate.
 
-<cp_PLR-eps-converted-to.pdf, id=125, 729.72626pt x 585.18625pt>
+<cp_PLR-eps-converted-to.pdf, id=130, 729.72626pt x 585.18625pt>
 File: cp_PLR-eps-converted-to.pdf Graphic file (type pdf)
 
 <use cp_PLR-eps-converted-to.pdf>
@@ -837,7 +842,7 @@ pdf cp_Delay.eps>
 (epstopdf)             \includegraphics on input line 849.
 Package epstopdf Info: Output file is already uptodate.
 
-<cp_Delay-eps-converted-to.pdf, id=126, 725.71124pt x 586.19pt>
+<cp_Delay-eps-converted-to.pdf, id=131, 725.71124pt x 586.19pt>
 File: cp_Delay-eps-converted-to.pdf Graphic file (type pdf)
 
 <use cp_Delay-eps-converted-to.pdf>
@@ -854,7 +859,7 @@ ted-to.pdf cp_energyPerBit.eps>
 (epstopdf)             \includegraphics on input line 854.
 Package epstopdf Info: Output file is already uptodate.
 
-<cp_energyPerBit-eps-converted-to.pdf, id=127, 726.715pt x 587.19376pt>
+<cp_energyPerBit-eps-converted-to.pdf, id=132, 726.715pt x 587.19376pt>
 File: cp_energyPerBit-eps-converted-to.pdf Graphic file (type pdf)
 
 <use cp_energyPerBit-eps-converted-to.pdf>
@@ -872,7 +877,7 @@ d-to.pdf cp_Throughput.eps>
 (epstopdf)             \includegraphics on input line 859.
 Package epstopdf Info: Output file is already uptodate.
 
-<cp_Throughput-eps-converted-to.pdf, id=128, 727.71875pt x 586.19pt>
+<cp_Throughput-eps-converted-to.pdf, id=133, 727.71875pt x 586.19pt>
 File: cp_Throughput-eps-converted-to.pdf Graphic file (type pdf)
 
 <use cp_Throughput-eps-converted-to.pdf>
@@ -890,7 +895,7 @@ Package epstopdf Info: Source file: <cp_bandwidth.eps>
 (epstopdf)             \includegraphics on input line 864.
 Package epstopdf Info: Output file is already uptodate.
 
-<cp_bandwidth-eps-converted-to.pdf, id=129, 727.71875pt x 588.1975pt>
+<cp_bandwidth-eps-converted-to.pdf, id=134, 727.71875pt x 588.1975pt>
 File: cp_bandwidth-eps-converted-to.pdf Graphic file (type pdf)
 
 <use cp_bandwidth-eps-converted-to.pdf>
@@ -908,7 +913,7 @@ rted-to.pdf EHefficiency_PLR.eps>
 (epstopdf)             \includegraphics on input line 876.
 Package epstopdf Info: Output file is already uptodate.
 
-<EHefficiency_PLR-eps-converted-to.pdf, id=130, 784.9325pt x 622.325pt>
+<EHefficiency_PLR-eps-converted-to.pdf, id=135, 784.9325pt x 622.325pt>
 File: EHefficiency_PLR-eps-converted-to.pdf Graphic file (type pdf)
 
 <use EHefficiency_PLR-eps-converted-to.pdf>
@@ -926,7 +931,7 @@ verted-to.pdf EHefficiency_Delay.eps>
 (epstopdf)             \includegraphics on input line 881.
 Package epstopdf Info: Output file is already uptodate.
 
-<EHefficiency_Delay-eps-converted-to.pdf, id=131, 784.9325pt x 623.32875pt>
+<EHefficiency_Delay-eps-converted-to.pdf, id=136, 784.9325pt x 623.32875pt>
 File: EHefficiency_Delay-eps-converted-to.pdf Graphic file (type pdf)
 
 <use EHefficiency_Delay-eps-converted-to.pdf>
@@ -945,7 +950,7 @@ s-converted-to.pdf EHefficiency_Throughput.eps>
 (epstopdf)             \includegraphics on input line 886.
 Package epstopdf Info: Output file is already uptodate.
 
-<EHefficiency_Throughput-eps-converted-to.pdf, id=132, 783.92876pt x 623.32875p
+<EHefficiency_Throughput-eps-converted-to.pdf, id=137, 783.92876pt x 623.32875p
 t>
 File: EHefficiency_Throughput-eps-converted-to.pdf Graphic file (type pdf)
  <use EHefficiency_Throughput-eps-converted-to.pdf>
@@ -964,7 +969,7 @@ f>
 (epstopdf)             \includegraphics on input line 891.
 Package epstopdf Info: Output file is already uptodate.
 
-<EHefficiency_bandwidth-eps-converted-to.pdf, id=133, 784.9325pt x 624.3325pt>
+<EHefficiency_bandwidth-eps-converted-to.pdf, id=138, 784.9325pt x 624.3325pt>
 File: EHefficiency_bandwidth-eps-converted-to.pdf Graphic file (type pdf)
 
 <use EHefficiency_bandwidth-eps-converted-to.pdf>
@@ -1002,7 +1007,7 @@ to.pdf ZhiqiangLiu.eps>
 (epstopdf)             \includegraphics on input line 994.
 Package epstopdf Info: Output file is already uptodate.
 
-<ZhiqiangLiu-eps-converted-to.pdf, id=221, 220.825pt x 314.17375pt>
+<ZhiqiangLiu-eps-converted-to.pdf, id=226, 220.825pt x 314.17375pt>
 File: ZhiqiangLiu-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ZhiqiangLiu-eps-converted-to.pdf>
@@ -1035,7 +1040,7 @@ f BinLiu.eps>
 (epstopdf)             \includegraphics on input line 998.
 Package epstopdf Info: Output file is already uptodate.
 
-<BinLiu-eps-converted-to.pdf, id=224, 372.39125pt x 495.8525pt>
+<BinLiu-eps-converted-to.pdf, id=229, 372.39125pt x 495.8525pt>
 File: BinLiu-eps-converted-to.pdf Graphic file (type pdf)
 
 <use BinLiu-eps-converted-to.pdf>
@@ -1066,7 +1071,7 @@ Package epstopdf Info: Source file: <ChangwenChen.eps>
 (epstopdf)             \includegraphics on input line 1002.
 Package epstopdf Info: Output file is already uptodate.
 
-<ChangwenChen-eps-converted-to.pdf, id=227, 220.825pt x 332.24126pt>
+<ChangwenChen-eps-converted-to.pdf, id=232, 220.825pt x 332.24126pt>
 File: ChangwenChen-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ChangwenChen-eps-converted-to.pdf>
@@ -1132,9 +1137,9 @@ sam10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
 2015/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2015/texmf-dist/f
 onts/type1/urw/times/utmr8a.pfb><c:/texlive/2015/texmf-dist/fonts/type1/urw/tim
 es/utmri8a.pfb>
-Output written on bare_jrnl.pdf (13 pages, 628220 bytes).
+Output written on bare_jrnl.pdf (13 pages, 630052 bytes).
 PDF statistics:
- 332 PDF objects out of 1000 (max. 8388607)
+ 337 PDF objects out of 1000 (max. 8388607)
  217 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
  127 words of extra memory for PDF output out of 10000 (max. 10000000)
