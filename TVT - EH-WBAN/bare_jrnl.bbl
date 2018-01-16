@@ -173,6 +173,11 @@ Z.~Liu, B.~Liu, and C.~W. Chen, ``Buffer-aware resource allocation scheme with
   energy efficiency and qos effectiveness in wireless body area networks,''
   {\em IEEE Access}, vol.~5, pp.~20763--20776, 2017.
 
+\bibitem{seyedi2010energy}
+A.~Seyedi and B.~Sikdar, ``Energy efficient transmission strategies for body
+  sensor networks with energy harvesting,'' {\em IEEE Transactions on
+  Communications}, vol.~58, no.~7, pp.~2116--2126, 2010.
+
 \bibitem{geisler2017human}
 M.~Geisler, S.~Boisseau, M.~Perez, P.~Gasnier, J.~Willemin, I.~Ait-Ali, and
   S.~Perraud, ``Human-motion energy harvester for autonomous body area
@@ -183,11 +188,6 @@ M.~Geisler, S.~Boisseau, M.~Perez, P.~Gasnier, J.~Willemin, I.~Ait-Ali, and
 M.~Thielen, L.~Sigrist, M.~Magno, C.~Hierold, and L.~Benini, ``Human body heat
   for powering wearable devices: From thermal energy to application,'' {\em
   Energy Conversion and Management}, vol.~131, pp.~44--54, 2017.
-
-\bibitem{seyedi2010energy}
-A.~Seyedi and B.~Sikdar, ``Energy efficient transmission strategies for body
-  sensor networks with energy harvesting,'' {\em IEEE Transactions on
-  Communications}, vol.~58, no.~7, pp.~2116--2126, 2010.
 
 \bibitem{xiao2009transmission}
 S.~Xiao, A.~Dhamdhere, V.~Sivaraman, and A.~Burdett, ``Transmission power
