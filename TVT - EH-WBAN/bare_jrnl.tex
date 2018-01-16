@@ -217,7 +217,7 @@ However, the time-varying and heterogeneous EH states of different sensors becom
 In this paper, we propose a novel two-phase resource allocation scheme, which optimizes the allocation of the transmission power, the source rate and the time slots to improve the QoS performance of EH-powered WBAN. 
 In the first phase, we investigate the statistical knowledge of energy harvesting to measure the long-term QoS performance, and then a joint Power-Rate Control Scheme (PRCS) is proposed to optimize the transmission power and the source rate for ensuring the long-term QoS performance.
 Moreover, we design a QoS Aware Slot Allocation Scheme (QASAS) to dynamically adjust the time slot allocation to cope with the time-varying and heterogeneous EH states for obtaining better short-term QoS performance in the second phase.
-Finally, numerical simulation results demonstrate that the proposed joint the Power-Rate-Slot Resource Allocation scheme (PRS-RA) of EH-powered WBAN can effectively exploit the time-varying EH to improve both long-term and short-term QoS performance.
+Finally, numerical simulation results demonstrate that the proposed joint Power-Rate-Slot Resource Allocation scheme (PRS-RA) of EH-powered WBAN can effectively exploit the time-varying EH to improve both long-term and short-term QoS performance.
  
 \end{abstract}
 
@@ -230,7 +230,7 @@ Finally, numerical simulation results demonstrate that the proposed joint the Po
 
 \IEEEpeerreviewmaketitle
 \section{Introduction}
-With the rapid development of sensors and wireless communication technologies, wireless body area network (WBAN) can replace complex and wired healthcare applications to continuously monitor the body's vital signals and provide real-time feedback to the user and doctors without causing any discomfort and interrupting their daily lifestyle \cite{salayma2017wireless,movassaghi2014wireless,dagdeviren2017energy}. 
+With the rapid development of sensors and wireless communication technologies, wireless body area network (WBAN) can replace complex and wired healthcare applications to continuously monitor the body's vital signals and provide real-time feedback to the users and doctors without causing any discomfort and interrupting their daily lifestyle \cite{salayma2017wireless,movassaghi2014wireless,dagdeviren2017energy}. 
 WBAN typically consists of several low-power, miniaturized and lightweight on-body or implanted sensor nodes to monitor physiological parameters, and then these collected physiological data are further transmitted to the remote medical servers by one energy-efficient hub (Mobile phone or PDA) for various medical and healthcare applications \cite{zhang2017medium}. 
 Generally, most of these applications are related to the chronic diseases, which need to continuously monitor the body's vital signals without interrupting user's daily lifestyle. In addition, for carrying out an effective diagnosis, the Quality of Service (QoS) should be guaranteed in terms of packet loss, delay and so on \cite{razzaque2017qos}. 
 
@@ -300,10 +300,10 @@ To achieve the best possible QoS performance, the authors of \cite{ibarra2016qos
 In this paper, we take the time-varying and heterogeneous EH states into consideration and develop an efficient resource allocation scheme for EH-powered WBANs to support both the long-term and short-term QoS requirements.
 The important contributions of this paper are expressed as three aspects:
  \begin{enumerate}
-	 \item As far as we know, this work is the first to combine the transmission power, source rate and time slots to effectively allocate the resources under dynamic link characteristics of heterogeneous body sensors. The time-varying EH states are regarded as an important factor to reallocate the resources to cope with the variation of the harvesting available energy.
+	 \item As far as we know, this work is the first to combine the transmission power, source rate and time slots to effectively allocate the resources under dynamic link characteristics of heterogeneous body sensors. The time-varying EH states are regarded as an important factor to reallocate the resources for coping with the variation of the harvesting available energy.
 Hence, the harvested energy can be efficiently utilized to improve both the long-term and short-term QoS performances.
 	 \item For supporting the long-term QoS performance of body sensors, we design a power-rate control scheme to optimize the transmission power and the source rates for different body sensors, subject to the long-term QoS requirements under the Energy Neutral Operation (ENO).
-The statistical knowledge of energy harvesting and channel fading are investigated to measure the QoS performance with the allocated resources. Then, an optimal numerical solution is successfully obtained through the transformation of the non-convex problem. 
+The statistical knowledge of energy harvesting and channel fading is investigated to measure the QoS performance with the allocated resources. Then, an optimal numerical solution is successfully obtained through the transformation of the non-convex problem. 
 	\item To further improve the short-term QoS performance and the resource utilization, we propose a QoS aware slot allocation scheme to dynamically adjust the time slot allocation based on the states of each sensor for better transmitting data packets with the available harvesting energy.
 The time-varying and heterogeneous EH states are carefully studied, which cause the fluctuation of the available energy and the data queues. Then the energy states and the queue states are evaluated and adopted to predict the states of each sensor. 
 Finally, the QoS aware slot allocation scheme can give a timely response to the changes of the sensor state to improve the short-term QoS performance.
@@ -314,7 +314,7 @@ Finally, the QoS aware slot allocation scheme can give a timely response to the 
  \end{enumerate}
 
 The remainder of this paper is organized as follows. 
-In Section \ref{sec:system_model}, the system model is presented. In Section \ref{sec:PRCS}, the relationship between the source rate and the QoS peformance is described in details, and a join power and source rate optimization allocation problem is formulated and solved. 
+In Section \ref{sec:system_model}, the system model is presented. In Section \ref{sec:PRCS}, the relationship between the source rate and the QoS performance is described in details, and a joint power and source rate optimization allocation problem is formulated and solved. 
 In Section \ref{sec:QASAS}, the sensor states are evaluated based on the energy state and queue buffer state, and a short-term QoS aware slot allocation scheme is provided in details.
 In Section \ref{sec:simulation}, the numerical results are discussed and analyzed. Finally, Section \ref{sec:conclusion} concludes the paper.
 
@@ -337,7 +337,7 @@ Suppose that the hub (such as a PDA and a mobile phone) has sufficient resources
 Due to the different positions and functions of different sensor nodes, the adopted energy harvesters may collect energy from different energy sources. 
 For instance, the sensor node on the foot can utilize the piezoelectric transducer to harvest energy from the body motion \cite{geisler2017human}, and the sensor node for capturing the electrocardiograph (ECG) signal may use a thermoelectric generator to harvest from the body temperature \cite{thielen2017human}. Therefore, the EH states of different nodes are heterogeneous. 
 In this paper, the harvested energy is stored in a rechargeable battery or a super-capacitor, then used to power the body sensor node \cite{akhtar2017energy}. 
-The EH process of each node can be model as a correlated discrete-time Markov chain with two states: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. 
+The EH process of each node can be modeled as a correlated discrete-time Markov chain with two states: the active state (ON) and the inactive state (OFF) \cite{seyedi2010energy,ibarra2016qos}. 
 In the ON state, it means the intensity of the motion is conductive to generate the energy by the energy harvester. In the OFF state, the energy harvester does not collect any energy due to the low motion intensity. In addition, the coherence time of the EH process is set to $t_{cor}=k \cdot  t_{slot}$, where $t_{slot}$ is the time length of one time slot in the superframe. We assume that the energy acquisition rate $\rho $ in the ON state follows an uniform distribution in range of $[EH_{min}, EH_{max}]$, which is based on the intensity of body movement. In addition, the energy acquisition rate in the ON state is different for different sensor nodes. The Markov chain of EH process is shown in Fig. \ref{fig:markov_model}. $p_{01}$ means the transition probability from the OFF state to the ON state, while $p_{10}$ represents the transition probability from the ON state to the OFF state. The probability of keeping the ON state and the OFF state are regarded as $p_{11}=1-p_{10}$ and $p_{00}=1-p_{01}$, respectively. And the steady probabilities of the ON state and the OFF state are expressed as follows, 
 \begin{equation}
 {\mu _{on}} = {{{p_{01}}} \over {{p_{01}} + {p_{10}}}}
@@ -357,7 +357,7 @@ E_{rec} = {E_{ct}}
 \end{equation}
 where $\alpha$ means the power amplifier inefficiency factor, $E_{tx}=P_{tx}t$ and $E_{ct}=P_{ct}t$. $P_{tx}$ represents the transmission power of the transmitter. $P_{ct}$ is the circuitry power, which is a constant depending on the specific transmitter \cite{lin2009asymmetric}. 
 
-To improve the QoS requirements, the transmission power should be dynamically adjusted to cope with the time-varying link quality. Thus, the path loss model of wireless links become a important factor for the energy consumption. In this paper, the path loss model $PL\left( d \right)$ for both Light-Of-Sight (LOS) and None-Light-Of-Sight (NLOS) scenarios follows the log normal distribution as recommended by IEEE 802.15.6 \cite{ieee2012WBAN}.
+To improve the QoS performances, the transmission power should be dynamically adjusted to cope with the time-varying link quality. Thus, the path loss model of wireless links becomes a important factor for the energy consumption. In this paper, the path loss model $PL\left( d \right)$ for both Light-Of-Sight (LOS) and None-Light-Of-Sight (NLOS) scenarios follows the log normal distribution as recommended by IEEE 802.15.6 \cite{ieee2012WBAN}.
 \begin{equation}\label{eq:PL}
 \small{
 PL\left( d \right) ={PL_{d_0}} + 10n{\log _{10}}\left( {\frac{d}{{{d_0}}}} \right) + {X_\sigma }
@@ -492,7 +492,7 @@ Therefore, the boundaries of the source rate as well as the optimal achievable t
 S_{i} = \max \left\{ \min (\upsilon_{i}^{*}, S_{up,i} ), S_{low,i} \right\}
 \end{equation}
 
-When the optimal achievable throughput $\upsilon^{*}$ is larger than the upper boundary $S_{up}$, it means the harvesting energy by the harvester is enough for supporting the source rate $S_{up}$. Meanwhile the long-term PLR performance is also satisfied by solving the maximization problem \textbf{P2}. 
+When the optimal achievable throughput $\upsilon^{*}$ is larger than the upper boundary $S_{up}$, it means the harvesting energy is enough for supporting the source rate $S_{up}$. Meanwhile the long-term PLR performance is also satisfied by solving the maximization problem \textbf{P2}. 
 Then, the source rate is set to the upper boundary $S_{up}$ for fair diagnosis and energy efficiency. 
 When the throughput $\upsilon^{*}$ is in the range of $[S_{low},S_{up}]$, the source rate is set to the optimal throughput $\upsilon^{*}$ to just meet the throughput requirements for keeping more details of the data signals. Otherwise, the source rate is configured as the low boundary $S_{low}$ to ensure the diagnostic significance.
 However, the throughput condition cannot be satisfied with current energy harvesting rate, and there will be packets blocked in the data queue. Fortunately the problem can be solved by the proposed short-term QoS aware resource allocation scheme in the following section,.
@@ -549,11 +549,11 @@ The EH states of each node in the following superframe can be predicted, while t
 Due to the heterogeneous EH states, the residual energy from energy harvesters is different in different nodes. Besides, the number of packets for each node in the data queue is also time-varying. 
 If the blocked packets are not timely transmitted to the hub, the QoS performance of both the blocked packets and the arriving packets will be degraded with adopting the First-In-First-Out (FIFO) queue strategy. 
 Hence, the slot allocation should be according to both the energy level in the energy buffer and the predicted EH states for further improving the short-term QoS performance. When the residual energy is sufficient to transmit the arriving packets in the following superframe, the number of slots for the blocked packets should be taken into consideration for timely transmission to decrease the short-term packet delay. 
-Otherwise, the residual energy is constrained, and then the number of allocated slots is only for the arriving packets to ensure the throughput of the queue model. And then the blocked packets will be transmitted until the residual energy is sufficient with high EH acquisition rate.
+Otherwise, the residual energy is constrained, and then the number of allocated slots is only allocated for the arriving packets to ensure the throughput of the queue model. And then the blocked packets will be transmitted until the residual energy is sufficient with high EH acquisition rate.
 Thus, before allocating slots, the sensor states for each node are evaluated.
 
 For the energy-sufficient nodes, the amount of the harvesting energy in the following superframe is not necessary, hence, they are insensitive to the location of allocated slots in the following superframe, while the number of allocated slots becomes important to transmit both the arriving data packets and the blocked packets in the data queue. 
-As for the energy-constrained nodes, the locations of the allocated slots need to carefully be adjusted to harvest more energy based on their EH states. In addition, the number of the allocated slots is at least enough to transmit the arriving packets for satisfying the throughput condition.
+As for the energy-constrained nodes, the locations of the allocated slots need to be carefully adjusted to harvest more energy based on their EH states. In addition, the number of the allocated slots is at least enough to transmit the arriving packets for satisfying the throughput condition.
 %we need to dynamically adjust the locations of allocated slots to improve the short-term QoS performance based on their EH states. 
 Therefore, the nodes can be classified into two categories based on the residual energy: the energy-sufficient nodes and the energy-constrained nodes.
 \begin{equation} \label{eq:energy_con}
@@ -585,9 +585,9 @@ Node_{i} \in \left\{ { \begin{array}{l}
 %For the energy-constrained nodes in the BAD set ${\Phi _{BAD}}$, the residual energy is limited to transmit the arriving data in the next framework. Thus, it should harvest more energy before its dedicated slot in the following framework. 
 
 Generally, the node with the allocated slot at the end of the superframe will have more time to collect energy.
-Due to the time-varying and heterogeneous EH states for nodes, there may be several nodes in the BAD set ${\Phi _{BAD}}$. Hence, we should study their arriving energy in the following superframe based on the predicted EH states, and then dynamic allocate the slots for these nodes in ${\Phi _{BAD}}$ with considering both the number and the locations.
+Due to the time-varying and heterogeneous EH states for nodes, there may be several nodes in the BAD set ${\Phi _{BAD}}$. Hence, we should study their arriving energy in the following superframe based on the predicted EH states, and then dynamically allocate the slots for these nodes in ${\Phi _{BAD}}$ with considering both the number and the locations.
 
-Firstly, we evaluate how long each sensor will take to harvest enough energy to transmit the arriving packets through calculating the arriving energy with the predicted state in the following superframe. The probability of the ON state in the last allocated slot can be obtained by the hub through the feedback from the node $i$, which is regard as $p_{i}(0)$. Then, the probability of the ON state for the following slots can be predicted as the equation \eqref{eq:P_ON_2}. 
+Firstly, we evaluate how long each sensor will take to harvest enough energy to transmit the arriving packets through calculating the arriving energy with the predicted state in the following superframe. The probability of the ON state in the last allocated slot can be obtained by the hub through the feedback from the node $i$, which is regarded as $p_{i}(0)$. Then, the probability of the ON state for the following slots can be predicted as the equation \eqref{eq:P_ON_2}. 
 Thus, the total harvesting energy after $m$ slots on average from the last allocated slot is calculated as follows,
 \begin{equation}  
 F_{i,EH}(m) = {\sum\limits_{l = 1}^m {\left( {{p_i}\left( {r{e_i} + l} \right) \cdot \overline {E{H_i}}  \cdot {t_{slot}}} \right)} }
@@ -773,7 +773,7 @@ In the PRCS, we optimize the transmission power for each node based on the link 
 
 In addition, the source rates for different nodes are adjusted based on the heterogeneous requirements and the energy harvesting rates. As shown in Fig. \ref{fig:PRCS_rate}, the source rates of the node 1 and the node 2 are allocated as the low boundary $S_{low}$ in all postures. 
 This is because the achievable throughput $\upsilon^{*}$ with the highest energy harvesting rates of them still does not reach the low boundary $S_{low}$ in Fig. \ref{fig:PRCS_power}. 
-As for node 5, the energy harvesting rates in different postures are different for the piezoelectric energy harvester in Table \ref{tab:parEH}. In still posture, the achievable throughput $\upsilon^{*}$ is lower than the low boundary $S_{low}$, thus the source rate is allocated as the low boundary $S_{low}$ to support the diagnostic significance. In walking posture, the source rate is allocated as the achievable throughput $\upsilon^{*}$, which is in range of $[S_{low},S_{up}]$. In running posture, the energy harvesting rate can support the upper boundary of the source rate $S_{up}$, then the source rate is set to the upper boundary $S_{up}$ for saving energy.
+As for node 5, the energy harvesting rates in different postures are different for the piezoelectric energy harvester in Table \ref{tab:parEH}. In still posture, the achievable throughput $\upsilon^{*}$ is lower than the low boundary $S_{low}$, thus the source rate is allocated as the low boundary $S_{low}$ to support the diagnostic significance. In walking posture, the source rate is allocated as the achievable throughput $\upsilon^{*}$, which is in the range of $[S_{low},S_{up}]$. In running posture, the energy harvesting rate can support the upper boundary of the source rate $S_{up}$, then the source rate is set to the upper boundary $S_{up}$ for saving energy.
 Thus, the source rates are adjusted based on the achievable throughput with the corresponding energy harvesting rate. 
 
 \begin{figure}[!htb]
