@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.12.25)  17 JAN 2018 14:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/W32TeX) (preloaded format=pdflatex 2015.12.25)  17 JAN 2018 18:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**./bare_jrnl.tex
-(./bare_jrnl.tex
+**./TVT_PRS-RA.tex
+(./TVT_PRS-RA.tex
 LaTeX2e <2015/01/01>
 Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (./IEEEtran.cls
@@ -419,8 +419,8 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \float@box=\box39
 \@float@everytoks=\toks24
 \@floatcapt=\box40
-) (./bare_jrnl.aux)
-\openout1 = `bare_jrnl.aux'.
+) (./TVT_PRS-RA.aux)
+\openout1 = `TVT_PRS-RA.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 172.
 LaTeX Font Info:    ... okay on input line 172.
@@ -502,10 +502,6 @@ Package caption Info: float package is loaded.
 Package caption Info: subfigure package is loaded.
 Package caption Info: threeparttable package is loaded.
 Package caption Info: End \AtBeginDocument code.
- [1{c:/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
-]
 LaTeX Font Info:    Try loading font information for U+msa on input line 249.
 
 (c:/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -525,7 +521,16 @@ Underfull \hbox (badness 1708) in paragraph at lines 249--250
 []\OT1/ptm/m/n/10 Compared with EH-powered wire-less sen-sor net-works
  []
 
-[2]
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [1{c:/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+
+]
+Underfull \vbox (badness 1043) has occurred while \output is active []
+
+ [2]
 Package epstopdf Info: Source file: <markov_model.eps>
 (epstopdf)                    date: 2017-12-09 00:20:07
 (epstopdf)                    size: 28143 bytes
@@ -536,7 +541,8 @@ Package epstopdf Info: Source file: <markov_model.eps>
 -to.pdf markov_model.eps>
 (epstopdf)             \includegraphics on input line 295.
 Package epstopdf Info: Output file is already uptodate.
- <markov_model-eps-converted-to.pdf, id=15, 842.14626pt x 430.60875pt>
+
+<markov_model-eps-converted-to.pdf, id=15, 842.14626pt x 430.60875pt>
 File: markov_model-eps-converted-to.pdf Graphic file (type pdf)
 
 <use markov_model-eps-converted-to.pdf>
@@ -701,6 +707,10 @@ Package amsfonts Warning: Obsolete command \Bbb; \mathbb should be used instead
 
 
 LaTeX Font Warning: Command \small invalid in math mode on input line 540.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 
 LaTeX Font Warning: Command \footnotesize invalid in math mode on input line 58
@@ -970,7 +980,7 @@ Underfull \hbox (badness 6842) in paragraph at lines 809--809
 []\OT1/ptm/m/n/8 (d) Band-width uti-liza-tion per-for-
  []
 
-(./bare_jrnl.bbl [10]
+(./TVT_PRS-RA.bbl [10]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11 <./cp_PLR-eps-converted-to.pdf> <./cp_Delay-eps-converted-to.pdf> <./cp_en
@@ -1087,7 +1097,7 @@ Package pdftex.def Info: ChangwenChen-eps-converted-to.pdf used on input line 8
 
  <./ZhiqiangLiu-eps-converted-to.pdf> <./BinLiu-eps-converted-to.pdf> <./Changw
 enChen-eps-converted-to.pdf>]
-(./bare_jrnl.aux)
+(./TVT_PRS-RA.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 4.5pt have occurred.
@@ -1095,12 +1105,12 @@ LaTeX Font Warning: Size substitutions with differences
  ) 
 Here is how much of TeX's memory you used:
  7078 strings out of 493089
- 108567 string characters out of 6138424
- 213242 words of memory out of 5000000
+ 108578 string characters out of 6138424
+ 212242 words of memory out of 5000000
  10379 multiletter control sequences out of 15000+600000
  58726 words of font info for 133 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 38i,23n,40p,1648b,341s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,23n,40p,1649b,341s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}<c:/texlive/2015/texm
 f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2015/texmf-dist/fo
 nts/type1/public/amsfonts/cmextra/cmex8.pfb><c:/texlive/2015/texmf-dist/fonts/t
@@ -1126,7 +1136,7 @@ sam10.pfb><c:/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm1
 2015/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb><c:/texlive/2015/texmf-dist/f
 onts/type1/urw/times/utmr8a.pfb><c:/texlive/2015/texmf-dist/fonts/type1/urw/tim
 es/utmr8a.pfb><c:/texlive/2015/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on bare_jrnl.pdf (13 pages, 636450 bytes).
+Output written on TVT_PRS-RA.pdf (13 pages, 636197 bytes).
 PDF statistics:
  341 PDF objects out of 1000 (max. 8388607)
  220 compressed objects within 3 object streams

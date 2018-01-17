@@ -241,8 +241,8 @@ Therefore, EH-powered WBANs have the potential ability to achieve an infinite li
 In the literature, researchers have paid more and more attention on how to keep in ENO state with considering the QoS performances in EH-powered WBANs.
 
 Most of the researchers investigated the statistical characteristics of the energy harvesting in the resource allocation schemes to support the long-term QoS performances \cite{ibarra2016qos,ozel2011transmission,leng2017resource}. 
-However, sensors in different positions on the body may have different types of EH, and the energy collection rates are heterogeneous. Meanwhile, harvesters with energy sources from the human body have time-varying states caused by the dynamic body movement status. And the collected available energy is time-variant and different for each node to transmit data packets. 
-The time-varying available energy will lead to some blocked packets in the buffer queue, which affect both the short-term QoS performances. The short-term QoS performance cannot be fully guaranteed.
+However, due to the dynamic ambient or body conditions, the EH states are time-variant and different for each node.
+The allocated resources for supporting the long-term QoS performances may not cope with the dynamic demand of the sensors due to the time-varying EH states, and then the short-term QoS performances cannot be fully guaranteed.
 Therefore, the time-varying EH states can be exploited to allocate the resources for improving the short-term QoS performances dynamically. This phenomenon will lead to a important result: the time-varying and heterogeneous EH states become a significant factor in designing the effective resource allocation scheme for improving both the long-term and short-term QoS performances. 
 
 \subsection{Related works}
@@ -273,7 +273,7 @@ Hence, the harvested energy can be efficiently utilized to improve both the long
 	 \item For supporting the long-term QoS performances of body sensors, we design a power-rate control scheme to optimize the transmission power and the source rates for different body sensors, subject to the long-term QoS requirements under the Energy Neutral Operation (ENO).
 The statistical knowledge of energy harvesting and channel fading is investigated to measure the QoS performances with the allocated resources. Then, an optimal numerical solution is successfully obtained through the transformation of the non-convex problem. 
 	\item To further improve the short-term QoS performances and the resource utilization, we propose a QoS aware slot allocation scheme to dynamically adjust the time slot allocation based on the states of each sensor for better transmitting data packets.
-The time-varying and heterogeneous EH states, which cause the fluctuation of the available energy and the data queues, are carefully studied. Then the energy states and the queue states are evaluated and adopted to predict the states of each sensor. 
+The time-varying and heterogeneous EH states, which causes the fluctuation of the available energy and the data queues, are carefully studied. Then the energy states and the queue states are evaluated and adopted to predict the states of each sensor. 
 Finally, the QoS aware slot allocation scheme can give a timely response to the changes of the sensor state to improve the short-term QoS performances.
 
  \end{enumerate}
